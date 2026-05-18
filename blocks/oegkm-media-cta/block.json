@@ -1,0 +1,46 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/media-cta",
+  "title": "OEGKM Media CTA",
+  "category": "oegkm",
+  "icon": "calculator",
+  "description": "Inhaltsblock mit Bild, Text und Button.",
+  "textdomain": "bootscore-child-oegkm",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "kicker": {
+      "type": "string",
+      "default": "FRAX® Rechner"
+    },
+    "title": {
+      "type": "string",
+      "default": "Osteoporose-Frakturrisiko Ihrer Patient:innen einfach und evidenzbasiert berechnen"
+    },
+    "text": {
+      "type": "string",
+      "default": "Der FRAX®-Rechner unterstützt Ärzt:innen dabei, auf Basis klinischer Parameter das 10-Jahres-Risiko für osteoporotische Frakturen zu berechnen und Therapieentscheidungen zu unterstützen."
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Zum FRAX® Rechner"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageId": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "editorScript": "bootscore-child-oegkm-media-cta-block",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor"
+}
