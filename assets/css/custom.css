@@ -2810,14 +2810,31 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 
 .oegkm-disease-slider__stage{
   position:relative;
+  display:grid;
+  align-items:stretch;
 }
 
 .oegkm-disease-slider__slide{
   display:grid;
+  grid-area:1 / 1;
   grid-template-columns:minmax(0, 1.55fr) minmax(320px, 1fr);
   align-items:stretch;
   background:#eef4f1;
   overflow:hidden;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .28s ease, visibility .28s ease;
+}
+
+.oegkm-disease-slider__slide[hidden]{
+  display:grid !important;
+}
+
+.oegkm-disease-slider__slide.is-active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
 }
 
 .oegkm-disease-slider__panel{
@@ -2825,33 +2842,40 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   padding:clamp(2rem,4vw,4.5rem) clamp(2rem,4vw,4.75rem);
   display:flex;
   flex-direction:column;
-  justify-content:center;
+  justify-content:flex-start;
   background:
     radial-gradient(circle at 78% 40%, rgba(155,236,207,.55), rgba(155,236,207,0) 28%),
     linear-gradient(135deg, rgba(255,255,255,.55) 0%, rgba(232,244,239,.92) 20%, rgba(196,243,223,.94) 100%);
 }
 
 .oegkm-disease-slider__kicker{
-  margin-bottom:1.4rem;
-  color:#4fd1ab;
-  font-size:.95rem;
-  font-weight:600;
+  margin:0 0 24px;
+  color:#00da8e;
+  font-family:var(--oegkm-font-copy);
+  font-size:18px;
+  font-weight:500;
+  line-height:1.6;
   text-transform:uppercase;
-  letter-spacing:.06em;
+  letter-spacing:0;
 }
 
 .oegkm-disease-slider__title{
-  margin:0 0 1.5rem;
-  color:#0b5562;
-  font-size:clamp(2rem, 4vw, 3.75rem);
-  line-height:.98;
+  margin:0 0 24px;
+  color:#01565b;
+  font-family:var(--oegkm-font-headline);
+  font-size:clamp(2rem, 2.65vw, 2.5rem);
+  font-weight:500;
+  line-height:1.1;
+  letter-spacing:0;
 }
 
 .oegkm-disease-slider__text,
 .oegkm-disease-slider .components-base-control__field textarea{
-  color:#24515e;
-  font-size:clamp(1rem, 1.3vw, 1.1rem);
-  line-height:1.65;
+  color:#01565b;
+  font-family:var(--oegkm-font-copy);
+  font-size:22px;
+  font-weight:400;
+  line-height:1.4;
 }
 
 .oegkm-disease-slider__text p:last-child{ margin-bottom:0; }
@@ -2887,26 +2911,29 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 .oegkm-disease-slider__navs{
   display:flex;
   gap:.75rem;
-  margin-top:2.25rem;
+  margin-top:auto;
+  padding-top:2.25rem;
 }
 
 .oegkm-disease-slider__nav{
-  width:3.75rem;
-  height:3.75rem;
-  border-radius:999px;
-  border:1px solid rgba(11,85,98,.55);
+  width:68px;
+  height:48px;
+  border-radius:64px;
+  border:1px solid #01565b;
   background:transparent;
-  color:#24515e;
+  color:#01565b;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  font-size:2rem;
+  padding:8px 20px;
+  font-size:1rem;
   line-height:1;
-  transition:all .2s ease;
+  transition:background-color .2s ease, color .2s ease, opacity .2s ease;
 }
 
 .oegkm-disease-slider__nav:hover:not(:disabled){
-  background:rgba(255,255,255,.45);
+  background:#01565b;
+  color:#f6fff0;
 }
 
 .oegkm-disease-slider__nav:disabled{
@@ -2931,6 +2958,17 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 
   .oegkm-disease-slider__media{
     aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 767.98px){
+  .oegkm-disease-slider__title{
+    font-size:clamp(2rem, 8vw, 2.6rem);
+  }
+
+  .oegkm-disease-slider__text,
+  .oegkm-disease-slider .components-base-control__field textarea{
+    font-size:1.125rem;
   }
 }
 

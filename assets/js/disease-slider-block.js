@@ -161,7 +161,7 @@
           slides.map(function (slide, index) {
             return el('article', {
               className: 'oegkm-disease-slider__slide' + (index === 0 ? ' is-active' : ''),
-              hidden: index === 0 ? undefined : true,
+              'aria-hidden': index === 0 ? 'false' : 'true',
               key: index
             },
               el('div', { className: 'oegkm-disease-slider__panel' },

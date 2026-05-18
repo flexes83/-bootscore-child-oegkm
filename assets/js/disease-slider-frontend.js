@@ -11,11 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
       slides.forEach(function (slide, slideIndex) {
         const active = slideIndex === index;
         slide.classList.toggle('is-active', active);
-        if (active) {
-          slide.removeAttribute('hidden');
-        } else {
-          slide.setAttribute('hidden', 'hidden');
-        }
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+        slide.removeAttribute('hidden');
       });
     }
 
