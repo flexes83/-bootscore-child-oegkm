@@ -1,0 +1,82 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/image-accordion-sections",
+  "title": "OEGKM Image Accordion Sections",
+  "category": "oegkm",
+  "icon": "align-pull-left",
+  "description": "Bild-Text-Abschnitte mit integrierten Accordion-Zeilen.",
+  "textdomain": "bootscore-child-oegkm",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "sections": {
+      "type": "array",
+      "default": [
+        {
+          "kicker": "Wie wird Osteoporose behandelt?",
+          "title": "Prophylaxe",
+          "text": "Eine ausreichende Versorgung mit Kalzium und Vitamin D sowie gezielte hormonelle Maßnahmen können helfen, den Knochenabbau frühzeitig zu bremsen und das Risiko osteoporotischer Frakturen zu senken.",
+          "imageUrl": "",
+          "imageId": 0,
+          "imagePosition": "right",
+          "items": [
+            {
+              "title": "Kalzium und Vitamin D",
+              "body": "Inhalt ergänzen."
+            },
+            {
+              "title": "Menopausale Hormontherapie",
+              "body": "Inhalt ergänzen."
+            }
+          ]
+        },
+        {
+          "kicker": "",
+          "title": "Nicht-medikamentöse Prophylaxe",
+          "text": "Sturz- und Sturzfolgen zu vermeiden und durch regelmäßiges Training mit Gewichts- und Widerstandsbelastung die Knochenfestigkeit zu erhalten, hilft Ihrer Knochenstruktur und dem Frakturrisiko gleichermaßen.",
+          "imageUrl": "",
+          "imageId": 0,
+          "imagePosition": "left",
+          "items": [
+            {
+              "title": "Stürze- und Sturzprophylaxe",
+              "body": "Inhalt ergänzen."
+            },
+            {
+              "title": "Körperliches Training in der Prävention und Therapie der Osteoporose",
+              "body": "Inhalt ergänzen."
+            }
+          ]
+        },
+        {
+          "kicker": "",
+          "title": "Spezifische Osteoporose Therapie",
+          "text": "Wenn die Erkrankung bereits gesichert ist, stehen Medikamente zur Verfügung, die gezielt zur Reduktion des Frakturrisikos eingesetzt werden.",
+          "imageUrl": "",
+          "imageId": 0,
+          "imagePosition": "right",
+          "items": [
+            {
+              "title": "SERM - Selektive Östrogenrezeptormodulatoren",
+              "body": "Inhalt ergänzen."
+            },
+            {
+              "title": "Biosphosphonate",
+              "body": "Inhalt ergänzen."
+            },
+            {
+              "title": "Strontiumranelat",
+              "body": "Inhalt ergänzen."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./editor.js",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor",
+  "viewScript": "file:./view.js"
+}
