@@ -66,11 +66,9 @@ get_header();
                         </aside>
 
                         <div class="oegkm-prize-content-wrap">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <figure class="oegkm-prize-featured-image">
-                                    <?php the_post_thumbnail('large'); ?>
-                                </figure>
-                            <?php endif; ?>
+                            <figure class="oegkm-prize-featured-image">
+                                <?php bootscore_child_oegkm_render_prize_thumbnail(get_the_ID()); ?>
+                            </figure>
 
                             <div class="oegkm-prize-content entry-content">
                                 <?php the_content(); ?>

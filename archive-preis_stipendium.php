@@ -5,14 +5,8 @@ if (!defined('ABSPATH')) {
 
 get_header();
 
-bootscore_child_oegkm_render_theme_page_header([
-    'title' => __('Preise & Stipendien', 'bootscore-child-oegkm'),
-    'intro' => __('Aktuelle Ausschreibungen, Fördermöglichkeiten und Auszeichnungen der ÖGKM im Überblick. Vergangene Einträge finden Sie im Archiv.', 'bootscore-child-oegkm'),
-    'variant' => 'mint-left',
-    'labelledby' => 'oegkm-prizes-title',
-]);
-
 $today = current_time('Y-m-d');
+$current_year = current_time('Y');
 
 $current_prizes = new WP_Query([
     'post_type'      => 'preis_stipendium',
@@ -50,13 +44,28 @@ $past_prizes = new WP_Query([
 ?>
 
 <main id="primary" class="site-main oegkm-prizes-page">
+    <section class="oegkm-prizes-hero" aria-labelledby="oegkm-prizes-title">
+        <div class="container">
+            <div class="oegkm-prizes-hero__panel">
+                <img class="oegkm-prizes-hero__guilloche" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/oegkm-guilloche.png'); ?>" alt="" aria-hidden="true">
+                <h1 id="oegkm-prizes-title"><?php esc_html_e('Preise und Stipendien', 'bootscore-child-oegkm'); ?></h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="oegkm-prizes-intro" aria-label="<?php esc_attr_e('Einleitung', 'bootscore-child-oegkm'); ?>">
+        <div class="container">
+            <p><?php esc_html_e('Die ÖGKM vergibt Preise und Stipendien zur Förderung von Forschung, Nachwuchs und wissenschaftlichem Austausch im Bereich Knochen- und Mineralstoffwechsel. Entdecken Sie aktuelle Ausschreibungen und Fördermöglichkeiten.', 'bootscore-child-oegkm'); ?></p>
+        </div>
+    </section>
+
     <section class="oegkm-prizes-section" aria-labelledby="oegkm-prizes-current-title">
         <div class="container">
             <div class="oegkm-prizes-list-wrap">
-                <h2 id="oegkm-prizes-current-title"><?php esc_html_e('Aktuelle Ausschreibungen', 'bootscore-child-oegkm'); ?></h2>
+                <h2 id="oegkm-prizes-current-title"><?php echo esc_html(sprintf(__('Preise und Stipendien %s', 'bootscore-child-oegkm'), $current_year)); ?></h2>
 
                 <?php if ($current_prizes->have_posts()) : ?>
-                    <div class="oegkm-prizes-grid">
+                    <div class="oegkm-prizes-list">
                         <?php while ($current_prizes->have_posts()) : $current_prizes->the_post(); ?>
                             <?php bootscore_child_oegkm_render_prize_card(get_the_ID()); ?>
                         <?php endwhile; ?>
@@ -75,29 +84,15 @@ $past_prizes = new WP_Query([
     <section class="oegkm-prizes-archive-section" aria-labelledby="oegkm-prizes-archive-title">
         <div class="container">
             <div class="oegkm-prizes-list-wrap">
-                <h2 id="oegkm-prizes-archive-title"><?php esc_html_e('Archiv', 'bootscore-child-oegkm'); ?></h2>
+                <h2 id="oegkm-prizes-archive-title"><?php esc_html_e('Preise und Stipendien Ausschreibungsarchiv', 'bootscore-child-oegkm'); ?></h2>
 
                 <?php if ($past_prizes->have_posts()) : ?>
                     <div class="oegkm-prizes-archive">
-                        <?php
-                        $current_year = '';
-                        while ($past_prizes->have_posts()) :
-                            $past_prizes->the_post();
-                            $year = bootscore_child_oegkm_prize_year(get_the_ID());
-                            if ($year && $year !== $current_year) :
-                                if ($current_year) {
-                                    echo '</div>';
-                                }
-                                $current_year = $year;
-                                ?>
-                                <h3 class="oegkm-prizes-archive__year"><?php echo esc_html($current_year); ?></h3>
-                                <div class="oegkm-prizes-grid oegkm-prizes-grid--archive">
-                            <?php endif; ?>
+                        <div class="oegkm-prizes-list oegkm-prizes-list--archive">
+                        <?php while ($past_prizes->have_posts()) : $past_prizes->the_post(); ?>
                             <?php bootscore_child_oegkm_render_prize_card(get_the_ID()); ?>
                         <?php endwhile; ?>
-                        <?php if ($current_year) : ?>
-                            </div>
-                        <?php endif; ?>
+                        </div>
                     </div>
                     <?php wp_reset_postdata(); ?>
                 <?php else : ?>

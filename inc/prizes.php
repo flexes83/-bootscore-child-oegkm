@@ -179,6 +179,31 @@ function bootscore_child_oegkm_prize_year(?int $post_id = null): string {
     return $timestamp ? wp_date('Y', $timestamp) : substr($date, 0, 4);
 }
 
+function bootscore_child_oegkm_render_prize_thumbnail(int $post_id): void {
+    if (has_post_thumbnail($post_id)) {
+        ?>
+        <a class="oegkm-prize-card__image" href="<?php echo esc_url(get_permalink($post_id)); ?>" aria-label="<?php echo esc_attr(get_the_title($post_id)); ?>">
+            <?php echo get_the_post_thumbnail($post_id, 'large'); ?>
+        </a>
+        <?php
+        return;
+    }
+
+    $guilloche_index = ($post_id % 7) + 1;
+    $guilloche_url   = get_stylesheet_directory_uri() . '/assets/img/oegkm-guilloche-' . $guilloche_index . '.jpg';
+    $logo_url        = get_stylesheet_directory_uri() . '/assets/img/logo-oegkm.svg';
+    ?>
+    <a
+        class="oegkm-prize-card__placeholder"
+        href="<?php echo esc_url(get_permalink($post_id)); ?>"
+        aria-label="<?php echo esc_attr(get_the_title($post_id)); ?>"
+        style="--oegkm-prize-placeholder-image:url('<?php echo esc_url($guilloche_url); ?>');"
+    >
+        <img src="<?php echo esc_url($logo_url); ?>" alt="" aria-hidden="true">
+    </a>
+    <?php
+}
+
 function bootscore_child_oegkm_render_prize_card(int $post_id): void {
     $date_label     = bootscore_child_oegkm_prize_date_label($post_id);
     $deadline_label = bootscore_child_oegkm_prize_deadline_label($post_id);
@@ -186,16 +211,15 @@ function bootscore_child_oegkm_render_prize_card(int $post_id): void {
     $amount         = (string) get_post_meta($post_id, '_oegkm_prize_amount', true);
     ?>
     <article <?php post_class('oegkm-prize-card', $post_id); ?>>
-        <?php if (has_post_thumbnail($post_id)) : ?>
-            <a class="oegkm-prize-card__image" href="<?php echo esc_url(get_permalink($post_id)); ?>" aria-label="<?php echo esc_attr(get_the_title($post_id)); ?>">
-                <?php echo get_the_post_thumbnail($post_id, 'large'); ?>
-            </a>
-        <?php endif; ?>
+        <?php bootscore_child_oegkm_render_prize_thumbnail($post_id); ?>
 
         <div class="oegkm-prize-card__body">
             <div class="oegkm-prize-card__meta">
-                <?php if ($type) : ?><span><?php echo esc_html($type); ?></span><?php endif; ?>
-                <?php if ($date_label) : ?><time datetime="<?php echo esc_attr(get_post_meta($post_id, '_oegkm_prize_date', true)); ?>"><?php echo esc_html($date_label); ?></time><?php endif; ?>
+                <?php if ($deadline_label) : ?>
+                    <span><?php echo esc_html(sprintf(__('Einreichungsschluss: %s', 'bootscore-child-oegkm'), $deadline_label)); ?></span>
+                <?php elseif ($date_label) : ?>
+                    <time datetime="<?php echo esc_attr(get_post_meta($post_id, '_oegkm_prize_date', true)); ?>"><?php echo esc_html($date_label); ?></time>
+                <?php endif; ?>
             </div>
 
             <h3><a href="<?php echo esc_url(get_permalink($post_id)); ?>"><?php echo esc_html(get_the_title($post_id)); ?></a></h3>
@@ -204,12 +228,12 @@ function bootscore_child_oegkm_render_prize_card(int $post_id): void {
                 <p><?php echo esc_html(get_the_excerpt($post_id)); ?></p>
             <?php endif; ?>
 
-            <?php if ($deadline_label || $amount) : ?>
+            <?php if ($type || $amount) : ?>
                 <dl class="oegkm-prize-card__facts">
-                    <?php if ($deadline_label) : ?>
+                    <?php if ($type) : ?>
                         <div>
-                            <dt><?php esc_html_e('Einreichfrist', 'bootscore-child-oegkm'); ?></dt>
-                            <dd><?php echo esc_html($deadline_label); ?></dd>
+                            <dt><?php esc_html_e('Art', 'bootscore-child-oegkm'); ?></dt>
+                            <dd><?php echo esc_html($type); ?></dd>
                         </div>
                     <?php endif; ?>
                     <?php if ($amount) : ?>
@@ -222,7 +246,7 @@ function bootscore_child_oegkm_render_prize_card(int $post_id): void {
             <?php endif; ?>
 
             <a class="oegkm-prize-card__button" href="<?php echo esc_url(get_permalink($post_id)); ?>">
-                <?php esc_html_e('Details ansehen', 'bootscore-child-oegkm'); ?> <span aria-hidden="true">→</span>
+                <?php esc_html_e('Mehr erfahren', 'bootscore-child-oegkm'); ?> <span aria-hidden="true">→</span>
             </a>
         </div>
     </article>
