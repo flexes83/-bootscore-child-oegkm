@@ -5,6 +5,13 @@ if (!defined('ABSPATH')) {
 
 get_header();
 
+bootscore_child_oegkm_render_theme_page_header([
+    'title' => __('Preise und Stipendien', 'bootscore-child-oegkm'),
+    'intro' => __('Die ÖGKM vergibt Preise und Stipendien zur Förderung von Forschung, Nachwuchs und wissenschaftlichem Austausch im Bereich Knochen- und Mineralstoffwechsel. Entdecken Sie aktuelle Ausschreibungen und Fördermöglichkeiten.', 'bootscore-child-oegkm'),
+    'variant' => 'mint-left',
+    'labelledby' => 'oegkm-prizes-title',
+]);
+
 $today = current_time('Y-m-d');
 $current_year = current_time('Y');
 
@@ -44,21 +51,6 @@ $past_prizes = new WP_Query([
 ?>
 
 <main id="primary" class="site-main oegkm-prizes-page">
-    <section class="oegkm-prizes-hero" aria-labelledby="oegkm-prizes-title">
-        <div class="container">
-            <div class="oegkm-prizes-hero__panel">
-                <img class="oegkm-prizes-hero__guilloche" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/oegkm-guilloche.png'); ?>" alt="" aria-hidden="true">
-                <h1 id="oegkm-prizes-title"><?php esc_html_e('Preise und Stipendien', 'bootscore-child-oegkm'); ?></h1>
-            </div>
-        </div>
-    </section>
-
-    <section class="oegkm-prizes-intro" aria-label="<?php esc_attr_e('Einleitung', 'bootscore-child-oegkm'); ?>">
-        <div class="container">
-            <p><?php esc_html_e('Die ÖGKM vergibt Preise und Stipendien zur Förderung von Forschung, Nachwuchs und wissenschaftlichem Austausch im Bereich Knochen- und Mineralstoffwechsel. Entdecken Sie aktuelle Ausschreibungen und Fördermöglichkeiten.', 'bootscore-child-oegkm'); ?></p>
-        </div>
-    </section>
-
     <section class="oegkm-prizes-section" aria-labelledby="oegkm-prizes-current-title">
         <div class="container">
             <div class="oegkm-prizes-list-wrap">

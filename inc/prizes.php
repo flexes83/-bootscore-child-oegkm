@@ -199,7 +199,9 @@ function bootscore_child_oegkm_render_prize_thumbnail(int $post_id): void {
         aria-label="<?php echo esc_attr(get_the_title($post_id)); ?>"
         style="--oegkm-prize-placeholder-image:url('<?php echo esc_url($guilloche_url); ?>');"
     >
-        <img src="<?php echo esc_url($logo_url); ?>" alt="" aria-hidden="true">
+        <span class="oegkm-prize-card__placeholder-mark" aria-hidden="true">
+            <img src="<?php echo esc_url($logo_url); ?>" alt="">
+        </span>
     </a>
     <?php
 }
@@ -207,8 +209,6 @@ function bootscore_child_oegkm_render_prize_thumbnail(int $post_id): void {
 function bootscore_child_oegkm_render_prize_card(int $post_id): void {
     $date_label     = bootscore_child_oegkm_prize_date_label($post_id);
     $deadline_label = bootscore_child_oegkm_prize_deadline_label($post_id);
-    $type           = (string) get_post_meta($post_id, '_oegkm_prize_type', true);
-    $amount         = (string) get_post_meta($post_id, '_oegkm_prize_amount', true);
     ?>
     <article <?php post_class('oegkm-prize-card', $post_id); ?>>
         <?php bootscore_child_oegkm_render_prize_thumbnail($post_id); ?>
@@ -226,23 +226,8 @@ function bootscore_child_oegkm_render_prize_card(int $post_id): void {
 
             <?php if (has_excerpt($post_id)) : ?>
                 <p><?php echo esc_html(get_the_excerpt($post_id)); ?></p>
-            <?php endif; ?>
-
-            <?php if ($type || $amount) : ?>
-                <dl class="oegkm-prize-card__facts">
-                    <?php if ($type) : ?>
-                        <div>
-                            <dt><?php esc_html_e('Art', 'bootscore-child-oegkm'); ?></dt>
-                            <dd><?php echo esc_html($type); ?></dd>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($amount) : ?>
-                        <div>
-                            <dt><?php esc_html_e('Dotierung', 'bootscore-child-oegkm'); ?></dt>
-                            <dd><?php echo esc_html($amount); ?></dd>
-                        </div>
-                    <?php endif; ?>
-                </dl>
+            <?php else : ?>
+                <p><?php echo esc_html(wp_trim_words(get_the_content(null, false, $post_id), 32)); ?></p>
             <?php endif; ?>
 
             <a class="oegkm-prize-card__button" href="<?php echo esc_url(get_permalink($post_id)); ?>">
