@@ -8896,9 +8896,9 @@ a.download::before,
   min-height:0;
   background:linear-gradient(
     180deg,
-    rgba(255,255,255,.5) 0%,
-    rgba(255,255,255,.82) 42%,
-    #fff 100%
+    rgba(255,255,255,.34) 0%,
+    rgba(255,255,255,.62) 42%,
+    rgba(255,255,255,.9) 100%
   );
 }
 
