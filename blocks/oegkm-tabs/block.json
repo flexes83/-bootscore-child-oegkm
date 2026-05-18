@@ -1,0 +1,93 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/tabs",
+  "title": "OEGKM Tabs",
+  "category": "oegkm",
+  "icon": "index-card",
+  "description": "Tab-Element für organisatorische Details und weitere Informationen.",
+  "textdomain": "bootscore-child-oegkm",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Weitere Informationen"
+    },
+    "title": {
+      "type": "string",
+      "default": "Organisatorische Details und weitere Informationen"
+    },
+    "activeTab": {
+      "type": "number",
+      "default": 0
+    },
+    "tabs": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Allgemeine Infos / Organisation",
+          "sections": [
+            {
+              "heading": "Öffnungszeiten & Registratur",
+              "body": "Donnerstag, 28. Mai          09:30 - 17:30 Uhr\nFreitag, 29. Mai                  08:00 - 17:30 Uhr\nSamstag, 30. Mai                08:00 - 13:00 Uhr"
+            },
+            {
+              "heading": "Tagungsbüro",
+              "body": "MAW - Medizinische Ausstellungs- und Werbegesellschaft\nCarmen Zavarsky\nFreyung 6/3, 1010 Wien\nT: +43 1 536 63-23\nE-Mail: osteoporose@media.co.at"
+            },
+            {
+              "heading": "Fachausstellung",
+              "body": "MAW - Medizinische Ausstellungs- und Werbegesellschaft\nIris Bobal\nFreyung 6, 1010 Wien\nT: +43 1 536 63-48\nF: +43 1 535 60 16\nE-Mail: maw@media.co.at"
+            },
+            {
+              "heading": "Diplomfortbildungsprogramm (DFP)",
+              "body": "Für die Veranstaltung werden im Rahmen des Diplomfortbildungsprogramms der Österreichischen Ärztekammer Fortbildungspunkte entsprechend den Vortragseinheiten angesucht."
+            }
+          ]
+        },
+        {
+          "title": "Veranstalter",
+          "sections": [
+            {
+              "heading": "Veranstalter",
+              "body": "Informationen zum Veranstalter ergänzen."
+            }
+          ]
+        },
+        {
+          "title": "Kongressort / Anfahrt",
+          "sections": [
+            {
+              "heading": "Kongressort / Anfahrt",
+              "body": "Informationen zu Kongressort und Anfahrt ergänzen."
+            }
+          ]
+        },
+        {
+          "title": "Teilnahmegebühren",
+          "sections": [
+            {
+              "heading": "Teilnahmegebühren",
+              "body": "Informationen zu Teilnahmegebühren ergänzen."
+            }
+          ]
+        },
+        {
+          "title": "Aussteller, Sponsoren, Interessenten",
+          "sections": [
+            {
+              "heading": "Aussteller, Sponsoren, Interessenten",
+              "body": "Informationen für Aussteller, Sponsoren und Interessenten ergänzen."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./editor.js",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor",
+  "viewScript": "file:./view.js"
+}
