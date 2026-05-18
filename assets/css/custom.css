@@ -8994,3 +8994,89 @@ a.download::before,
     transform:translateX(-40%) rotate(4deg);
   }
 }
+
+/* Preise & Stipendien: final typography and shared button style */
+.oegkm-prizes-page .oegkm-prizes-list-wrap > h2{
+  font-size:40px;
+  line-height:1.08;
+  letter-spacing:0;
+  font-weight:500;
+}
+
+.oegkm-prizes-page .oegkm-prize-card__meta{
+  margin-bottom:8px;
+  font-size:14px;
+  line-height:1.2;
+  font-weight:700;
+}
+
+.oegkm-prizes-page .oegkm-prize-card h3{
+  font-size:40px;
+  line-height:1.1;
+  letter-spacing:0;
+  font-weight:500;
+}
+
+.oegkm-prizes-page .oegkm-prize-card p{
+  max-width:680px;
+  margin-top:12px;
+  font-size:14px;
+  line-height:1.42;
+  font-weight:500;
+}
+
+.oegkm-prize-card__button,
+.oegkm-prize-button,
+.oegkm-prizes-page .oegkm-prize-card__button{
+  gap:16px;
+  min-height:48px;
+  margin-top:20px;
+  padding:8px 24px;
+  border-radius:64px;
+  background:#00da8e;
+  color:#01565b;
+  font-family:var(--oegkm-font-copy);
+  font-size:18px;
+  font-weight:700;
+  line-height:1.1;
+  text-decoration:none;
+}
+
+.oegkm-prize-card__button:hover,
+.oegkm-prize-card__button:focus,
+.oegkm-prize-button:hover,
+.oegkm-prize-button:focus{
+  color:#01565b;
+  background:#00da8e;
+  opacity:.94;
+  transform:none;
+}
+
+.oegkm-prize-card__button .oegkm-button-arrow,
+.oegkm-prize-button .oegkm-button-arrow{
+  width:20px;
+  height:20px;
+}
+
+.oegkm-prize-card__button:hover .oegkm-button-arrow,
+.oegkm-prize-card__button:focus .oegkm-button-arrow,
+.oegkm-prize-button:hover .oegkm-button-arrow,
+.oegkm-prize-button:focus .oegkm-button-arrow{
+  transform:translateX(4px);
+}
+
+@media (max-width: 575.98px){
+  .oegkm-prizes-page .oegkm-prizes-list-wrap > h2{
+    font-size:32px;
+  }
+
+  .oegkm-prizes-page .oegkm-prize-card h3{
+    font-size:32px;
+  }
+
+  .oegkm-prize-card__button,
+  .oegkm-prize-button,
+  .oegkm-prizes-page .oegkm-prize-card__button{
+    font-size:16px;
+  }
+}

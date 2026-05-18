@@ -179,6 +179,10 @@ function bootscore_child_oegkm_prize_year(?int $post_id = null): string {
     return $timestamp ? wp_date('Y', $timestamp) : substr($date, 0, 4);
 }
 
+function bootscore_child_oegkm_button_arrow_svg(): string {
+    return '<svg class="oegkm-button-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 10h12m0 0-4.5-4.5M15.5 10 11 14.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
 function bootscore_child_oegkm_render_prize_thumbnail(int $post_id): void {
     if (has_post_thumbnail($post_id)) {
         ?>
@@ -231,7 +235,7 @@ function bootscore_child_oegkm_render_prize_card(int $post_id): void {
             <?php endif; ?>
 
             <a class="oegkm-prize-card__button" href="<?php echo esc_url(get_permalink($post_id)); ?>">
-                <?php esc_html_e('Mehr erfahren', 'bootscore-child-oegkm'); ?> <span aria-hidden="true">→</span>
+                <?php esc_html_e('Mehr erfahren', 'bootscore-child-oegkm'); ?> <?php echo bootscore_child_oegkm_button_arrow_svg(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             </a>
         </div>
     </article>

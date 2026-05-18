@@ -61,7 +61,9 @@ get_header();
                             <?php endif; ?>
 
                             <?php if ($application_url) : ?>
-                                <a class="oegkm-prize-button oegkm-prize-button-wide" href="<?php echo esc_url($application_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Zur Einreichung', 'bootscore-child-oegkm'); ?></a>
+                                <a class="oegkm-prize-button oegkm-prize-button-wide" href="<?php echo esc_url($application_url); ?>" target="_blank" rel="noopener">
+                                    <?php esc_html_e('Zur Einreichung', 'bootscore-child-oegkm'); ?> <?php echo bootscore_child_oegkm_button_arrow_svg(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                                </a>
                             <?php endif; ?>
                         </aside>
 
