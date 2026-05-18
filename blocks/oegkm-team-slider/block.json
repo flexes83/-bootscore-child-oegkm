@@ -1,0 +1,56 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/team-slider",
+  "title": "OEGKM Team Slider",
+  "category": "oegkm",
+  "icon": "groups",
+  "description": "Slider fuer Vorstand und Teammitglieder.",
+  "textdomain": "bootscore-child-oegkm",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "2024 - 2026"
+    },
+    "title": {
+      "type": "string",
+      "default": "Vorstand und erweiterter Vorstand der OEGKM"
+    },
+    "members": {
+      "type": "array",
+      "default": [
+        {
+          "name": "Astrid Fahrleitner-Pammer",
+          "role": "Praesidentin",
+          "imageUrl": "",
+          "imageId": 0
+        },
+        {
+          "name": "Teammitglied",
+          "role": "Vorstand",
+          "imageUrl": "",
+          "imageId": 0
+        },
+        {
+          "name": "Teammitglied",
+          "role": "Vorstand",
+          "imageUrl": "",
+          "imageId": 0
+        },
+        {
+          "name": "Teammitglied",
+          "role": "Vorstand",
+          "imageUrl": "",
+          "imageId": 0
+        }
+      ]
+    }
+  },
+  "editorScript": "bootscore-child-oegkm-team-slider-block",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor",
+  "viewScript": "file:./view.js"
+}

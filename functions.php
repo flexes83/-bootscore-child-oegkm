@@ -83,6 +83,14 @@ add_action('enqueue_block_editor_assets', function () {
         $version,
         true
     );
+
+    wp_enqueue_script(
+        'bootscore-child-oegkm-team-slider-block',
+        get_stylesheet_directory_uri() . '/blocks/oegkm-team-slider/editor.js',
+        ['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'],
+        $version,
+        true
+    );
 });
 
 add_action('after_setup_theme', function () {
