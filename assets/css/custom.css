@@ -17,7 +17,27 @@ body{
   color:var(--oegkm-text);
   text-wrap:pretty;
   font-family:var(--oegkm-font-copy);
-  
+}
+
+main,
+.site-content,
+.entry-content,
+.wp-site-blocks{
+  -webkit-hyphens:auto;
+  hyphens:auto;
+  overflow-wrap:break-word;
+}
+
+a,
+button,
+.btn,
+.oegkm-nav-menu,
+.oegkm-info-slider__button,
+.oegkm-media-cta__button,
+.oegkm-pill-link,
+.oegkm-member-button{
+  -webkit-hyphens:none;
+  hyphens:none;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -4349,18 +4369,18 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   content:none;
 }
 
-.oegkm-form input[type="radio"].ff-el-form-check-input:checked{
-  background:transparent !important;
+.oegkm-form input[type="radio"].ff-el-form-check-input:checked,
+.oegkm-form .ff_item_selected input[type="radio"].ff-el-form-check-input{
+  background-color:transparent !important;
+  background-image:radial-gradient(circle, var(--oegkm-form-teal) 0 7px, transparent 7.5px) !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+  background-size:32px 32px !important;
 }
 
-.oegkm-form input[type="radio"].ff-el-form-check-input:checked::after{
-  content:"";
-  width:16px;
-  height:16px;
-  border:0;
-  border-radius:50%;
-  background:var(--oegkm-form-teal);
-  transform:none;
+.oegkm-form input[type="radio"].ff-el-form-check-input:checked::after,
+.oegkm-form .ff_item_selected input[type="radio"].ff-el-form-check-input::after{
+  content:none;
 }
 
 .oegkm-form .ff_submit_btn_wrapper{
