@@ -1,0 +1,30 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/accordion-item",
+  "title": "OEGKM Accordion Item",
+  "category": "oegkm",
+  "parent": [
+    "oegkm/accordion"
+  ],
+  "icon": "insert",
+  "description": "Single accordion item.",
+  "textdomain": "bootscore-child-oegkm",
+  "supports": {
+    "html": false,
+    "reusable": false
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "source": "html",
+      "selector": ".oegkm-accordion__title"
+    },
+    "openByDefault": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "editorScript": "bootscore-child-oegkm-accordion-block",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor"
+}

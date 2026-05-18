@@ -1,0 +1,161 @@
+
+/* =========================================================
+   ÖGKM Header / Hero Refinements
+   ========================================================= */
+
+.oegkm-theme-page-header{
+    position: relative;
+    overflow: hidden;
+}
+
+.oegkm-theme-page-header__gradient{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background:
+        linear-gradient(
+            135deg,
+            #eef5d8 0%,
+            #edf7f2 40%,
+            #dff7ef 100%
+        );
+}
+
+.oegkm-theme-page-header__guilloche{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.oegkm-theme-page-header__guilloche img{
+    max-width:100%;
+    max-height:100%;
+    width:auto;
+    height:auto;
+    opacity:.18;
+}
+
+.oegkm-theme-page-header__inner{
+    position:relative;
+    z-index:3;
+    padding-top:4rem;
+    padding-bottom:5rem;
+}
+
+.oegkm-theme-page-header__title{
+    font-size:clamp(2.8rem,5vw,4.4rem);
+    line-height:.95;
+    letter-spacing:-0.03em;
+    color:#005d66;
+    text-align:center;
+    max-width:950px;
+    margin:0 auto;
+}
+
+.oegkm-theme-page-header__intro{
+    position:relative;
+    z-index:4;
+    text-align:center;
+    max-width:900px;
+    margin:0 auto;
+    padding:5rem 1.5rem 7rem;
+}
+
+.oegkm-theme-page-header__intro::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,.92) 42%,
+            #fff 100%
+        );
+    z-index:-1;
+}
+
+.oegkm-theme-page-header__divider{
+    height:22px;
+    background:#fff;
+    position:relative;
+    z-index:5;
+}
+
+/* HERO MODE */
+
+.oegkm-theme-page-header--hero .oegkm-theme-page-header__inner{
+    min-height:760px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+
+.oegkm-theme-page-header--hero .oegkm-theme-page-header__title{
+    font-size:clamp(3rem,5vw,4.8rem);
+    max-width:980px;
+}
+
+.oegkm-hero-scroll{
+    width:72px;
+    height:72px;
+    border-radius:999px;
+    background:rgba(255,255,255,.92);
+    border:1px solid rgba(0,93,102,.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:3rem;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.oegkm-hero-scroll svg{
+    width:26px;
+    height:26px;
+}
+
+.oegkm-hero-scroll path{
+    stroke:#005d66;
+    stroke-width:1.8;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+/* Navigation */
+
+.navbar-nav .nav-link{
+    font-size:1.08rem;
+    font-weight:500;
+    letter-spacing:.01em;
+    padding-left:1rem !important;
+    padding-right:1rem !important;
+}
+
+.navbar-nav .dropdown-toggle::after{
+    transform:scale(.85);
+    margin-left:.45rem;
+    vertical-align:.15em;
+}
+
+/* Sticky Footer */
+
+body{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+#content{
+    flex:1 0 auto;
+}
+
+footer{
+    margin-top:auto;
+}

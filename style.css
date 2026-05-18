@@ -1,0 +1,91 @@
+/*
+Theme Name: Bootscore Child OEGKM
+Theme URI: https://example.com/
+Description: Gutenberg-first child theme for OEGKM based on Bootscore.
+Author: Felix Küster, unbekannt + freunde
+Author URI: https://example.com/
+Template: bootscore
+Version: 1.13.9
+Text Domain: bootscore-child-oegkm
+Requires at least: 6.4
+Tested up to: 6.8
+Requires PHP: 8.0
+*/
+
+/* Styles loaded from assets/css/custom.css */
+
+
+/* Medienarchiv Performance + Cleanup */
+.oegkm-media-archive-page .oegkm-event-media-card::before,
+.oegkm-media-archive-page .oegkm-event-media-card::after,
+.oegkm-media-archive-page .oegkm-media-placeholder,
+.oegkm-media-archive-page .oegkm-event-media-thumb{
+    display:none !important;
+}
+
+.oegkm-media-archive-page .oegkm-event-media-card{
+    overflow:hidden;
+    background:#fff;
+}
+
+.oegkm-event-media-videos{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:1.5rem;
+}
+
+.oegkm-video-placeholder{
+    position:relative;
+    width:100%;
+    padding:0;
+    border:none;
+    overflow:hidden;
+    cursor:pointer;
+    background:#111;
+}
+
+.oegkm-video-placeholder img{
+    width:100%;
+    display:block;
+    aspect-ratio:16/9;
+    object-fit:cover;
+}
+
+.oegkm-video-placeholder__play{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    background:rgba(0,0,0,.72);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2rem;
+}
+
+.oegkm-event-media-video iframe{
+    width:100%;
+    aspect-ratio:16/9;
+    border:none;
+}
+
+.oegkm-lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.92);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+    padding:2rem;
+}
+
+.oegkm-lightbox img{
+    max-width:95vw;
+    max-height:92vh;
+    object-fit:contain;
+}

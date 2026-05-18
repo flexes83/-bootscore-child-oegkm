@@ -1,0 +1,66 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/ziele",
+  "title": "OEGKM Ziele Section",
+  "category": "oegkm",
+  "icon": "layout",
+  "description": "Ziele Section mit 3 Bildern und Karten-Slider",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Unsere Ziele"
+    },
+    "title": {
+      "type": "string",
+      "default": "Forschung, Vernetzung und Verantwortung – für die Zukunft der Knochenforschung"
+    },
+    "text": {
+      "type": "string",
+      "default": "Die ÖGKM unterstützt experimentelle und klinische Forschung zum Knochen- und Mineralstoffwechsel, um wissenschaftliche Erkenntnisse und Therapien weiterzuentwickeln."
+    },
+    "image1Url": {
+      "type": "string",
+      "default": ""
+    },
+    "image1Id": {
+      "type": "number"
+    },
+    "image2Url": {
+      "type": "string",
+      "default": ""
+    },
+    "image2Id": {
+      "type": "number"
+    },
+    "image3Url": {
+      "type": "string",
+      "default": ""
+    },
+    "image3Id": {
+      "type": "number"
+    },
+    "cards": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Forschung fördern",
+          "text": "Die ÖGKM unterstützt experimentelle und klinische Forschung zum Knochen- und Mineralstoffwechsel, um wissenschaftliche Erkenntnisse und Therapien weiterzuentwickeln."
+        },
+        {
+          "title": "Lehre und Praxis",
+          "text": "Durch die Verbindung von Forschung, klinischem Alltag und Wissensvermittlung stärkt die Gesellschaft den Transfer in die Praxis."
+        },
+        {
+          "title": "Vernetzung",
+          "text": "Die ÖGKM vernetzt Fachbereiche und schafft Austausch zwischen Wissenschaft, Medizin und Praxis."
+        }
+      ]
+    }
+  },
+  "editorScript": "bootscore-child-oegkm-ziele-block",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor"
+}

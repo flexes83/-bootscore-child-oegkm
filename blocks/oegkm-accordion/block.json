@@ -1,0 +1,22 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/accordion",
+  "title": "OEGKM Accordion",
+  "category": "oegkm",
+  "icon": "menu-alt",
+  "description": "Accordion container for OEGKM content.",
+  "textdomain": "bootscore-child-oegkm",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "singleOpen": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "editorScript": "bootscore-child-oegkm-accordion-block",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor"
+}
