@@ -87,8 +87,9 @@ function bootscore_child_oegkm_render_theme_page_header(array $args = []): void 
     }
 
     $guilloche_url = get_stylesheet_directory_uri() . '/assets/img/oegkm-guilloche.png';
+    $has_intro = trim((string) $args['intro']) !== '';
     ?>
-    <section class="oegkm-theme-page-header oegkm-theme-page-header--<?php echo esc_attr($args['variant']); ?><?php echo !empty($args['hero']) ? ' oegkm-theme-page-header--hero' : ''; ?>" aria-labelledby="<?php echo esc_attr($args['labelledby']); ?>">
+    <section class="oegkm-theme-page-header oegkm-theme-page-header--<?php echo esc_attr($args['variant']); ?> <?php echo $has_intro ? 'oegkm-theme-page-header--has-intro' : 'oegkm-theme-page-header--no-intro'; ?><?php echo !empty($args['hero']) ? ' oegkm-theme-page-header--hero' : ''; ?>" aria-labelledby="<?php echo esc_attr($args['labelledby']); ?>">
         <div class="oegkm-theme-page-header__shell">
             <img class="oegkm-theme-page-header__guilloche" src="<?php echo esc_url($guilloche_url); ?>" alt="" aria-hidden="true" loading="eager">
 
@@ -106,7 +107,7 @@ function bootscore_child_oegkm_render_theme_page_header(array $args = []): void 
 
             <div class="oegkm-theme-page-header__divider" aria-hidden="true"></div>
 
-            <?php if (trim((string) $args['intro']) !== '') : ?>
+            <?php if ($has_intro) : ?>
                 <div class="container oegkm-theme-page-header__intro-wrap">
                     <div class="oegkm-theme-page-header__intro">
                         <?php echo wpautop(wp_kses_post($args['intro'])); ?>
