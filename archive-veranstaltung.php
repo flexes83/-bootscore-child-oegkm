@@ -51,7 +51,7 @@ bootscore_child_oegkm_render_theme_page_header([
                                     <?php endif; ?>
 
                                     <a class="oegkm-event-calendar-item__button" href="<?php the_permalink(); ?>">
-                                        <?php esc_html_e('Mehr erfahren', 'bootscore-child-oegkm'); ?> <span aria-hidden="true">→</span>
+                                        <?php esc_html_e('Mehr erfahren', 'bootscore-child-oegkm'); ?> <?php echo function_exists('bootscore_child_oegkm_button_arrow_svg') ? bootscore_child_oegkm_button_arrow_svg() : '<svg class="oegkm-button-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 10h12m0 0-4.5-4.5M15.5 10 11 14.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                                     </a>
                                 </div>
                             </article>

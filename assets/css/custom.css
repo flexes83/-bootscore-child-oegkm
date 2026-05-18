@@ -9157,7 +9157,7 @@ a.download::before,
 .oegkm-prizes-page .oegkm-prize-card__body{
   display:flex;
   flex-direction:column;
-  gap:32px;
+  gap:0;
   align-items:flex-start;
 }
 
@@ -9180,6 +9180,7 @@ a.download::before,
 }
 
 .oegkm-prizes-page .oegkm-prize-card h3{
+  margin-bottom:32px;
   font-size:40px;
   line-height:1.1;
   letter-spacing:0;
@@ -9188,7 +9189,7 @@ a.download::before,
 .oegkm-prizes-page .oegkm-prize-card p{
   width:100%;
   max-width:none;
-  margin:0;
+  margin:0 0 32px;
   color:#01565b;
   font-family:var(--oegkm-font-copy);
   font-size:22px;
@@ -9280,6 +9281,198 @@ a.download::before,
   }
 
   .oegkm-prizes-page .oegkm-prize-card p{
+    font-size:17px;
+  }
+}
+
+/* Veranstaltungen: match event list cards to Preise/Figma width */
+.oegkm-events-calendar-section > .container{
+  max-width:1320px;
+  padding-left:clamp(1.5rem, 3.5vw, 3rem);
+  padding-right:clamp(1.5rem, 3.5vw, 3rem);
+}
+
+.oegkm-events-calendar-list-wrap{
+  width:100%;
+  max-width:100%;
+  margin-inline:auto;
+}
+
+.oegkm-events-calendar-list-wrap > h2{
+  margin:0;
+  padding-bottom:clamp(1rem, 1.55vw, 1.35rem);
+  border-bottom:1px solid rgba(1,86,91,.64);
+  color:#01565b;
+  font-family:var(--oegkm-font-headline);
+  font-size:40px;
+  line-height:1.1;
+  letter-spacing:0;
+  font-weight:500;
+}
+
+.oegkm-events-calendar-list{
+  border-top:0;
+}
+
+.oegkm-event-calendar-item{
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) minmax(520px, 735px);
+  gap:40px;
+  align-items:start;
+  padding:40px 0;
+  border-top:1px solid rgba(1,86,91,.64);
+  border-bottom:1px solid rgba(1,86,91,.64);
+}
+
+.oegkm-event-calendar-item + .oegkm-event-calendar-item{
+  border-top:0;
+}
+
+.oegkm-event-calendar-item__image{
+  align-self:stretch;
+  min-height:260px;
+  background:var(--oegkm-mint);
+}
+
+.oegkm-event-calendar-item__image img{
+  width:100%;
+  height:100%;
+  min-height:260px;
+  aspect-ratio:auto;
+  object-fit:cover;
+}
+
+.oegkm-event-calendar-item__content{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  align-items:flex-start;
+}
+
+.oegkm-event-calendar-item__date{
+  margin:0 0 16px;
+  color:#00da8e;
+  font-family:var(--oegkm-font-copy);
+  font-size:26px;
+  line-height:1.1;
+  font-weight:700;
+}
+
+.oegkm-event-calendar-item h3{
+  margin:0;
+  margin-bottom:32px;
+  color:#01565b;
+  font-family:var(--oegkm-font-headline);
+  font-size:40px;
+  line-height:1.1;
+  letter-spacing:0;
+  font-weight:500;
+}
+
+.oegkm-event-calendar-item__location{
+  display:none;
+}
+
+.oegkm-event-calendar-item p{
+  width:100%;
+  max-width:none;
+  margin:0 0 32px;
+  color:#01565b;
+  font-family:var(--oegkm-font-copy);
+  font-size:22px;
+  line-height:1.4;
+  font-weight:400;
+}
+
+.oegkm-event-calendar-item__button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:48px;
+  margin-top:0;
+  padding:8px 16px;
+  border:1px solid #01565b;
+  border-radius:64px;
+  background:#01565b;
+  color:#f6fff0;
+  font-family:var(--oegkm-font-copy);
+  font-size:18px;
+  line-height:1.4;
+  font-weight:600;
+  text-decoration:none;
+  transition:opacity .2s ease;
+}
+
+.oegkm-event-calendar-item__button:hover,
+.oegkm-event-calendar-item__button:focus{
+  color:#f6fff0;
+  background:#01565b;
+  opacity:.94;
+  transform:none;
+}
+
+.oegkm-event-calendar-item__button .oegkm-button-arrow{
+  width:20px;
+  height:20px;
+}
+
+.oegkm-event-calendar-item__button:hover .oegkm-button-arrow,
+.oegkm-event-calendar-item__button:focus .oegkm-button-arrow{
+  transform:translateX(4px);
+}
+
+@media (max-width: 1199.98px){
+  .oegkm-event-calendar-item{
+    grid-template-columns:minmax(300px, 1fr) minmax(0, 58%);
+  }
+}
+
+@media (max-width: 991.98px){
+  .oegkm-events-calendar-section > .container{
+    padding-left:24px;
+    padding-right:24px;
+  }
+
+  .oegkm-event-calendar-item{
+    grid-template-columns:220px minmax(0, 1fr);
+    gap:28px;
+  }
+
+  .oegkm-event-calendar-item__image,
+  .oegkm-event-calendar-item__image img{
+    min-height:220px;
+  }
+
+  .oegkm-event-calendar-item__date{
+    font-size:20px;
+  }
+
+  .oegkm-event-calendar-item h3{
+    font-size:34px;
+  }
+
+  .oegkm-event-calendar-item p{
+    font-size:18px;
+  }
+}
+
+@media (max-width: 575.98px){
+  .oegkm-events-calendar-section > .container{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .oegkm-event-calendar-item{
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+
+  .oegkm-event-calendar-item h3{
+    font-size:32px;
+  }
+
+  .oegkm-event-calendar-item p{
     font-size:17px;
   }
 }
