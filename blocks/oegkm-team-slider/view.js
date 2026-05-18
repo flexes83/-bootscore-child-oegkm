@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function update() {
       var gap = parseFloat(getComputedStyle(track).gap || getComputedStyle(track).columnGap || 16);
       index = Math.max(0, Math.min(index, maxIndex()));
+      cards.forEach(function (card, cardIndex) {
+        card.classList.toggle('is-active', cardIndex === index);
+      });
       var offset = 0;
       cards.forEach(function (card, cardIndex) {
         if (cardIndex < index) {
@@ -23,9 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
       track.style.transform = 'translateX(-' + offset + 'px)';
-      cards.forEach(function (card, cardIndex) {
-        card.classList.toggle('is-active', cardIndex === index);
-      });
       prev.disabled = index === 0;
       next.disabled = index >= maxIndex();
     }
