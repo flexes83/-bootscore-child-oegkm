@@ -8,6 +8,7 @@ function bootscore_child_oegkm_theme_version(): string {
 }
 
 require_once get_stylesheet_directory() . '/inc/events.php';
+require_once get_stylesheet_directory() . '/inc/prizes.php';
 require_once get_stylesheet_directory() . '/inc/theme-page-header.php';
 require_once get_stylesheet_directory() . '/inc/members.php';
 
