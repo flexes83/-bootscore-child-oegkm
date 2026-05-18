@@ -3,8 +3,11 @@
   var Fragment = element.Fragment;
   var useBlockProps = blockEditor.useBlockProps;
   var RichText = blockEditor.RichText;
+  var MediaUpload = blockEditor.MediaUpload;
+  var MediaUploadCheck = blockEditor.MediaUploadCheck;
   var InspectorControls = blockEditor.InspectorControls;
   var PanelBody = components.PanelBody;
+  var Button = components.Button;
   var TextControl = components.TextControl;
 
   function arrowIcon() {
@@ -35,6 +38,24 @@
   }
 
   function renderBlock(attrs, blockProps, setAttributes) {
+    var mediaControls = setAttributes ? el('div', { className: 'oegkm-podcast-cta__media-actions' },
+      el(MediaUploadCheck, {},
+        el(MediaUpload, {
+          onSelect: function (media) {
+            setAttributes({
+              imageUrl: media.url || '',
+              imageId: media.id || 0
+            });
+          },
+          allowedTypes: ['image'],
+          value: attrs.imageId,
+          render: function (obj) {
+            return el(Button, { variant: 'secondary', onClick: obj.open }, attrs.imageUrl ? 'Bild ersetzen' : 'Bild auswählen');
+          }
+        })
+      )
+    ) : null;
+
     return el('section', blockProps,
       el('div', { className: 'oegkm-podcast-cta__content' },
         setAttributes ?
@@ -76,8 +97,10 @@
           arrowIcon()
         )
       ),
-      el('div', { className: 'oegkm-podcast-cta__visual', 'aria-hidden': 'true' },
-        el('div', { className: 'oegkm-podcast-cta__orb' })
+      el('figure', { className: 'oegkm-podcast-cta__visual' },
+        attrs.imageUrl ? el('img', { src: attrs.imageUrl, alt: '' }) : null,
+        mediaControls,
+        !attrs.imageUrl ? el('div', { className: 'oegkm-podcast-cta__orb', 'aria-hidden': 'true' }) : null
       )
     );
   }
