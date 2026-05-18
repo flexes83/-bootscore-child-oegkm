@@ -981,6 +981,147 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   border:1px solid #dde5e1;
 }
 
+.oegkm-image-content{
+  --oegkm-image-content-teal:#01565b;
+  --oegkm-image-content-green:#00da8e;
+  --oegkm-image-content-bleed:clamp(2rem, calc((100vw - 1272px) / 2), 7.5rem);
+  width:min(100% - 3rem, 1272px);
+  margin:0 auto;
+  padding:clamp(4rem, 7vw, 7.5rem) 0;
+  color:var(--oegkm-image-content-teal);
+  font-family:var(--oegkm-font-copy);
+}
+
+.oegkm-image-content__section{
+  display:grid;
+  grid-template-columns:minmax(0, 735px) minmax(320px, 533px);
+  gap:clamp(3rem, 6vw, 6.25rem);
+  align-items:center;
+}
+
+.oegkm-image-content__section + .oegkm-image-content__section{
+  margin-top:clamp(5rem, 9vw, 8.75rem);
+}
+
+.oegkm-image-content__section--image-left{
+  grid-template-columns:minmax(320px, 533px) minmax(0, 735px);
+}
+
+.oegkm-image-content__section--image-right .oegkm-image-content__media{
+  width:calc(100% + var(--oegkm-image-content-bleed));
+}
+
+.oegkm-image-content__section--image-left .oegkm-image-content__media{
+  width:calc(100% + var(--oegkm-image-content-bleed));
+  margin-left:calc(var(--oegkm-image-content-bleed) * -1);
+}
+
+.oegkm-image-content__content{
+  min-width:0;
+}
+
+.oegkm-image-content__kicker{
+  margin:0 0 24px;
+  color:var(--oegkm-image-content-green);
+  font-family:var(--oegkm-font-copy);
+  font-size:18px;
+  font-weight:500;
+  line-height:1.6;
+  text-transform:uppercase;
+}
+
+.oegkm-image-content__title{
+  margin:0 0 24px;
+  color:var(--oegkm-image-content-teal);
+  font-family:var(--oegkm-font-headline);
+  font-size:clamp(2rem, 2.65vw, 2.5rem);
+  font-weight:500;
+  line-height:1.1;
+  letter-spacing:0;
+}
+
+.oegkm-image-content__text{
+  max-width:735px;
+  margin:0;
+  color:var(--oegkm-image-content-teal);
+  font-family:var(--oegkm-font-copy);
+  font-size:22px;
+  font-weight:400;
+  line-height:1.4;
+}
+
+.oegkm-image-content__button{
+  display:inline-flex;
+  align-items:center;
+  gap:16px;
+  min-height:48px;
+  margin-top:40px;
+  padding:8px 24px;
+  border:1px solid var(--oegkm-image-content-teal);
+  border-radius:64px;
+  background:var(--oegkm-image-content-teal);
+  color:#f6fff0;
+  font-family:var(--oegkm-font-copy);
+  font-size:18px;
+  font-weight:700;
+  line-height:1.1;
+  text-decoration:none;
+  transition:opacity .2s ease;
+}
+
+.oegkm-image-content__button:hover,
+.oegkm-image-content__button:focus{
+  color:#f6fff0;
+  opacity:.94;
+}
+
+.oegkm-image-content__button .oegkm-button-arrow{
+  transition:transform .2s ease;
+}
+
+.oegkm-image-content__button:hover .oegkm-button-arrow,
+.oegkm-image-content__button:focus .oegkm-button-arrow{
+  transform:translateX(4px);
+}
+
+.oegkm-image-content__media{
+  position:relative;
+  margin:0;
+  width:100%;
+  aspect-ratio:533 / 565;
+  overflow:hidden;
+  background:#eef4f1;
+}
+
+.oegkm-image-content__media img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.oegkm-image-content__placeholder{
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:100%;
+  min-height:320px;
+  color:var(--oegkm-image-content-teal);
+  background:#eef4f1;
+}
+
+.oegkm-image-content__media-actions{
+  position:absolute;
+  left:1rem;
+  bottom:1rem;
+  z-index:2;
+}
+
+.oegkm-image-content-editor__section{
+  padding:1rem 0;
+  border-top:1px solid #dde5e1;
+}
+
 .oegkm-cta{
   display:grid;
   grid-template-columns:minmax(280px,420px) minmax(0,1fr);
@@ -1483,6 +1624,19 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
     width:100%;
     margin-left:0;
   }
+  .oegkm-image-content__section,
+  .oegkm-image-content__section--image-left{
+    grid-template-columns:1fr;
+    gap:2.5rem;
+  }
+  .oegkm-image-content__section--image-left .oegkm-image-content__media{
+    order:2;
+  }
+  .oegkm-image-content__section--image-right .oegkm-image-content__media,
+  .oegkm-image-content__section--image-left .oegkm-image-content__media{
+    width:100%;
+    margin-left:0;
+  }
   .oegkm-hero-wrap{padding-top:6.5rem;}
   .oegkm-footer-inner{
     flex-direction:column;
@@ -1587,6 +1741,19 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   }
   .oegkm-image-accordion__panel{
     padding-inline:20px;
+  }
+  .oegkm-image-content{
+    width:min(100% - 2rem, 1272px);
+    padding:3.5rem 0;
+  }
+  .oegkm-image-content__section + .oegkm-image-content__section{
+    margin-top:4.5rem;
+  }
+  .oegkm-image-content__title{
+    font-size:clamp(2rem, 8vw, 2.6rem);
+  }
+  .oegkm-image-content__text{
+    font-size:1.125rem;
   }
   .oegkm-team-slider{
     padding:3.5rem 0;
