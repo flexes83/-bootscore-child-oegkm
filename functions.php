@@ -75,6 +75,14 @@ add_action('enqueue_block_editor_assets', function () {
         $version,
         true
     );
+
+    wp_enqueue_script(
+        'bootscore-child-oegkm-podcast-cta-block',
+        get_stylesheet_directory_uri() . '/blocks/oegkm-podcast-cta/editor.js',
+        ['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'],
+        $version,
+        true
+    );
 });
 
 add_action('after_setup_theme', function () {

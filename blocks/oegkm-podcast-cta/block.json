@@ -1,0 +1,38 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/podcast-cta",
+  "title": "OEGKM Podcast CTA",
+  "category": "oegkm",
+  "icon": "microphone",
+  "description": "Podcast-Teaser mit Text, Button und dekorativer Grafikfläche.",
+  "textdomain": "bootscore-child-oegkm",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "kicker": {
+      "type": "string",
+      "default": "INTERVIEWS MIT EXPERT:INNEN"
+    },
+    "title": {
+      "type": "string",
+      "default": "Der Osteoporose-Podcast für Patient:innen und Interessierte"
+    },
+    "text": {
+      "type": "string",
+      "default": "Seit 2022 gibt es den ÖGKM Podcast für Patientinnen und Patienten, deren Angehörige und andere Interessierte. Priv. Doz. Dr. Karin Amrein aus Graz stellt meist 5 Fragen zum Spezialgebiet der interviewten Expertinnen und Experten."
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Mehr erfahren"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": "#"
+    }
+  },
+  "editorScript": "bootscore-child-oegkm-podcast-cta-block",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor"
+}

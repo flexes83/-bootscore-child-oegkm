@@ -11,3 +11,4 @@
 <!-- wp:pattern {"slug":"bootscore-child-oegkm/home-goals"} /-->
 <!-- wp:pattern {"slug":"bootscore-child-oegkm/home-info-cards"} /-->
 <!-- wp:pattern {"slug":"bootscore-child-oegkm/home-frax-cta"} /-->
+<!-- wp:pattern {"slug":"bootscore-child-oegkm/home-podcast-cta"} /-->
