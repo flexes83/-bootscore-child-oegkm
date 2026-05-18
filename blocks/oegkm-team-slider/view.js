@@ -14,10 +14,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function update() {
-      var cardWidth = cards[0].getBoundingClientRect().width;
       var gap = parseFloat(getComputedStyle(track).gap || getComputedStyle(track).columnGap || 16);
       index = Math.max(0, Math.min(index, maxIndex()));
-      track.style.transform = 'translateX(-' + ((cardWidth + gap) * index) + 'px)';
+      var offset = 0;
+      cards.forEach(function (card, cardIndex) {
+        if (cardIndex < index) {
+          offset += card.getBoundingClientRect().width + gap;
+        }
+      });
+      track.style.transform = 'translateX(-' + offset + 'px)';
       cards.forEach(function (card, cardIndex) {
         card.classList.toggle('is-active', cardIndex === index);
       });
