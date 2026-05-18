@@ -9084,14 +9084,14 @@ a.download::before,
 /* Preise & Stipendien: match Figma item 421:1210 */
 .oegkm-prizes-page .oegkm-prizes-section > .container,
 .oegkm-prizes-page .oegkm-prizes-archive-section > .container{
-  max-width:none;
-  padding-left:40px;
-  padding-right:40px;
+  max-width:1320px;
+  padding-left:clamp(1.5rem, 3.5vw, 3rem);
+  padding-right:clamp(1.5rem, 3.5vw, 3rem);
 }
 
 .oegkm-prizes-page .oegkm-prizes-list-wrap{
   width:100%;
-  max-width:1432px;
+  max-width:100%;
   margin-inline:auto;
 }
 
@@ -9102,7 +9102,7 @@ a.download::before,
 }
 
 .oegkm-prizes-page .oegkm-prize-card{
-  grid-template-columns:413px minmax(0, 1fr);
+  grid-template-columns:minmax(320px, 413px) minmax(0, 1fr);
   gap:40px;
   align-items:center;
   padding:40px 0;
@@ -9116,7 +9116,7 @@ a.download::before,
 
 .oegkm-prizes-page .oegkm-prize-card__image,
 .oegkm-prizes-page .oegkm-prize-card__placeholder{
-  width:413px;
+  width:100%;
   max-width:100%;
   aspect-ratio:1 / 1;
 }
@@ -9218,12 +9218,7 @@ a.download::before,
 
 @media (max-width: 1199.98px){
   .oegkm-prizes-page .oegkm-prize-card{
-    grid-template-columns:minmax(280px, 36vw) minmax(0, 1fr);
-  }
-
-  .oegkm-prizes-page .oegkm-prize-card__image,
-  .oegkm-prizes-page .oegkm-prize-card__placeholder{
-    width:100%;
+    grid-template-columns:minmax(280px, 34vw) minmax(0, 1fr);
   }
 }
 
@@ -9250,6 +9245,11 @@ a.download::before,
   .oegkm-prizes-page .oegkm-prize-card p{
     font-size:18px;
   }
+}
+
+.oegkm-prizes-page .oegkm-prizes-archive-section .oegkm-prizes-list-wrap > h2{
+  max-width:620px;
+  width:100%;
 }
 
 @media (max-width: 575.98px){
