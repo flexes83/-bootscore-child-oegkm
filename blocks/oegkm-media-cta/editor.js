@@ -10,6 +10,33 @@
   var Button = components.Button;
   var TextControl = components.TextControl;
 
+  function arrowIcon() {
+    return el('svg', {
+      className: 'oegkm-button-arrow',
+      viewBox: '0 0 20 20',
+      width: 20,
+      height: 20,
+      'aria-hidden': 'true',
+      focusable: 'false'
+    },
+      el('path', {
+        d: 'M4 10h11',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 1.7,
+        strokeLinecap: 'round'
+      }),
+      el('path', {
+        d: 'm11 6 4 4-4 4',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 1.7,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round'
+      })
+    );
+  }
+
   function renderBlock(attrs, blockProps, setAttributes) {
     var mediaControls = setAttributes ? el('div', { className: 'oegkm-media-cta__media-actions' },
       el(MediaUploadCheck, {},
@@ -72,7 +99,7 @@
                 onChange: function (value) { setAttributes({ buttonText: value }); }
               }) :
               el(RichText.Content, { tagName: 'span', value: attrs.buttonText }),
-            el('span', { 'aria-hidden': 'true' }, '→')
+            arrowIcon()
           )
         )
       )

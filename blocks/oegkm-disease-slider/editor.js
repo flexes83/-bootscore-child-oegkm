@@ -20,10 +20,10 @@
       focusable: 'false'
     },
       el('path', {
-        d: direction === 'prev' ? 'M12.5 4.5 7 10l5.5 5.5' : 'M7.5 4.5 13 10l-5.5 5.5',
+        d: direction === 'prev' ? 'M11.5 5 6.5 10l5 5' : 'M8.5 5l5 5-5 5',
         fill: 'none',
         stroke: 'currentColor',
-        strokeWidth: 1.8,
+        strokeWidth: 1.6,
         strokeLinecap: 'round',
         strokeLinejoin: 'round'
       })

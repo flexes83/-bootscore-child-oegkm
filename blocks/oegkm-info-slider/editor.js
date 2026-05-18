@@ -19,10 +19,37 @@
       focusable: 'false'
     },
       el('path', {
-        d: direction === 'prev' ? 'M12.5 4.5 7 10l5.5 5.5' : 'M7.5 4.5 13 10l-5.5 5.5',
+        d: direction === 'prev' ? 'M11.5 5 6.5 10l5 5' : 'M8.5 5l5 5-5 5',
         fill: 'none',
         stroke: 'currentColor',
-        strokeWidth: 1.8,
+        strokeWidth: 1.6,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round'
+      })
+    );
+  }
+
+  function arrowIcon() {
+    return el('svg', {
+      className: 'oegkm-button-arrow',
+      viewBox: '0 0 20 20',
+      width: 20,
+      height: 20,
+      'aria-hidden': 'true',
+      focusable: 'false'
+    },
+      el('path', {
+        d: 'M4 10h11',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 1.7,
+        strokeLinecap: 'round'
+      }),
+      el('path', {
+        d: 'm11 6 4 4-4 4',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 1.7,
         strokeLinecap: 'round',
         strokeLinejoin: 'round'
       })
@@ -118,7 +145,7 @@
                       placeholder: 'Buttontext',
                       onChange: function (value) { updateSlide(index, 'buttonText', value); }
                     }),
-                    chevronIcon('next')
+                    arrowIcon()
                   )
                 );
               })
@@ -148,7 +175,7 @@
                 el('p', { className: 'oegkm-info-slider__card-text' }, slide.text || ''),
                 el('a', { className: 'oegkm-info-slider__button', href: slide.buttonUrl || '#' },
                   el(RichText.Content, { tagName: 'span', value: slide.buttonText || 'Mehr erfahren' }),
-                  chevronIcon('next')
+                  arrowIcon()
                 )
               );
             })
