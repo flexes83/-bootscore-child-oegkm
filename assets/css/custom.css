@@ -2102,12 +2102,13 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   --oegkm-accordion-surface:#f6fff0;
   --oegkm-accordion-active:#01565b;
   --oegkm-accordion-ink:#01565b;
-  --oegkm-accordion-active-ink:#fff;
+  --oegkm-accordion-active-ink:#f6fff0;
+  --oegkm-accordion-x:64px;
   width:min(100% - 3rem, 1272px);
   max-width:1272px;
   margin: 0 auto;
   display: grid;
-  gap: 8px;
+  gap: 16px;
 }
 
 .oegkm-accordion__item{
@@ -2119,11 +2120,13 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   border: 0;
   background: var(--oegkm-accordion-surface);
   color: var(--oegkm-accordion-ink);
-  padding: 32px clamp(1.5rem, 3vw, 3rem);
+  min-height: 144px;
+  padding: 40px var(--oegkm-accordion-x);
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 24px;
+  position: relative;
   text-align: left;
   cursor: pointer;
   transition: background-color .2s ease, color .2s ease, transform .2s ease;
@@ -2134,42 +2137,63 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   font-size: clamp(2rem, 2.65vw, 2.5rem);
   line-height: 1.1;
   letter-spacing: 0;
-  max-width: 980px;
+  max-width: 1008px;
   font-weight: 500;
 }
 
 .oegkm-accordion__icon{
-  width: 68px;
-  height: 48px;
-  min-width: 68px;
-  border-radius: 999px;
-  border: 1px solid currentColor;
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  position: relative;
+  font-size: 0;
   line-height: 1;
-  font-weight: 300;
   transition: background-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.oegkm-accordion__icon::before,
+.oegkm-accordion__icon::after{
+  content:"";
+  position:absolute;
+}
+
+.oegkm-accordion__icon::before{
+  inset:8px;
+  border:1px solid currentColor;
+  border-radius:50%;
+  transition:inset .2s ease, background-color .2s ease;
+}
+
+.oegkm-accordion__icon::after{
+  width:16px;
+  height:16px;
+  background:
+    linear-gradient(currentColor, currentColor) center/16px 1.5px no-repeat,
+    linear-gradient(currentColor, currentColor) center/1.5px 16px no-repeat;
+  transition:transform .2s ease;
 }
 
 .oegkm-accordion__panel{
   background: var(--oegkm-accordion-active);
   color: var(--oegkm-accordion-active-ink);
-  padding: 0 clamp(1.5rem, 3vw, 3rem);
+  padding: 0 var(--oegkm-accordion-x);
   max-height: 0;
   overflow: hidden;
   transition: max-height .28s ease, padding .28s ease;
 }
 
 .oegkm-accordion__panel.is-open{
-  padding-top: 8px;
-  padding-bottom: 40px;
+  padding-top: 24px;
+  padding-bottom: 48px;
   max-height: 900px;
 }
 
 .oegkm-accordion__content{
-  max-width: 840px;
+  max-width: 1008px;
 }
 
 .oegkm-accordion__content p,
@@ -2187,7 +2211,7 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 
 .oegkm-accordion__content a{
   color:var(--oegkm-accordion-active-ink);
-  text-decoration-color:rgba(255,255,255,.55);
+  text-decoration-color:rgba(246,255,240,.55);
   text-underline-offset:.16em;
 }
 
@@ -2204,21 +2228,49 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 .oegkm-accordion__toggle.is-open{
   background: var(--oegkm-accordion-active);
   color: var(--oegkm-accordion-active-ink);
+  min-height: 0;
+  padding-top: 48px;
+  padding-bottom: 0;
+  align-items: start;
 }
 
 .oegkm-accordion__toggle:hover{
   transform: translateY(1px);
 }
 
+.oegkm-accordion__toggle.is-open .oegkm-accordion__icon{
+  position:absolute;
+  top:40px;
+  right:var(--oegkm-accordion-x);
+}
+
+.oegkm-accordion__toggle.is-open .oegkm-accordion__icon::before{
+  inset:0;
+}
+
+.oegkm-accordion__toggle.is-open .oegkm-accordion__icon::after{
+  height:1.5px;
+  background:currentColor;
+}
+
 .oegkm-accordion__toggle:hover .oegkm-accordion__icon,
 .oegkm-accordion__toggle:focus-visible .oegkm-accordion__icon{
-  background: rgba(1,86,91,.08);
   transform: scale(1.04);
+}
+
+.oegkm-accordion__toggle:hover .oegkm-accordion__icon::before,
+.oegkm-accordion__toggle:focus-visible .oegkm-accordion__icon::before{
+  background: rgba(1,86,91,.05);
+}
+
+.oegkm-accordion__toggle.is-open:hover .oegkm-accordion__icon::before,
+.oegkm-accordion__toggle.is-open:focus-visible .oegkm-accordion__icon::before{
+  background: rgba(246,255,240,.08);
 }
 
 .oegkm-accordion--editor .oegkm-accordion__panel{
   max-height: none;
-  padding: 1rem clamp(1.5rem, 3vw, 3rem) 1.4rem;
+  padding: 1rem var(--oegkm-accordion-x) 1.4rem;
   background: var(--oegkm-accordion-active);
 }
 
@@ -2234,11 +2286,13 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 @media (max-width: 767.98px){
   .oegkm-accordion{
     gap: 6px;
+    --oegkm-accordion-x:1rem;
     width:min(100% - 2rem, 1272px);
   }
 
   .oegkm-accordion__toggle{
-    padding: 1.25rem 1rem;
+    min-height: 112px;
+    padding: 1.5rem var(--oegkm-accordion-x);
     gap: 16px;
   }
 
@@ -2247,10 +2301,22 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   }
 
   .oegkm-accordion__icon{
-    width: 56px;
-    height: 40px;
-    min-width: 56px;
-    font-size: 1.45rem;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+  }
+
+  .oegkm-accordion__icon::before{
+    inset:4px;
+  }
+
+  .oegkm-accordion__toggle.is-open{
+    padding-top: 1.5rem;
+  }
+
+  .oegkm-accordion__toggle.is-open .oegkm-accordion__icon{
+    top:1rem;
+    right:var(--oegkm-accordion-x);
   }
 
   .oegkm-accordion__panel.is-open{
