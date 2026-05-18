@@ -10,6 +10,26 @@
   var Button = components.Button;
   var TextareaControl = components.TextareaControl;
 
+  function ChevronIcon(direction) {
+    return el('svg', {
+      className: 'oegkm-slider-chevron',
+      viewBox: '0 0 20 20',
+      width: 20,
+      height: 20,
+      'aria-hidden': 'true',
+      focusable: 'false'
+    },
+      el('path', {
+        d: direction === 'prev' ? 'M12.5 4.5 7 10l5.5 5.5' : 'M7.5 4.5 13 10l-5.5 5.5',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 1.8,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round'
+      })
+    );
+  }
+
   function clampIndex(index, length) {
     if (!length) return 0;
     return Math.max(0, Math.min(index, length - 1));
@@ -100,13 +120,13 @@
                   className: 'oegkm-disease-slider__nav',
                   onClick: function () { props.setAttributes({ activeSlide: clampIndex(activeSlide - 1, slides.length) }); },
                   disabled: slides.length <= 1
-                }, '‹'),
+                }, ChevronIcon('prev')),
                 el('button', {
                   type: 'button',
                   className: 'oegkm-disease-slider__nav',
                   onClick: function () { props.setAttributes({ activeSlide: clampIndex(activeSlide + 1, slides.length) }); },
                   disabled: slides.length <= 1
-                }, '›')
+                }, ChevronIcon('next'))
               )
             ),
             el('div', { className: 'oegkm-disease-slider__media' },
@@ -151,8 +171,8 @@
                   el(RichText.Content, { tagName: 'h2', className: 'oegkm-disease-slider__title', value: slide.title }),
                   el(RichText.Content, { tagName: 'div', className: 'oegkm-disease-slider__text', value: slide.text }),
                   slides.length > 1 ? el('div', { className: 'oegkm-disease-slider__controls' },
-                    el('button', { type: 'button', className: 'oegkm-disease-slider__nav oegkm-disease-slider__nav--prev', 'aria-label': 'Zurück' }, '‹'),
-                    el('button', { type: 'button', className: 'oegkm-disease-slider__nav oegkm-disease-slider__nav--next', 'aria-label': 'Weiter' }, '›')
+                    el('button', { type: 'button', className: 'oegkm-disease-slider__nav oegkm-disease-slider__nav--prev', 'aria-label': 'Zurück' }, ChevronIcon('prev')),
+                    el('button', { type: 'button', className: 'oegkm-disease-slider__nav oegkm-disease-slider__nav--next', 'aria-label': 'Weiter' }, ChevronIcon('next'))
                   ) : null
                 ),
                 el('div', { className: 'oegkm-disease-slider__media' },

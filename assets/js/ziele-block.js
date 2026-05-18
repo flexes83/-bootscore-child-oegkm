@@ -10,6 +10,26 @@
   const Button = components.Button;
   const TextareaControl = components.TextareaControl;
 
+  function ChevronIcon(direction) {
+    return el('svg', {
+      className: 'oegkm-slider-chevron',
+      viewBox: '0 0 20 20',
+      width: 20,
+      height: 20,
+      'aria-hidden': 'true',
+      focusable: 'false'
+    },
+      el('path', {
+        d: direction === 'prev' ? 'M12.5 4.5 7 10l5.5 5.5' : 'M7.5 4.5 13 10l-5.5 5.5',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 1.8,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round'
+      })
+    );
+  }
+
   function ImageField(props) {
     return el('div', { className: 'oegkm-ziele-editor__imagefield' },
       el('label', {}, props.label),
@@ -139,8 +159,8 @@
                 })
               ),
               el('div', { className: 'oegkm-ziele__navs' },
-                el('span', { className: 'oegkm-ziele__nav oegkm-ziele__nav--prev' }, '‹'),
-                el('span', { className: 'oegkm-ziele__nav oegkm-ziele__nav--next' }, '›')
+                el('span', { className: 'oegkm-ziele__nav oegkm-ziele__nav--prev' }, ChevronIcon('prev')),
+                el('span', { className: 'oegkm-ziele__nav oegkm-ziele__nav--next' }, ChevronIcon('next'))
               )
             )
           )
@@ -177,8 +197,8 @@
                 )
               ),
               el('div', { className: 'oegkm-ziele__navs' },
-                el('button', { type: 'button', className: 'oegkm-ziele__nav oegkm-ziele__nav--prev', 'aria-label': 'Zurück' }, '‹'),
-                el('button', { type: 'button', className: 'oegkm-ziele__nav oegkm-ziele__nav--next', 'aria-label': 'Weiter' }, '›')
+                el('button', { type: 'button', className: 'oegkm-ziele__nav oegkm-ziele__nav--prev', 'aria-label': 'Zurück' }, ChevronIcon('prev')),
+                el('button', { type: 'button', className: 'oegkm-ziele__nav oegkm-ziele__nav--next', 'aria-label': 'Weiter' }, ChevronIcon('next'))
               )
             )
           )

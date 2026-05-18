@@ -449,6 +449,149 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   color:var(--oegkm-text);
 }
 
+.oegkm-slider-chevron{
+  display:block;
+  width:20px;
+  height:20px;
+  flex:0 0 auto;
+}
+
+.oegkm-info-slider{
+  background:var(--oegkm-mint);
+  overflow:hidden;
+  padding:clamp(5rem, 9vw, 8rem) 0;
+}
+
+.oegkm-info-slider__header,
+.oegkm-info-slider__viewport{
+  width:min(100% - 3rem, 1512px);
+  margin-inline:auto;
+}
+
+.oegkm-info-slider__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:2rem;
+  margin-bottom:56px;
+  padding-inline:clamp(0rem, 5vw, 4rem);
+}
+
+.oegkm-info-slider__heading{
+  margin:0;
+  color:var(--oegkm-primary);
+  font-size:clamp(2.25rem, 3.5vw, 3.25rem);
+  line-height:1.1;
+  letter-spacing:0;
+}
+
+.oegkm-info-slider__navs{
+  display:flex;
+  gap:8px;
+  flex:0 0 auto;
+}
+
+.oegkm-info-slider__nav{
+  width:68px;
+  height:48px;
+  border:1px solid var(--oegkm-primary);
+  border-radius:64px;
+  background:transparent;
+  color:var(--oegkm-primary);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 24px;
+  transition:opacity .2s ease, background-color .2s ease;
+}
+
+.oegkm-info-slider__nav:hover:not(:disabled),
+.oegkm-info-slider__nav:focus-visible:not(:disabled){
+  background:rgba(255,255,255,.5);
+}
+
+.oegkm-info-slider__nav:disabled{
+  opacity:.35;
+}
+
+.oegkm-info-slider__viewport{
+  overflow:visible;
+  padding-inline:clamp(0rem, 5vw, 4rem);
+}
+
+.oegkm-info-slider__track{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:minmax(420px, 1fr);
+  grid-template-columns:repeat(3, minmax(420px, 1fr));
+  gap:16px;
+  transition:transform .42s cubic-bezier(.22,.61,.36,1);
+  width:max-content;
+}
+
+.oegkm-info-slider__card{
+  width:min(521px, 29vw);
+  min-width:420px;
+  min-height:521px;
+  padding:clamp(3rem, 6vw, 8.625rem) clamp(2rem, 3vw, 3rem);
+  background:var(--oegkm-primary);
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+.oegkm-info-slider__card-title{
+  color:inherit;
+  font-family:var(--oegkm-font-copy);
+  font-size:26px;
+  font-weight:700;
+  line-height:1.1;
+  letter-spacing:0;
+  margin:0 0 24px;
+}
+
+.oegkm-info-slider__card-text,
+.oegkm-info-slider .components-base-control__field textarea{
+  color:inherit;
+  font-size:clamp(1.25rem, 1.45vw, 1.375rem);
+  line-height:1.4;
+}
+
+.oegkm-info-slider__card-text{
+  max-width:425px;
+  margin:0 0 32px;
+}
+
+.oegkm-info-slider__button{
+  display:inline-flex;
+  align-items:center;
+  gap:16px;
+  min-height:48px;
+  margin-top:auto;
+  padding:8px 24px;
+  border-radius:64px;
+  background:var(--oegkm-accent);
+  color:var(--oegkm-primary);
+  font-family:var(--oegkm-font-copy);
+  font-size:18px;
+  font-weight:700;
+  line-height:1.1;
+  text-decoration:none;
+}
+
+.oegkm-info-slider__button:hover,
+.oegkm-info-slider__button:focus{
+  color:var(--oegkm-primary);
+  opacity:.94;
+}
+
+.oegkm-info-slider-editor__card{
+  padding:.75rem 0;
+  border-top:1px solid #dde5e1;
+}
+
 .oegkm-cta{
   display:grid;
   grid-template-columns:minmax(280px,420px) minmax(0,1fr);
@@ -607,6 +750,19 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
     max-width:473px;
   }
   .oegkm-card-grid{grid-template-columns:1fr;}
+  .oegkm-info-slider__header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .oegkm-info-slider__track{
+    grid-auto-columns:minmax(320px, 78vw);
+    grid-template-columns:none;
+  }
+  .oegkm-info-slider__card{
+    width:78vw;
+    min-width:320px;
+    min-height:460px;
+  }
   .oegkm-hero-wrap{padding-top:6.5rem;}
   .oegkm-footer-inner{
     flex-direction:column;
@@ -617,6 +773,29 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 @media (max-width: 767.98px){
   .oegkm-site-hero{min-height:520px;border-radius:0 0 32px 32px;}
   .oegkm-image-collage{min-height:300px;}
+  .oegkm-info-slider{
+    padding:4rem 0;
+  }
+  .oegkm-info-slider__header,
+  .oegkm-info-slider__viewport{
+    width:min(100% - 2rem, 1512px);
+    padding-inline:0;
+  }
+  .oegkm-info-slider__heading{
+    font-size:clamp(2rem, 8vw, 2.6rem);
+  }
+  .oegkm-info-slider__nav{
+    width:60px;
+    height:44px;
+    padding:8px 20px;
+  }
+  .oegkm-info-slider__card{
+    padding:3rem 2rem;
+  }
+  .oegkm-info-slider__card-text,
+  .oegkm-info-slider .components-base-control__field textarea{
+    font-size:1.125rem;
+  }
   .oegkm-media-cta{
     width:min(100% - 2rem, 1272px);
     margin:3.5rem auto;

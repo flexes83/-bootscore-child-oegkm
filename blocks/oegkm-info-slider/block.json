@@ -2,31 +2,39 @@
   "apiVersion": 2,
   "name": "oegkm/info-slider",
   "title": "OEGKM Info Slider",
-  "category": "design",
+  "category": "oegkm",
   "icon": "images-alt2",
-  "description": "Inhaltsslider mit Textfläche, Bild und Navigation.",
+  "description": "Karten-Slider für wichtige Inhaltslinks.",
   "textdomain": "bootscore-child-oegkm",
   "supports": {
     "html": false,
     "anchor": true
   },
   "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Die wichtigsten Infos:"
+    },
     "slides": {
       "type": "array",
       "default": [
         {
-          "kicker": "WIE ENTSTEHT OSTEOPOROSE?",
-          "title": "Charakteristika der Erkrankung",
-          "text": "Das Krankheitsbild der Osteoporose ist durch einen Verlust an Knochenmasse, Knochenarchitektur und Knochenfestigkeit charakterisiert. Dieser Verlust ist Folge einer Störung des physiologischen Knochenumbaus (Remodelings) in Richtung einer verstärkten Knochenresorption.",
-          "imageUrl": "",
-          "imageId": 0
+          "title": "Erkrankungen",
+          "text": "Hier finden Sie die wichtigsten Informationen über die häufigsten Erkrankungen im Bereich Knochen und Mineralstoffwechsel sowie zur Osteoporose.",
+          "buttonText": "Mehr erfahren",
+          "buttonUrl": "#"
         },
         {
-          "kicker": "URSACHEN UND RISIKEN",
-          "title": "Risikofaktoren erkennen",
-          "text": "Neben Alter und hormonellen Veränderungen beeinflussen unter anderem Ernährung, Bewegung, Medikamente und Vorerkrankungen das persönliche Risiko. Eine frühe Einordnung unterstützt Prävention und Therapie.",
-          "imageUrl": "",
-          "imageId": 0
+          "title": "Osteoporose",
+          "text": "Hier finden Sie die wichtigsten Informationen über die häufigsten Erkrankungen im Bereich Knochen und Mineralstoffwechsel sowie zur Osteoporose.",
+          "buttonText": "Mehr erfahren",
+          "buttonUrl": "#"
+        },
+        {
+          "title": "Leitlinien",
+          "text": "Hier finden Sie die wichtigsten Informationen über die häufigsten Erkrankungen im Bereich Knochen und Mineralstoffwechsel sowie zur Osteoporose.",
+          "buttonText": "Mehr erfahren",
+          "buttonUrl": "#"
         }
       ]
     },
