@@ -220,6 +220,9 @@ function bootscore_child_oegkm_render_prize_card(int $post_id): void {
         <div class="oegkm-prize-card__body">
             <div class="oegkm-prize-card__meta">
                 <?php if ($deadline_label) : ?>
+                    <svg class="oegkm-prize-card__meta-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 2.667c7.364 0 13.333 5.97 13.333 13.333S23.364 29.333 16 29.333 2.667 23.364 2.667 16 8.636 2.667 16 2.667Zm0 18.666a1.333 1.333 0 1 0 0 2.667 1.333 1.333 0 0 0 0-2.667Zm0-13.333c-.736 0-1.333.597-1.333 1.333v8a1.333 1.333 0 1 0 2.666 0v-8C17.333 8.597 16.736 8 16 8Z" fill="currentColor"/>
+                    </svg>
                     <span><?php echo esc_html(sprintf(__('Einreichungsschluss: %s', 'bootscore-child-oegkm'), $deadline_label)); ?></span>
                 <?php elseif ($date_label) : ?>
                     <time datetime="<?php echo esc_attr(get_post_meta($post_id, '_oegkm_prize_date', true)); ?>"><?php echo esc_html($date_label); ?></time>
