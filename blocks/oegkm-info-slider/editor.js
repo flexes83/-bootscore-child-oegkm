@@ -2,7 +2,6 @@
   var el = element.createElement;
   var Fragment = element.Fragment;
   var useBlockProps = blockEditor.useBlockProps;
-  var RichText = blockEditor.RichText;
   var InspectorControls = blockEditor.InspectorControls;
   var PanelBody = components.PanelBody;
   var Button = components.Button;
@@ -77,8 +76,8 @@
         setSlides(slides.concat([{
           title: 'Neue Karte',
           text: 'Text ergänzen …',
-          buttonText: 'Mehr erfahren',
-          buttonUrl: '#'
+          buttonText: '',
+          buttonUrl: ''
         }]));
       }
 
@@ -89,11 +88,37 @@
         setSlides(slidesNext);
       }
 
+      function hasButton(slide) {
+        return !!(slide.buttonText || '').trim() && !!(slide.buttonUrl || '').trim();
+      }
+
       return el(Fragment, {},
         el(InspectorControls, {},
+          el(PanelBody, { title: 'Inhalt', initialOpen: true },
+            el(TextControl, {
+              label: 'Überschrift',
+              value: attrs.heading || '',
+              onChange: function (value) { props.setAttributes({ heading: value }); }
+            })
+          ),
           el(PanelBody, { title: 'Karten', initialOpen: true },
             slides.map(function (slide, index) {
               return el('div', { className: 'oegkm-info-slider-editor__card', key: index },
+                el(TextControl, {
+                  label: 'Titel',
+                  value: slide.title || '',
+                  onChange: function (value) { updateSlide(index, 'title', value); }
+                }),
+                el(TextareaControl, {
+                  label: 'Text',
+                  value: slide.text || '',
+                  onChange: function (value) { updateSlide(index, 'text', value); }
+                }),
+                el(TextControl, {
+                  label: 'Buttontext',
+                  value: slide.buttonText || '',
+                  onChange: function (value) { updateSlide(index, 'buttonText', value); }
+                }),
                 el(TextControl, {
                   label: 'Button URL',
                   value: slide.buttonUrl || '',
@@ -110,13 +135,7 @@
         ),
         el('section', blockProps,
           el('div', { className: 'oegkm-info-slider__header' },
-            el(RichText, {
-              tagName: 'h2',
-              className: 'oegkm-info-slider__heading',
-              value: attrs.heading,
-              placeholder: 'Überschrift',
-              onChange: function (value) { props.setAttributes({ heading: value }); }
-            }),
+            el('h2', { className: 'oegkm-info-slider__heading' }, attrs.heading || 'Überschrift'),
             el('div', { className: 'oegkm-info-slider__navs' },
               el('button', { type: 'button', className: 'oegkm-info-slider__nav oegkm-info-slider__nav--prev', disabled: true }, chevronIcon('prev')),
               el('button', { type: 'button', className: 'oegkm-info-slider__nav oegkm-info-slider__nav--next' }, chevronIcon('next'))
@@ -126,27 +145,12 @@
             el('div', { className: 'oegkm-info-slider__track' },
               slides.map(function (slide, index) {
                 return el('article', { className: 'oegkm-info-slider__card', key: index },
-                  el(RichText, {
-                    tagName: 'h3',
-                    className: 'oegkm-info-slider__card-title',
-                    value: slide.title,
-                    placeholder: 'Titel',
-                    onChange: function (value) { updateSlide(index, 'title', value); }
-                  }),
-                  el(TextareaControl, {
-                    label: 'Text',
-                    value: slide.text || '',
-                    onChange: function (value) { updateSlide(index, 'text', value); }
-                  }),
-                  el('a', { className: 'oegkm-info-slider__button', href: slide.buttonUrl || '#' },
-                    el(RichText, {
-                      tagName: 'span',
-                      value: slide.buttonText,
-                      placeholder: 'Buttontext',
-                      onChange: function (value) { updateSlide(index, 'buttonText', value); }
-                    }),
+                  el('h3', { className: 'oegkm-info-slider__card-title' }, slide.title || 'Titel'),
+                  el('p', { className: 'oegkm-info-slider__card-text' }, slide.text || 'Text'),
+                  hasButton(slide) ? el('a', { className: 'oegkm-info-slider__button', href: slide.buttonUrl },
+                    el('span', {}, slide.buttonText),
                     arrowIcon()
-                  )
+                  ) : null
                 );
               })
             )
@@ -159,9 +163,13 @@
       var slides = attrs.slides || [];
       var blockProps = blockEditor.useBlockProps.save({ className: 'oegkm-info-slider', 'data-slides': String(slides.length || 0) });
 
+      function hasButton(slide) {
+        return !!(slide.buttonText || '').trim() && !!(slide.buttonUrl || '').trim();
+      }
+
       return el('section', blockProps,
         el('div', { className: 'oegkm-info-slider__header' },
-          el(RichText.Content, { tagName: 'h2', className: 'oegkm-info-slider__heading', value: attrs.heading }),
+          el('h2', { className: 'oegkm-info-slider__heading' }, attrs.heading || ''),
           el('div', { className: 'oegkm-info-slider__navs' },
             el('button', { type: 'button', className: 'oegkm-info-slider__nav oegkm-info-slider__nav--prev', 'aria-label': 'Zurück' }, chevronIcon('prev')),
             el('button', { type: 'button', className: 'oegkm-info-slider__nav oegkm-info-slider__nav--next', 'aria-label': 'Weiter' }, chevronIcon('next'))
@@ -171,12 +179,12 @@
           el('div', { className: 'oegkm-info-slider__track' },
             slides.map(function (slide, index) {
               return el('article', { className: 'oegkm-info-slider__card', key: index },
-                el(RichText.Content, { tagName: 'h3', className: 'oegkm-info-slider__card-title', value: slide.title }),
+                el('h3', { className: 'oegkm-info-slider__card-title' }, slide.title || ''),
                 el('p', { className: 'oegkm-info-slider__card-text' }, slide.text || ''),
-                el('a', { className: 'oegkm-info-slider__button', href: slide.buttonUrl || '#' },
-                  el(RichText.Content, { tagName: 'span', value: slide.buttonText || 'Mehr erfahren' }),
+                hasButton(slide) ? el('a', { className: 'oegkm-info-slider__button', href: slide.buttonUrl },
+                  el('span', {}, slide.buttonText),
                   arrowIcon()
-                )
+                ) : null
               );
             })
           )
