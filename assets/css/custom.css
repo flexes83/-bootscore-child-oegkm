@@ -714,10 +714,22 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 .oegkm-tabs__panel{
   display:grid;
   gap:24px;
+  animation:oegkm-tabs-fade-in .24s ease both;
 }
 
 .oegkm-tabs__panel[hidden]{
   display:none;
+}
+
+@keyframes oegkm-tabs-fade-in{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 .oegkm-tabs__section{
@@ -754,6 +766,12 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   margin:0 0 .75rem;
   background:#f6fff0;
   border:1px solid #dde5e1;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .oegkm-tabs__panel{
+    animation:none;
+  }
 }
 
 .oegkm-cta{
