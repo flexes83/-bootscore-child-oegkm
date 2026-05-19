@@ -1,0 +1,74 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/period-tabs",
+  "title": "OEGKM Perioden Tabs",
+  "category": "oegkm",
+  "icon": "calendar-alt",
+  "description": "Tab-Element mit vorgeschalteter Perioden-Auswahl für historische Inhalte.",
+  "textdomain": "bootscore-child-oegkm",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Vorstände im Rückblick"
+    },
+    "title": {
+      "type": "string",
+      "default": "Frühere Amtsperioden und ihre Verantwortlichen auf einen Blick"
+    },
+    "activePeriod": {
+      "type": "number",
+      "default": 0
+    },
+    "activeTab": {
+      "type": "number",
+      "default": 0
+    },
+    "periods": {
+      "type": "array",
+      "default": [
+        {
+          "label": "2022 - 2024",
+          "tabs": [
+            {
+              "title": "Vorstand",
+              "body": "Astrid Fahrleitner-Pammer, Präsidentin\nGeorg Pfeiler, Generalsekretär\nHans Peter Dimai, Past President\nChristian Muschitz, President elect\nKatharina Kerschan-Schindl, Schatzmeisterin\nPeter Bernecker, Beisitzer\nKarin Amrein, Beisitzerin\nJudith Haschka, Beisitzerin\nPeter Pietschmann, Beisitzer\nDaniel Cejka, Beisitzer"
+            },
+            {
+              "title": "Rechnungsprüfer",
+              "body": "Einträge ergänzen."
+            },
+            {
+              "title": "Wissenschaftlicher Beirat",
+              "body": "Einträge ergänzen."
+            }
+          ]
+        },
+        {
+          "label": "2020 - 2022",
+          "tabs": [
+            {
+              "title": "Vorstand",
+              "body": "Einträge ergänzen."
+            },
+            {
+              "title": "Rechnungsprüfer",
+              "body": "Einträge ergänzen."
+            },
+            {
+              "title": "Wissenschaftlicher Beirat",
+              "body": "Einträge ergänzen."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./editor.js",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor",
+  "viewScript": "file:./view.js"
+}

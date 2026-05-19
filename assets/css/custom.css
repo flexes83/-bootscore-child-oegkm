@@ -768,8 +768,171 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   border:1px solid #dde5e1;
 }
 
+.oegkm-period-tabs{
+  --oegkm-period-tabs-teal:#01565b;
+  --oegkm-period-tabs-green:#00da8e;
+  --oegkm-period-tabs-light:#f6fff0;
+  width:min(100%, 1272px);
+  margin:0 auto;
+  padding:clamp(4rem, 7vw, 7.5rem) 0;
+  color:var(--oegkm-period-tabs-teal);
+  font-family:var(--oegkm-font-copy);
+}
+
+.oegkm-period-tabs__intro{
+  width:min(100%, 560px);
+  margin:0 0 clamp(4rem, 7vw, 5.75rem);
+}
+
+.oegkm-period-tabs__eyebrow{
+  margin:0 0 24px;
+  color:var(--oegkm-period-tabs-green);
+  font-family:var(--oegkm-font-copy);
+  font-size:18px;
+  font-weight:500;
+  line-height:1.6;
+  text-transform:uppercase;
+}
+
+.oegkm-period-tabs__title{
+  margin:0 0 40px;
+  color:var(--oegkm-period-tabs-teal);
+  font-family:var(--oegkm-font-headline);
+  font-size:clamp(2.25rem, 2.65vw, 2.5rem);
+  font-weight:500;
+  line-height:1.1;
+  letter-spacing:0;
+}
+
+.oegkm-period-tabs__select-wrap{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+}
+
+.oegkm-period-tabs__select-wrap::after{
+  content:"";
+  position:absolute;
+  right:18px;
+  width:8px;
+  height:8px;
+  border-right:1.5px solid var(--oegkm-period-tabs-teal);
+  border-bottom:1.5px solid var(--oegkm-period-tabs-teal);
+  transform:translateY(-2px) rotate(45deg);
+  pointer-events:none;
+}
+
+.oegkm-period-tabs__select,
+.oegkm-period-tabs__select-control select{
+  min-width:142px;
+  height:44px;
+  padding:0 42px 0 18px;
+  border:1.5px solid var(--oegkm-period-tabs-teal);
+  border-radius:999px;
+  background-color:#fff;
+  color:var(--oegkm-period-tabs-teal);
+  font-family:var(--oegkm-font-copy);
+  font-size:16px;
+  font-weight:500;
+  line-height:1;
+  appearance:none;
+}
+
+.oegkm-period-tabs__select:focus-visible,
+.oegkm-period-tabs__select-control select:focus-visible{
+  outline:2px solid rgba(0,218,142,.35);
+  outline-offset:3px;
+}
+
+.oegkm-period-tabs__period[hidden]{
+  display:none;
+}
+
+.oegkm-period-tabs__period.is-active{
+  animation:oegkm-tabs-fade-in .24s ease both;
+}
+
+.oegkm-period-tabs__layout{
+  display:grid;
+  grid-template-columns:412px minmax(0, 736px);
+  gap:clamp(5rem, 10vw, 9.25rem);
+  align-items:start;
+}
+
+.oegkm-period-tabs__nav{
+  display:grid;
+  gap:16px;
+}
+
+.oegkm-period-tabs__tab{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  width:100%;
+  min-height:85px;
+  padding:24px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:var(--oegkm-period-tabs-teal);
+  font-family:var(--oegkm-font-copy);
+  font-size:26px;
+  font-weight:500;
+  line-height:1.1;
+  text-align:left;
+  transition:background-color .2s ease, font-weight .2s ease;
+}
+
+.oegkm-period-tabs__tab:hover,
+.oegkm-period-tabs__tab:focus-visible{
+  background:rgba(246,255,240,.62);
+}
+
+.oegkm-period-tabs__tab.is-active{
+  background:var(--oegkm-period-tabs-light);
+  font-weight:700;
+}
+
+.oegkm-period-tabs__panel{
+  animation:oegkm-tabs-fade-in .24s ease both;
+}
+
+.oegkm-period-tabs__panel[hidden]{
+  display:none;
+}
+
+.oegkm-period-tabs__list{
+  display:grid;
+  gap:8px;
+  margin:12px 0 0;
+  padding-left:1.25em;
+  color:var(--oegkm-period-tabs-teal);
+  font-family:var(--oegkm-font-copy);
+  font-size:18px;
+  font-weight:400;
+  line-height:1.45;
+}
+
+.oegkm-period-tabs__list li::marker{
+  font-size:.75em;
+}
+
+.oegkm-period-tabs-editor__period{
+  padding:1rem 0;
+  border-top:1px solid #dde5e1;
+}
+
+.oegkm-period-tabs-editor__tab{
+  padding:.75rem;
+  margin:0 0 .75rem;
+  background:#f6fff0;
+  border:1px solid #dde5e1;
+}
+
 @media (prefers-reduced-motion: reduce){
-  .oegkm-tabs__panel{
+  .oegkm-tabs__panel,
+  .oegkm-period-tabs__panel,
+  .oegkm-period-tabs__period.is-active{
     animation:none;
   }
 }
@@ -1611,6 +1774,16 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   .oegkm-tabs__nav{
     grid-template-columns:repeat(2, minmax(0, 1fr));
   }
+  .oegkm-period-tabs{
+    width:min(100% - 3rem, 1272px);
+  }
+  .oegkm-period-tabs__layout{
+    grid-template-columns:1fr;
+    gap:3rem;
+  }
+  .oegkm-period-tabs__nav{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
   .oegkm-image-accordion__section,
   .oegkm-image-accordion__section--image-left{
     grid-template-columns:1fr;
@@ -1711,6 +1884,29 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   }
   .oegkm-tabs__section-title,
   .oegkm-tabs__section-text{
+    font-size:1.125rem;
+  }
+  .oegkm-period-tabs{
+    width:min(100% - 2rem, 1272px);
+    padding:3.5rem 0;
+  }
+  .oegkm-period-tabs__intro{
+    margin-bottom:2.5rem;
+  }
+  .oegkm-period-tabs__title{
+    margin-bottom:32px;
+    font-size:clamp(2rem, 8vw, 2.6rem);
+  }
+  .oegkm-period-tabs__nav{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .oegkm-period-tabs__tab{
+    min-height:0;
+    padding:18px 20px;
+    font-size:22px;
+  }
+  .oegkm-period-tabs__list{
     font-size:1.125rem;
   }
   .oegkm-image-accordion{
