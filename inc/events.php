@@ -66,9 +66,23 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
     $end_time         = get_post_meta($post->ID, '_oegkm_event_end_time', true);
     $location         = get_post_meta($post->ID, '_oegkm_event_location', true);
     $registration_url = get_post_meta($post->ID, '_oegkm_event_registration_url', true);
+    $flyer_url        = get_post_meta($post->ID, '_oegkm_event_flyer_url', true);
+    $program_label    = get_post_meta($post->ID, '_oegkm_event_program_label', true);
+    $program_title    = get_post_meta($post->ID, '_oegkm_event_program_title', true);
+    $program_text     = get_post_meta($post->ID, '_oegkm_event_program_text', true);
+    $bottom_image_id  = get_post_meta($post->ID, '_oegkm_event_bottom_image_id', true);
+    $tabs_json        = get_post_meta($post->ID, '_oegkm_event_tabs_json', true);
+
+    if (!$program_label) {
+        $program_label = __('Programm', 'bootscore-child-oegkm');
+    }
+
+    if (!$tabs_json) {
+        $tabs_json = wp_json_encode(bootscore_child_oegkm_default_event_tabs(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
     ?>
     <style>
-        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field input{width:100%}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}}
+        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field input,.oegkm-event-admin-field textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}}
     </style>
     <div class="oegkm-event-admin-grid">
         <p class="oegkm-event-admin-field">
@@ -95,6 +109,30 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
             <label for="oegkm_event_registration_url"><?php esc_html_e('Anmeldelink', 'bootscore-child-oegkm'); ?></label>
             <input type="url" id="oegkm_event_registration_url" name="oegkm_event_registration_url" value="<?php echo esc_attr($registration_url); ?>" placeholder="https://">
         </p>
+        <p class="oegkm-event-admin-field">
+            <label for="oegkm_event_flyer_url"><?php esc_html_e('Flyer-Download URL', 'bootscore-child-oegkm'); ?></label>
+            <input type="url" id="oegkm_event_flyer_url" name="oegkm_event_flyer_url" value="<?php echo esc_attr($flyer_url); ?>" placeholder="https://">
+        </p>
+        <p class="oegkm-event-admin-field">
+            <label for="oegkm_event_bottom_image_id"><?php esc_html_e('Abschlussbild Attachment-ID', 'bootscore-child-oegkm'); ?></label>
+            <input type="number" id="oegkm_event_bottom_image_id" name="oegkm_event_bottom_image_id" value="<?php echo esc_attr($bottom_image_id); ?>" min="0" step="1">
+        </p>
+        <p class="oegkm-event-admin-field">
+            <label for="oegkm_event_program_label"><?php esc_html_e('Programm Label', 'bootscore-child-oegkm'); ?></label>
+            <input type="text" id="oegkm_event_program_label" name="oegkm_event_program_label" value="<?php echo esc_attr($program_label); ?>">
+        </p>
+        <p class="oegkm-event-admin-field">
+            <label for="oegkm_event_program_title"><?php esc_html_e('Programm Überschrift', 'bootscore-child-oegkm'); ?></label>
+            <input type="text" id="oegkm_event_program_title" name="oegkm_event_program_title" value="<?php echo esc_attr($program_title); ?>">
+        </p>
+        <p class="oegkm-event-admin-field oegkm-event-admin-field--full">
+            <label for="oegkm_event_program_text"><?php esc_html_e('Programm Text / Liste', 'bootscore-child-oegkm'); ?></label>
+            <textarea id="oegkm_event_program_text" name="oegkm_event_program_text" rows="7"><?php echo esc_textarea($program_text); ?></textarea>
+        </p>
+        <p class="oegkm-event-admin-field oegkm-event-admin-field--full">
+            <label for="oegkm_event_tabs_json"><?php esc_html_e('Tabsektion JSON', 'bootscore-child-oegkm'); ?></label>
+            <textarea id="oegkm_event_tabs_json" name="oegkm_event_tabs_json" rows="16"><?php echo esc_textarea($tabs_json); ?></textarea>
+        </p>
     </div>
     <?php
 }
@@ -118,6 +156,12 @@ add_action('save_post_veranstaltung', function (int $post_id) {
     $end_time         = isset($_POST['oegkm_event_end_time']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_end_time'])) : '';
     $location         = isset($_POST['oegkm_event_location']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_location'])) : '';
     $registration_url = isset($_POST['oegkm_event_registration_url']) ? esc_url_raw(wp_unslash($_POST['oegkm_event_registration_url'])) : '';
+    $flyer_url        = isset($_POST['oegkm_event_flyer_url']) ? esc_url_raw(wp_unslash($_POST['oegkm_event_flyer_url'])) : '';
+    $program_label    = isset($_POST['oegkm_event_program_label']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_program_label'])) : '';
+    $program_title    = isset($_POST['oegkm_event_program_title']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_program_title'])) : '';
+    $program_text     = isset($_POST['oegkm_event_program_text']) ? sanitize_textarea_field(wp_unslash($_POST['oegkm_event_program_text'])) : '';
+    $bottom_image_id  = isset($_POST['oegkm_event_bottom_image_id']) ? absint($_POST['oegkm_event_bottom_image_id']) : 0;
+    $tabs_json        = isset($_POST['oegkm_event_tabs_json']) ? wp_unslash($_POST['oegkm_event_tabs_json']) : '';
 
     if ($start_date && !$end_date) {
         $end_date = $start_date;
@@ -129,6 +173,14 @@ add_action('save_post_veranstaltung', function (int $post_id) {
     update_post_meta($post_id, '_oegkm_event_end_time', $end_time);
     update_post_meta($post_id, '_oegkm_event_location', $location);
     update_post_meta($post_id, '_oegkm_event_registration_url', $registration_url);
+    update_post_meta($post_id, '_oegkm_event_flyer_url', $flyer_url);
+    update_post_meta($post_id, '_oegkm_event_program_label', $program_label);
+    update_post_meta($post_id, '_oegkm_event_program_title', $program_title);
+    update_post_meta($post_id, '_oegkm_event_program_text', $program_text);
+    update_post_meta($post_id, '_oegkm_event_bottom_image_id', $bottom_image_id);
+
+    json_decode($tabs_json, true);
+    update_post_meta($post_id, '_oegkm_event_tabs_json', json_last_error() === JSON_ERROR_NONE ? $tabs_json : wp_json_encode(bootscore_child_oegkm_default_event_tabs(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 });
 
 add_action('pre_get_posts', function (WP_Query $query) {
@@ -192,6 +244,38 @@ function bootscore_child_oegkm_event_date_label(?int $post_id = null): string {
     return $label;
 }
 
+function bootscore_child_oegkm_event_date_range_label(?int $post_id = null): string {
+    $post_id = $post_id ?: get_the_ID();
+
+    $start_date = (string) get_post_meta($post_id, '_oegkm_event_start_date', true);
+    $end_date   = (string) get_post_meta($post_id, '_oegkm_event_end_date', true);
+
+    if (!$start_date) {
+        return '';
+    }
+
+    $start_ts = strtotime($start_date);
+    $end_ts   = $end_date ? strtotime($end_date) : $start_ts;
+
+    if (!$start_ts) {
+        return $start_date;
+    }
+
+    if (!$end_ts || !$end_date || $end_date === $start_date) {
+        return wp_date('j. F Y', $start_ts);
+    }
+
+    if (wp_date('Y-m', $start_ts) === wp_date('Y-m', $end_ts)) {
+        return wp_date('j.', $start_ts) . '-' . wp_date('j. F Y', $end_ts);
+    }
+
+    if (wp_date('Y', $start_ts) === wp_date('Y', $end_ts)) {
+        return wp_date('j. F', $start_ts) . ' - ' . wp_date('j. F Y', $end_ts);
+    }
+
+    return wp_date('j. F Y', $start_ts) . ' - ' . wp_date('j. F Y', $end_ts);
+}
+
 function bootscore_child_oegkm_event_month_badge(?int $post_id = null): array {
     $post_id    = $post_id ?: get_the_ID();
     $start_date = (string) get_post_meta($post_id, '_oegkm_event_start_date', true);
@@ -205,4 +289,42 @@ function bootscore_child_oegkm_event_month_badge(?int $post_id = null): array {
         'day'   => wp_date('d', $timestamp),
         'month' => wp_date('M', $timestamp),
     ];
+}
+
+function bootscore_child_oegkm_default_event_tabs(): array {
+    return [
+        [
+            'title' => 'Allgemeine Infos / Organisation',
+            'sections' => [
+                [
+                    'heading' => 'Öffnungszeiten & Registratur',
+                    'body' => "Donnerstag, 28. Mai          09:30 - 17:30 Uhr\nFreitag, 29. Mai                  08:00 - 17:30 Uhr\nSamstag, 30. Mai                08:00 - 13:00 Uhr",
+                ],
+                [
+                    'heading' => 'Tagungsbüro',
+                    'body' => "MAW - Medizinische Ausstellungs- und Werbegesellschaft\nCarmen Zavarsky\nFreyung 6/3, 1010 Wien\nT: +43 1 536 63-23\nE-Mail: osteoporose@media.co.at",
+                ],
+                [
+                    'heading' => 'Fachausstellung',
+                    'body' => "MAW - Medizinische Ausstellungs- und Werbegesellschaft\nIris Bobal\nFreyung 6, 1010 Wien\nT: +43 1 536 63-48\nF: +43 1 535 60 16\nE-Mail: maw@media.co.at",
+                ],
+                [
+                    'heading' => 'Diplomfortbildungsprogramm (DFP)',
+                    'body' => 'Für die Veranstaltung werden im Rahmen des Diplomfortbildungsprogramms der Österreichischen Ärztekammer Fortbildungspunkte entsprechend den Vortragseinheiten angesucht.',
+                ],
+            ],
+        ],
+        ['title' => 'Veranstalter', 'sections' => [['heading' => 'Veranstalter', 'body' => 'Informationen ergänzen.']]],
+        ['title' => 'Kongressort / Anfahrt', 'sections' => [['heading' => 'Kongressort / Anfahrt', 'body' => 'Informationen ergänzen.']]],
+        ['title' => 'Teilnahmegebühren', 'sections' => [['heading' => 'Teilnahmegebühren', 'body' => 'Informationen ergänzen.']]],
+        ['title' => 'Aussteller, Sponsoren, Interessenten', 'sections' => [['heading' => 'Aussteller, Sponsoren, Interessenten', 'body' => 'Informationen ergänzen.']]],
+    ];
+}
+
+function bootscore_child_oegkm_event_tabs(?int $post_id = null): array {
+    $post_id = $post_id ?: get_the_ID();
+    $json = (string) get_post_meta($post_id, '_oegkm_event_tabs_json', true);
+    $tabs = $json ? json_decode($json, true) : null;
+
+    return is_array($tabs) && $tabs ? $tabs : bootscore_child_oegkm_default_event_tabs();
 }

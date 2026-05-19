@@ -35,6 +35,10 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('bootscore-child-oegkm-ziele-frontend', get_stylesheet_directory_uri() . '/assets/js/ziele-frontend.js', [], $version, true);
     wp_enqueue_script('bootscore-child-oegkm-disease-slider-frontend', get_stylesheet_directory_uri() . '/assets/js/disease-slider-frontend.js', [], $version, true);
 
+    if (is_singular('veranstaltung')) {
+        wp_enqueue_script('bootscore-child-oegkm-event-single', get_stylesheet_directory_uri() . '/assets/js/event-single.js', [], $version, true);
+    }
+
     if (is_page_template('page-mitglieder-medien.php') && file_exists(get_stylesheet_directory() . '/assets/js/member-media-lightbox.js')) {
         wp_enqueue_script('bootscore-child-oegkm-member-media', get_stylesheet_directory_uri() . '/assets/js/member-media-lightbox.js', [], $version, true);
     }
