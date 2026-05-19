@@ -9568,11 +9568,6 @@ a.download::before,
   text-align:center;
 }
 
-.single-preis_stipendium .oegkm-theme-page-header__intro p{
-  font-size:22px;
-  line-height:1.4;
-}
-
 .single-preis_stipendium .oegkm-prize-content-section{
   padding-top:0;
 }
@@ -9662,6 +9657,74 @@ a.download::before,
     width:760px;
     opacity:.11;
     transform:translateX(-40%) rotate(4deg);
+  }
+}
+
+/* Preise & Stipendien single: keep the shared header composition, centered intro and continuous guilloche */
+.single-preis_stipendium .oegkm-theme-page-header--has-intro{
+  margin-bottom:0;
+}
+
+.single-preis_stipendium .oegkm-theme-page-header__shell{
+  overflow:hidden;
+}
+
+.single-preis_stipendium .oegkm-theme-page-header__panel{
+  position:relative;
+  z-index:2;
+}
+
+.single-preis_stipendium .oegkm-theme-page-header__guilloche,
+.single-preis_stipendium .oegkm-theme-page-header--mint-left .oegkm-theme-page-header__guilloche{
+  z-index:1;
+  left:50%;
+  top:clamp(-145px, -8vw, -82px);
+  width:min(1320px, 92vw);
+  max-width:none;
+  opacity:.18;
+  transform:translateX(-58%) rotate(-5deg);
+  mix-blend-mode:multiply;
+}
+
+.single-preis_stipendium .oegkm-theme-page-header__intro-wrap{
+  position:relative;
+  z-index:2;
+  overflow:visible;
+}
+
+.single-preis_stipendium .oegkm-theme-page-header__intro-wrap::before{
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,.44) 0%,
+    rgba(255,255,255,.58) 48%,
+    rgba(255,255,255,.76) 100%
+  );
+}
+
+.single-preis_stipendium .oegkm-theme-page-header__intro{
+  max-width:842px;
+  margin-inline:auto;
+  text-align:center;
+}
+
+@media (max-width: 991.98px){
+  .single-preis_stipendium .oegkm-theme-page-header__guilloche,
+  .single-preis_stipendium .oegkm-theme-page-header--mint-left .oegkm-theme-page-header__guilloche{
+    left:50%;
+    top:-78px;
+    width:980px;
+    opacity:.15;
+    transform:translateX(-55%) rotate(-4deg);
+  }
+}
+
+@media (max-width: 575.98px){
+  .single-preis_stipendium .oegkm-theme-page-header__guilloche,
+  .single-preis_stipendium .oegkm-theme-page-header--mint-left .oegkm-theme-page-header__guilloche{
+    top:-48px;
+    width:760px;
+    opacity:.13;
+    transform:translateX(-54%) rotate(-4deg);
   }
 }
 
