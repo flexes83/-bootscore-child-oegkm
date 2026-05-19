@@ -71,18 +71,15 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
     $program_title    = get_post_meta($post->ID, '_oegkm_event_program_title', true);
     $program_text     = get_post_meta($post->ID, '_oegkm_event_program_text', true);
     $bottom_image_id  = get_post_meta($post->ID, '_oegkm_event_bottom_image_id', true);
-    $tabs_json        = get_post_meta($post->ID, '_oegkm_event_tabs_json', true);
+    $tabs             = bootscore_child_oegkm_event_tabs($post->ID);
 
     if (!$program_label) {
         $program_label = __('Programm', 'bootscore-child-oegkm');
     }
 
-    if (!$tabs_json) {
-        $tabs_json = wp_json_encode(bootscore_child_oegkm_default_event_tabs(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    }
     ?>
     <style>
-        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field input,.oegkm-event-admin-field textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}}
+        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field input,.oegkm-event-admin-field textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}}
     </style>
     <div class="oegkm-event-admin-grid">
         <p class="oegkm-event-admin-field">
@@ -129,10 +126,42 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
             <label for="oegkm_event_program_text"><?php esc_html_e('Programm Text / Liste', 'bootscore-child-oegkm'); ?></label>
             <textarea id="oegkm_event_program_text" name="oegkm_event_program_text" rows="7"><?php echo esc_textarea($program_text); ?></textarea>
         </p>
-        <p class="oegkm-event-admin-field oegkm-event-admin-field--full">
-            <label for="oegkm_event_tabs_json"><?php esc_html_e('Tabsektion JSON', 'bootscore-child-oegkm'); ?></label>
-            <textarea id="oegkm_event_tabs_json" name="oegkm_event_tabs_json" rows="16"><?php echo esc_textarea($tabs_json); ?></textarea>
-        </p>
+        <div class="oegkm-event-admin-field oegkm-event-admin-field--full">
+            <label><?php esc_html_e('Tabsektion', 'bootscore-child-oegkm'); ?></label>
+            <p class="oegkm-event-admin-help"><?php esc_html_e('Leere Überschriften und Texte werden nicht ausgegeben. Zusätzliche Bereiche erscheinen automatisch, wenn bereits mehr Inhalte gespeichert sind.', 'bootscore-child-oegkm'); ?></p>
+            <div class="oegkm-event-admin-tabs">
+                <?php foreach ($tabs as $tab_index => $tab) : ?>
+                    <?php
+                    $tab_title = isset($tab['title']) ? (string) $tab['title'] : '';
+                    $sections = isset($tab['sections']) && is_array($tab['sections']) ? $tab['sections'] : [];
+                    $section_count = max(4, count($sections));
+                    ?>
+                    <div class="oegkm-event-admin-tab">
+                        <h4><?php echo esc_html(sprintf(__('Tab %d', 'bootscore-child-oegkm'), $tab_index + 1)); ?></h4>
+                        <label for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_title"><?php esc_html_e('Tabtitel', 'bootscore-child-oegkm'); ?></label>
+                        <input type="text" id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_title" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][title]" value="<?php echo esc_attr($tab_title); ?>">
+
+                        <?php for ($section_index = 0; $section_index < $section_count; $section_index++) : ?>
+                            <?php
+                            $section = $sections[$section_index] ?? [];
+                            $section_heading = isset($section['heading']) ? (string) $section['heading'] : '';
+                            $section_body = isset($section['body']) ? (string) $section['body'] : '';
+                            ?>
+                            <div class="oegkm-event-admin-section">
+                                <p>
+                                    <label for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_heading"><?php echo esc_html(sprintf(__('Abschnitt %d Überschrift', 'bootscore-child-oegkm'), $section_index + 1)); ?></label>
+                                    <input type="text" id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_heading" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][sections][<?php echo esc_attr($section_index); ?>][heading]" value="<?php echo esc_attr($section_heading); ?>">
+                                </p>
+                                <p>
+                                    <label for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body"><?php echo esc_html(sprintf(__('Abschnitt %d Text', 'bootscore-child-oegkm'), $section_index + 1)); ?></label>
+                                    <textarea id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][sections][<?php echo esc_attr($section_index); ?>][body]" rows="4"><?php echo esc_textarea($section_body); ?></textarea>
+                                </p>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
     </div>
     <?php
 }
@@ -161,7 +190,7 @@ add_action('save_post_veranstaltung', function (int $post_id) {
     $program_title    = isset($_POST['oegkm_event_program_title']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_program_title'])) : '';
     $program_text     = isset($_POST['oegkm_event_program_text']) ? sanitize_textarea_field(wp_unslash($_POST['oegkm_event_program_text'])) : '';
     $bottom_image_id  = isset($_POST['oegkm_event_bottom_image_id']) ? absint($_POST['oegkm_event_bottom_image_id']) : 0;
-    $tabs_json        = isset($_POST['oegkm_event_tabs_json']) ? wp_unslash($_POST['oegkm_event_tabs_json']) : '';
+    $tabs_input       = isset($_POST['oegkm_event_tabs']) && is_array($_POST['oegkm_event_tabs']) ? wp_unslash($_POST['oegkm_event_tabs']) : [];
 
     if ($start_date && !$end_date) {
         $end_date = $start_date;
@@ -179,8 +208,7 @@ add_action('save_post_veranstaltung', function (int $post_id) {
     update_post_meta($post_id, '_oegkm_event_program_text', $program_text);
     update_post_meta($post_id, '_oegkm_event_bottom_image_id', $bottom_image_id);
 
-    json_decode($tabs_json, true);
-    update_post_meta($post_id, '_oegkm_event_tabs_json', json_last_error() === JSON_ERROR_NONE ? $tabs_json : wp_json_encode(bootscore_child_oegkm_default_event_tabs(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    update_post_meta($post_id, '_oegkm_event_tabs_json', wp_json_encode(bootscore_child_oegkm_sanitize_event_tabs($tabs_input), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 });
 
 add_action('pre_get_posts', function (WP_Query $query) {
@@ -319,6 +347,49 @@ function bootscore_child_oegkm_default_event_tabs(): array {
         ['title' => 'Teilnahmegebühren', 'sections' => [['heading' => 'Teilnahmegebühren', 'body' => 'Informationen ergänzen.']]],
         ['title' => 'Aussteller, Sponsoren, Interessenten', 'sections' => [['heading' => 'Aussteller, Sponsoren, Interessenten', 'body' => 'Informationen ergänzen.']]],
     ];
+}
+
+function bootscore_child_oegkm_sanitize_event_tabs(array $tabs_input): array {
+    $tabs = [];
+
+    foreach ($tabs_input as $tab_input) {
+        if (!is_array($tab_input)) {
+            continue;
+        }
+
+        $title = isset($tab_input['title']) ? sanitize_text_field((string) $tab_input['title']) : '';
+        $sections_input = isset($tab_input['sections']) && is_array($tab_input['sections']) ? $tab_input['sections'] : [];
+        $sections = [];
+
+        foreach ($sections_input as $section_input) {
+            if (!is_array($section_input)) {
+                continue;
+            }
+
+            $heading = isset($section_input['heading']) ? sanitize_text_field((string) $section_input['heading']) : '';
+            $body = isset($section_input['body']) ? sanitize_textarea_field((string) $section_input['body']) : '';
+
+            if ($heading === '' && $body === '') {
+                continue;
+            }
+
+            $sections[] = [
+                'heading' => $heading,
+                'body' => $body,
+            ];
+        }
+
+        if ($title === '' && !$sections) {
+            continue;
+        }
+
+        $tabs[] = [
+            'title' => $title,
+            'sections' => $sections,
+        ];
+    }
+
+    return $tabs ?: bootscore_child_oegkm_default_event_tabs();
 }
 
 function bootscore_child_oegkm_event_tabs(?int $post_id = null): array {
