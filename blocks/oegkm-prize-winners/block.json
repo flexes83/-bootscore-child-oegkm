@@ -1,0 +1,62 @@
+{
+  "apiVersion": 2,
+  "name": "oegkm/prize-winners",
+  "title": "OEGKM Preisträger:innen Rückblick",
+  "category": "oegkm",
+  "icon": "awards",
+  "description": "Rückblick-Liste der Preisträger:innen mit Jahresauswahl.",
+  "textdomain": "bootscore-child-oegkm",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Rückblick"
+    },
+    "title": {
+      "type": "string",
+      "default": "Übersicht der Preisträger:innen"
+    },
+    "activeYear": {
+      "type": "number",
+      "default": 0
+    },
+    "years": {
+      "type": "array",
+      "default": [
+        {
+          "label": "2023",
+          "items": [
+            {
+              "recipient": "Thomas Dechat (Wien)",
+              "project": "Der Einfluss von Bisphosphonaten auf die Lamin A Prozessierung und osteogene Differenzierung",
+              "institution": "Ludwig Boltzmann Institut für Osteologie am Hanusch Krankenhaus Wien der OEGK",
+              "linkText": "Mehr",
+              "linkUrl": ""
+            },
+            {
+              "recipient": "Domenik Popp (Wien)",
+              "project": "Feasibility of microRNA-levels and bone-microarchitecture in patients with complex regional pain syndrome as a prognostic marker - an explorative study",
+              "institution": "Department of Orthopedics and Traumatology, Division of Trauma Surgery, Medical University of Vienna, Austria",
+              "linkText": "Mehr",
+              "linkUrl": ""
+            },
+            {
+              "recipient": "Robert Wakolbinger-Habel (Wien)",
+              "project": "Can we estimate systemic osteoporotic alterations in Austrian geriatric persons by cranial computed tomography?",
+              "institution": "Vienna Healthcare Group, Clinic Donaustadt, Department of Physical and Rehabilitation Medicine (PRM)",
+              "linkText": "Mehr",
+              "linkUrl": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./editor.js",
+  "style": "bootscore-child-oegkm",
+  "editorStyle": "bootscore-child-oegkm-editor",
+  "viewScript": "file:./view.js"
+}

@@ -73,6 +73,7 @@ function bootscore_child_oegkm_render_theme_page_header(array $args = []): void 
         'labelledby' => 'oegkm-theme-page-title',
         'hero' => false,
         'hide' => false,
+        'subtitle' => '',
     ];
 
     $args = wp_parse_args($args, $defaults);
@@ -96,6 +97,9 @@ function bootscore_child_oegkm_render_theme_page_header(array $args = []): void 
             <div class="oegkm-theme-page-header__panel">
                 <div class="container oegkm-theme-page-header__inner">
                     <h1 id="<?php echo esc_attr($args['labelledby']); ?>"><?php echo esc_html($args['title']); ?></h1>
+                    <?php if (trim((string) $args['subtitle']) !== '') : ?>
+                        <p class="oegkm-theme-page-header__subtitle"><?php echo esc_html($args['subtitle']); ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <?php if (!empty($args['hero'])) : ?>

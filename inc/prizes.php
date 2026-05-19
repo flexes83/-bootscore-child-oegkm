@@ -166,6 +166,23 @@ function bootscore_child_oegkm_prize_deadline_label(?int $post_id = null): strin
     return $timestamp ? wp_date($date_format, $timestamp) : $deadline;
 }
 
+function bootscore_child_oegkm_prize_deadline_is_future(?int $post_id = null): bool {
+    $post_id  = $post_id ?: get_the_ID();
+    $deadline = (string) get_post_meta($post_id, '_oegkm_prize_deadline', true);
+
+    if (!$deadline) {
+        return false;
+    }
+
+    $deadline_timestamp = strtotime($deadline . ' 23:59:59');
+
+    if (!$deadline_timestamp) {
+        return false;
+    }
+
+    return $deadline_timestamp >= current_time('timestamp');
+}
+
 function bootscore_child_oegkm_prize_year(?int $post_id = null): string {
     $post_id = $post_id ?: get_the_ID();
     $date    = (string) get_post_meta($post_id, '_oegkm_prize_date', true);
