@@ -8,7 +8,8 @@
   var InspectorControls = blockEditor.InspectorControls;
   var PanelBody = components.PanelBody;
   var Button = components.Button;
-  var TextareaControl = components.TextareaControl;
+  var ToggleControl = components.ToggleControl;
+  var textFormats = ['core/bold', 'core/link'];
 
   function ChevronIcon(direction) {
     return el('svg', {
@@ -61,6 +62,7 @@
           kicker: 'NEUER ABSCHNITT',
           title: 'Neue Slide',
           text: 'Text ergänzen …',
+          textAsList: false,
           imageUrl: '',
           imageId: 0
         }]);
@@ -86,7 +88,12 @@
                 slides.length > 1 ? el(Button, {
                   isDestructive: true,
                   onClick: function () { removeSlide(index); }
-                }, 'Löschen') : null
+                }, 'Löschen') : null,
+                el(ToggleControl, {
+                  label: 'Text als Liste',
+                  checked: !!slide.textAsList,
+                  onChange: function (value) { updateSlide(index, 'textAsList', value); }
+                })
               );
             }),
             el(Button, { variant: 'primary', onClick: addSlide }, 'Slide hinzufügen')
@@ -109,9 +116,13 @@
                 placeholder: 'Headline',
                 onChange: function (value) { updateSlide(activeSlide, 'title', value); }
               }),
-              el(TextareaControl, {
-                label: 'Text',
+              el(RichText, {
+                tagName: currentSlide.textAsList ? 'ul' : 'div',
+                className: 'oegkm-disease-slider__text',
+                multiline: currentSlide.textAsList ? 'li' : undefined,
                 value: currentSlide.text || '',
+                allowedFormats: textFormats,
+                placeholder: 'Text',
                 onChange: function (value) { updateSlide(activeSlide, 'text', value); }
               }),
               el('div', { className: 'oegkm-disease-slider__controls' },
@@ -169,7 +180,12 @@
                 el('div', { className: 'oegkm-disease-slider__content' },
                   slide.kicker ? el(RichText.Content, { tagName: 'div', className: 'oegkm-disease-slider__kicker', value: slide.kicker }) : null,
                   el(RichText.Content, { tagName: 'h2', className: 'oegkm-disease-slider__title', value: slide.title }),
-                  el(RichText.Content, { tagName: 'div', className: 'oegkm-disease-slider__text', value: slide.text }),
+                  el(RichText.Content, {
+                    tagName: slide.textAsList ? 'ul' : 'div',
+                    className: 'oegkm-disease-slider__text',
+                    multiline: slide.textAsList ? 'li' : undefined,
+                    value: slide.text
+                  }),
                   slides.length > 1 ? el('div', { className: 'oegkm-disease-slider__controls' },
                     el('button', { type: 'button', className: 'oegkm-disease-slider__nav oegkm-disease-slider__nav--prev', 'aria-label': 'Zurück' }, ChevronIcon('prev')),
                     el('button', { type: 'button', className: 'oegkm-disease-slider__nav oegkm-disease-slider__nav--next', 'aria-label': 'Weiter' }, ChevronIcon('next'))

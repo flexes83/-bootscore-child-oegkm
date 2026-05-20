@@ -10,6 +10,8 @@
   var Button = components.Button;
   var SelectControl = components.SelectControl;
   var TextControl = components.TextControl;
+  var ToggleControl = components.ToggleControl;
+  var textFormats = ['core/bold', 'core/link'];
 
   function arrowIcon() {
     return el('svg', {
@@ -73,12 +75,19 @@
         onChange: function (value) { helpers.updateField(index, 'title', value); }
       }) : el(RichText.Content, { tagName: 'h2', className: 'oegkm-image-content__title', value: section.title }),
       isEditor ? el(RichText, {
-        tagName: 'p',
+        tagName: section.textAsList ? 'ul' : 'p',
         className: 'oegkm-image-content__text',
+        multiline: section.textAsList ? 'li' : undefined,
         value: section.text,
+        allowedFormats: textFormats,
         placeholder: 'Text',
         onChange: function (value) { helpers.updateField(index, 'text', value); }
-      }) : el(RichText.Content, { tagName: 'p', className: 'oegkm-image-content__text', value: section.text }),
+      }) : el(RichText.Content, {
+        tagName: section.textAsList ? 'ul' : 'p',
+        className: 'oegkm-image-content__text',
+        multiline: section.textAsList ? 'li' : undefined,
+        value: section.text
+      }),
       hasButton(section) ? el('a', { className: 'oegkm-image-content__button', href: section.buttonUrl },
         el('span', {}, section.buttonText),
         arrowIcon()
@@ -118,6 +127,7 @@
           imageUrl: '',
           imageId: 0,
           imagePosition: sections.length % 2 ? 'right' : 'left',
+          textAsList: false,
           buttonText: '',
           buttonUrl: ''
         }]));
@@ -153,6 +163,11 @@
                     { label: 'Bild links', value: 'left' }
                   ],
                   onChange: function (value) { updateField(index, 'imagePosition', value); }
+                }),
+                el(ToggleControl, {
+                  label: 'Text als Liste',
+                  checked: !!section.textAsList,
+                  onChange: function (value) { updateField(index, 'textAsList', value); }
                 }),
                 el(TextControl, {
                   label: 'Buttontext',
