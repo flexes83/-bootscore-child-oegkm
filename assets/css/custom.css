@@ -1127,9 +1127,33 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   line-height:1.4;
 }
 
-.oegkm-image-accordion__panel-content p{
+.oegkm-image-accordion__panel-content p,
+.oegkm-image-accordion__panel-text{
   margin:0;
   color:inherit;
+}
+
+.oegkm-image-accordion__panel-text p,
+.oegkm-image-accordion__panel-text ul,
+.oegkm-image-accordion__panel-text ol{
+  margin:0 0 1rem;
+}
+
+.oegkm-image-accordion__panel-text p:last-child,
+.oegkm-image-accordion__panel-text ul:last-child,
+.oegkm-image-accordion__panel-text ol:last-child{
+  margin-bottom:0;
+}
+
+.oegkm-image-accordion__panel-text ul,
+.oegkm-image-accordion__panel-text ol{
+  padding-left:1.2em;
+}
+
+.oegkm-image-accordion__panel-text a{
+  color:inherit;
+  text-decoration-color:rgba(246,255,240,.6);
+  text-underline-offset:.16em;
 }
 
 .oegkm-image-accordion-editor__section{

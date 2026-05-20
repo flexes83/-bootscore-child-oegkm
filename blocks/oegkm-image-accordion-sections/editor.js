@@ -1,6 +1,7 @@
 (function (blocks, element, blockEditor, components) {
   var el = element.createElement;
   var Fragment = element.Fragment;
+  var RawHTML = element.RawHTML;
   var useBlockProps = blockEditor.useBlockProps;
   var RichText = blockEditor.RichText;
   var MediaUpload = blockEditor.MediaUpload;
@@ -16,6 +17,18 @@
     return (value || '').split('\n').map(function (line, index) {
       return index === 0 ? line : [el('br', { key: 'br-' + index }), line];
     });
+  }
+
+  function containsHtml(value) {
+    return /<\/?[a-z][\s\S]*>/i.test(value || '');
+  }
+
+  function renderBody(value) {
+    if (!value) {
+      return null;
+    }
+
+    return containsHtml(value) ? el(RawHTML, {}, value) : toLines(value);
   }
 
   function plusIcon() {
@@ -51,7 +64,7 @@
             label: 'Accordion-Inhalt',
             value: item.body || '',
             onChange: function (value) { updateItem(sectionIndex, itemIndex, 'body', value); }
-          }) : el('p', {}, toLines(item.body || ''))
+          }) : el('div', { className: 'oegkm-image-accordion__panel-text' }, renderBody(item.body || ''))
         )
       )
     );
