@@ -133,7 +133,7 @@ get_header();
                                         <?php foreach ($sections as $section) : ?>
                                             <?php
                                             $section_heading = isset($section['heading']) ? trim((string) $section['heading']) : '';
-                                            $section_body    = isset($section['body']) ? trim((string) $section['body']) : '';
+                                            $section_body    = isset($section['body']) ? trim(bootscore_child_oegkm_normalize_event_tab_body((string) $section['body'])) : '';
                                             ?>
                                             <div class="oegkm-event-single-tabs__section">
                                                 <?php if ($section_heading) : ?>

@@ -148,13 +148,13 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
                             $section_body = isset($section['body']) ? (string) $section['body'] : '';
                             ?>
                             <div class="oegkm-event-admin-section">
-                                <p>
+                                <div>
                                     <label for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_heading"><?php echo esc_html(sprintf(__('Abschnitt %d Überschrift', 'bootscore-child-oegkm'), $section_index + 1)); ?></label>
                                     <input type="text" id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_heading" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][sections][<?php echo esc_attr($section_index); ?>][heading]" value="<?php echo esc_attr($section_heading); ?>">
-                                </p>
-                                <p>
+                                </div>
+                                <div>
                                     <label for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body"><?php echo esc_html(sprintf(__('Abschnitt %d Text', 'bootscore-child-oegkm'), $section_index + 1)); ?></label>
-                                    <span class="oegkm-event-admin-editor">
+                                    <div class="oegkm-event-admin-editor">
                                         <?php
                                         wp_editor($section_body, 'oegkm_event_tabs_' . $tab_index . '_' . $section_index . '_body', [
                                             'textarea_name' => 'oegkm_event_tabs[' . $tab_index . '][sections][' . $section_index . '][body]',
@@ -170,8 +170,8 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
                                             ],
                                         ]);
                                         ?>
-                                    </span>
-                                </p>
+                                    </div>
+                                </div>
                             </div>
                         <?php endfor; ?>
                     </div>
@@ -409,6 +409,8 @@ function bootscore_child_oegkm_sanitize_event_tabs(array $tabs_input): array {
 }
 
 function bootscore_child_oegkm_sanitize_event_tab_body(string $body): string {
+    $body = bootscore_child_oegkm_normalize_event_tab_body($body);
+
     return wp_kses($body, [
         'a' => [
             'href' => true,
@@ -424,6 +426,12 @@ function bootscore_child_oegkm_sanitize_event_tab_body(string $body): string {
         'p' => [],
         'br' => [],
     ]);
+}
+
+function bootscore_child_oegkm_normalize_event_tab_body(string $body): string {
+    $body = str_replace(['\\r\\n', '\\n', '\\r', '\\t'], ["\n", "\n", "\n", "\t"], $body);
+
+    return preg_replace('/(^|>)[\s\t]*(?:rn|r|n|t)(?:\s+(?:rn|r|n|t))*[\s\t]*(?=<|$)/i', '$1', $body) ?? $body;
 }
 
 function bootscore_child_oegkm_event_tabs(?int $post_id = null): array {
