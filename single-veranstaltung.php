@@ -141,7 +141,7 @@ get_header();
                                                 <?php endif; ?>
                                                 <?php if ($section_body) : ?>
                                                     <div class="oegkm-event-single-tabs__text">
-                                                        <?php echo wpautop(esc_html($section_body)); ?>
+                                                        <?php echo wpautop(bootscore_child_oegkm_sanitize_event_tab_body($section_body)); ?>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>

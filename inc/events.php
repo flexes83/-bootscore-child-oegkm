@@ -79,7 +79,7 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
 
     ?>
     <style>
-        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field input,.oegkm-event-admin-field textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}}
+        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field input,.oegkm-event-admin-field textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}.oegkm-event-admin-editor .wp-editor-wrap{max-width:100%}.oegkm-event-admin-editor .wp-editor-area{min-height:110px}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}}
     </style>
     <div class="oegkm-event-admin-grid">
         <p class="oegkm-event-admin-field">
@@ -154,7 +154,23 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
                                 </p>
                                 <p>
                                     <label for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body"><?php echo esc_html(sprintf(__('Abschnitt %d Text', 'bootscore-child-oegkm'), $section_index + 1)); ?></label>
-                                    <textarea id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][sections][<?php echo esc_attr($section_index); ?>][body]" rows="4"><?php echo esc_textarea($section_body); ?></textarea>
+                                    <span class="oegkm-event-admin-editor">
+                                        <?php
+                                        wp_editor($section_body, 'oegkm_event_tabs_' . $tab_index . '_' . $section_index . '_body', [
+                                            'textarea_name' => 'oegkm_event_tabs[' . $tab_index . '][sections][' . $section_index . '][body]',
+                                            'textarea_rows' => 5,
+                                            'media_buttons' => false,
+                                            'tinymce' => [
+                                                'toolbar1' => 'bold,link,bullist',
+                                                'toolbar2' => '',
+                                                'block_formats' => 'Paragraph=p',
+                                            ],
+                                            'quicktags' => [
+                                                'buttons' => 'strong,link,ul,li',
+                                            ],
+                                        ]);
+                                        ?>
+                                    </span>
                                 </p>
                             </div>
                         <?php endfor; ?>
@@ -367,7 +383,7 @@ function bootscore_child_oegkm_sanitize_event_tabs(array $tabs_input): array {
             }
 
             $heading = isset($section_input['heading']) ? sanitize_text_field((string) $section_input['heading']) : '';
-            $body = isset($section_input['body']) ? sanitize_textarea_field((string) $section_input['body']) : '';
+            $body = isset($section_input['body']) ? bootscore_child_oegkm_sanitize_event_tab_body((string) $section_input['body']) : '';
 
             if ($heading === '' && $body === '') {
                 continue;
@@ -390,6 +406,24 @@ function bootscore_child_oegkm_sanitize_event_tabs(array $tabs_input): array {
     }
 
     return $tabs ?: bootscore_child_oegkm_default_event_tabs();
+}
+
+function bootscore_child_oegkm_sanitize_event_tab_body(string $body): string {
+    return wp_kses($body, [
+        'a' => [
+            'href' => true,
+            'title' => true,
+            'target' => true,
+            'rel' => true,
+        ],
+        'strong' => [],
+        'b' => [],
+        'ul' => [],
+        'ol' => [],
+        'li' => [],
+        'p' => [],
+        'br' => [],
+    ]);
 }
 
 function bootscore_child_oegkm_event_tabs(?int $post_id = null): array {
