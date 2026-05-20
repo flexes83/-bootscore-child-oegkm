@@ -74,7 +74,7 @@ get_header();
                             <?php endif; ?>
 
                             <?php if ($registration_url) : ?>
-                                <a class="oegkm-event-single-button" href="<?php echo esc_url($registration_url); ?>">
+                                <a class="oegkm-event-single-button" href="<?php echo esc_url($registration_url); ?>" target="_blank" rel="noopener">
                                     <span><?php esc_html_e('Jetzt anmelden', 'bootscore-child-oegkm'); ?></span>
                                     <?php echo $arrow_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                                 </a>
