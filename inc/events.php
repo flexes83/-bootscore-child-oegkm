@@ -79,7 +79,7 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
 
     ?>
     <style>
-        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field input,.oegkm-event-admin-field textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}.oegkm-event-admin-editor .wp-editor-wrap{max-width:100%}.oegkm-event-admin-editor .wp-editor-area{min-height:110px}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}}
+        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field>input,.oegkm-event-admin-field>textarea,.oegkm-event-admin-field>div>input,.oegkm-event-admin-field>p>input,.oegkm-event-admin-field>p>textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}.oegkm-event-admin-editor .wp-editor-wrap{max-width:100%}.oegkm-event-admin-editor .wp-editor-area{width:100%;min-height:110px}.oegkm-event-admin-editor input[type=button]{width:auto}.oegkm-event-admin-editor .wp-editor-tabs{float:right}.oegkm-event-admin-editor .mce-toolbar .mce-btn button{width:auto}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}}
     </style>
     <div class="oegkm-event-admin-grid">
         <p class="oegkm-event-admin-field">
@@ -165,9 +165,7 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
                                                 'toolbar2' => '',
                                                 'block_formats' => 'Paragraph=p',
                                             ],
-                                            'quicktags' => [
-                                                'buttons' => 'strong,link,ul,li',
-                                            ],
+                                            'quicktags' => false,
                                         ]);
                                         ?>
                                     </div>
