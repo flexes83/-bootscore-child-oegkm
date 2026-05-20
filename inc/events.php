@@ -79,7 +79,7 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
 
     ?>
     <style>
-        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field>input,.oegkm-event-admin-field>textarea,.oegkm-event-admin-field>div>input,.oegkm-event-admin-field>p>input,.oegkm-event-admin-field>p>textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-tab>input{width:100%;max-width:760px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(240px,.8fr) minmax(480px,1.8fr);gap:24px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-section input,.oegkm-event-admin-section textarea{box-sizing:border-box;width:100%}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}.oegkm-event-admin-section textarea{min-height:220px;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.5}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}.oegkm-event-admin-section textarea{min-height:180px}}
+        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field>input,.oegkm-event-admin-field>textarea,.oegkm-event-admin-field>div>input,.oegkm-event-admin-field>p>input,.oegkm-event-admin-field>p>textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:22px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:18px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-tab>input{width:100%!important;max-width:760px!important}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(300px,.7fr) minmax(720px,2fr);gap:32px;margin-top:18px;padding-top:18px;border-top:1px solid #f0f0f1}.oegkm-event-admin-section input,.oegkm-event-admin-section textarea{box-sizing:border-box;width:100%!important;max-width:none!important}.oegkm-event-admin-section input{min-height:40px}.oegkm-event-admin-help{margin:6px 0 0;color:#646970}.oegkm-event-admin-section textarea.oegkm-event-admin-html-field{display:block!important;min-width:720px!important;min-height:300px!important;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.5;resize:vertical}.oegkm-event-admin-note{font-size:12px}@media(max-width:1280px){.oegkm-event-admin-section{grid-template-columns:minmax(260px,.8fr) minmax(560px,1.8fr)}.oegkm-event-admin-section textarea.oegkm-event-admin-html-field{min-width:560px!important}}@media(max-width:960px){.oegkm-event-admin-section{grid-template-columns:1fr}.oegkm-event-admin-section textarea.oegkm-event-admin-html-field{min-width:0!important;min-height:220px!important}}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}}
     </style>
     <div class="oegkm-event-admin-grid">
         <p class="oegkm-event-admin-field">
@@ -154,8 +154,8 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
                                 </div>
                                 <div>
                                     <label for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body"><?php echo esc_html(sprintf(__('Abschnitt %d Text', 'bootscore-child-oegkm'), $section_index + 1)); ?></label>
-                                    <textarea id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][sections][<?php echo esc_attr($section_index); ?>][body]" rows="6"><?php echo esc_textarea($section_body); ?></textarea>
-                                    <p class="oegkm-event-admin-help"><?php esc_html_e('HTML ist erlaubt und wird beim Speichern bereinigt.', 'bootscore-child-oegkm'); ?></p>
+                                    <textarea class="oegkm-event-admin-html-field" id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][sections][<?php echo esc_attr($section_index); ?>][body]" rows="12"><?php echo esc_textarea($section_body); ?></textarea>
+                                    <p class="oegkm-event-admin-help oegkm-event-admin-note"><?php esc_html_e('Formatierungen mit HTML sind möglich.', 'bootscore-child-oegkm'); ?></p>
                                 </div>
                             </div>
                         <?php endfor; ?>
@@ -404,6 +404,7 @@ function bootscore_child_oegkm_normalize_event_tab_body(string $body): string {
     $body = str_replace(['\\r\\n', '\\n', '\\r', '\\t'], ["\n", "\n", "\n", "\t"], $body);
     $body = preg_replace('/(^|>)[\s\t]*(?:rn|r|n|t)(?:\s+(?:rn|r|n|t))*[\s\t]*(?=<|$)/i', '$1', $body) ?? $body;
     $body = preg_replace('/(<br\s*\/?>|<\/(?:p|div|li|ul|ol)>)[\s\t]*(?:rn|r|n|t)+[\s\t]*/i', '$1', $body) ?? $body;
+    $body = str_replace(['<br>rn', '<br/>rn', '<br />rn', '>rn'], ['<br>', '<br/>', '<br />', '>'], $body);
 
     return trim($body);
 }
