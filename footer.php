@@ -30,8 +30,8 @@ if (!defined('ABSPATH')) {
                     </nav>
                 <?php else : ?>
                     <div class="oegkm-inline-links">
-                        <a href="<?php echo bootscore_child_oegkm_privacy_url(); ?>"><?php esc_html_e('Datenschutz', 'bootscore-child-oegkm'); ?></a>
                         <a href="<?php echo bootscore_child_oegkm_statutes_url(); ?>"><?php esc_html_e('Statuten', 'bootscore-child-oegkm'); ?></a>
+                        <a href="<?php echo bootscore_child_oegkm_privacy_url(); ?>"><?php esc_html_e('Datenschutz', 'bootscore-child-oegkm'); ?></a>
                         <a href="<?php echo bootscore_child_oegkm_imprint_url(); ?>"><?php esc_html_e('Impressum', 'bootscore-child-oegkm'); ?></a>
                     </div>
                 <?php endif; ?>
