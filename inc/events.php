@@ -79,7 +79,7 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
 
     ?>
     <style>
-        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field>input,.oegkm-event-admin-field>textarea,.oegkm-event-admin-field>div>input,.oegkm-event-admin-field>p>input,.oegkm-event-admin-field>p>textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}.oegkm-event-admin-editor .wp-editor-wrap{max-width:100%}.oegkm-event-admin-editor .wp-editor-area{width:100%;min-height:110px}.oegkm-event-admin-editor input[type=button]{width:auto}.oegkm-event-admin-editor .wp-editor-tabs{float:right}.oegkm-event-admin-editor .mce-toolbar .mce-btn button{width:auto}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}}
+        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field>input,.oegkm-event-admin-field>textarea,.oegkm-event-admin-field>div>input,.oegkm-event-admin-field>p>input,.oegkm-event-admin-field>p>textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}.oegkm-event-admin-editor{border:1px solid #8c8f94;background:#fff}.oegkm-event-admin-toolbar{display:flex;gap:4px;padding:6px;border-bottom:1px solid #dcdcde;background:#f6f7f7}.oegkm-event-admin-toolbar button{min-width:32px;height:30px;border:1px solid transparent;background:transparent;color:#3c434a;font-weight:600;cursor:pointer}.oegkm-event-admin-toolbar button:hover,.oegkm-event-admin-toolbar button:focus{border-color:#8c8f94;background:#fff}.oegkm-event-admin-toolbar svg{display:block;width:18px;height:18px}.oegkm-event-admin-editor textarea{display:block;width:100%;min-height:126px;border:0;box-shadow:none;resize:vertical}.oegkm-event-admin-editor textarea:focus{box-shadow:0 0 0 1px #2271b1;outline:2px solid transparent}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}}
     </style>
     <div class="oegkm-event-admin-grid">
         <p class="oegkm-event-admin-field">
@@ -155,19 +155,16 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
                                 <div>
                                     <label for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body"><?php echo esc_html(sprintf(__('Abschnitt %d Text', 'bootscore-child-oegkm'), $section_index + 1)); ?></label>
                                     <div class="oegkm-event-admin-editor">
-                                        <?php
-                                        wp_editor($section_body, 'oegkm_event_tabs_' . $tab_index . '_' . $section_index . '_body', [
-                                            'textarea_name' => 'oegkm_event_tabs[' . $tab_index . '][sections][' . $section_index . '][body]',
-                                            'textarea_rows' => 5,
-                                            'media_buttons' => false,
-                                            'tinymce' => [
-                                                'toolbar1' => 'bold,link,bullist',
-                                                'toolbar2' => '',
-                                                'block_formats' => 'Paragraph=p',
-                                            ],
-                                            'quicktags' => false,
-                                        ]);
-                                        ?>
+                                        <div class="oegkm-event-admin-toolbar" aria-label="<?php esc_attr_e('Text formatieren', 'bootscore-child-oegkm'); ?>">
+                                            <button type="button" class="oegkm-event-admin-format" data-format="bold" aria-label="<?php esc_attr_e('Fett', 'bootscore-child-oegkm'); ?>">B</button>
+                                            <button type="button" class="oegkm-event-admin-format" data-format="link" aria-label="<?php esc_attr_e('Link', 'bootscore-child-oegkm'); ?>">
+                                                <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M8.3 12.5 7 13.8a3.1 3.1 0 0 1-4.4-4.4l2.2-2.2a3.1 3.1 0 0 1 4.4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m11.7 7.5 1.3-1.3a3.1 3.1 0 0 1 4.4 4.4l-2.2 2.2a3.1 3.1 0 0 1-4.4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m7.5 12.5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                                            </button>
+                                            <button type="button" class="oegkm-event-admin-format" data-format="list" aria-label="<?php esc_attr_e('Aufzählung', 'bootscore-child-oegkm'); ?>">
+                                                <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M7 5h10M7 10h10M7 15h10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="3.5" cy="5" r="1.1" fill="currentColor"/><circle cx="3.5" cy="10" r="1.1" fill="currentColor"/><circle cx="3.5" cy="15" r="1.1" fill="currentColor"/></svg>
+                                            </button>
+                                        </div>
+                                        <textarea id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][sections][<?php echo esc_attr($section_index); ?>][body]" rows="5"><?php echo esc_textarea($section_body); ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -177,6 +174,54 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('click', function (event) {
+            var button = event.target.closest('.oegkm-event-admin-format');
+            var textarea;
+            var start;
+            var end;
+            var selected;
+            var replacement;
+            var url;
+
+            if (!button) {
+                return;
+            }
+
+            textarea = button.closest('.oegkm-event-admin-editor').querySelector('textarea');
+            if (!textarea) {
+                return;
+            }
+
+            start = textarea.selectionStart;
+            end = textarea.selectionEnd;
+            selected = textarea.value.slice(start, end);
+
+            if (button.dataset.format === 'bold') {
+                replacement = '<strong>' + (selected || '<?php echo esc_js(__('Text', 'bootscore-child-oegkm')); ?>') + '</strong>';
+            }
+
+            if (button.dataset.format === 'link') {
+                url = window.prompt('<?php echo esc_js(__('Link-URL eingeben', 'bootscore-child-oegkm')); ?>', 'https://');
+                if (!url) {
+                    textarea.focus();
+                    return;
+                }
+                replacement = '<a href="' + url.replace(/"/g, '&quot;') + '">' + (selected || url) + '</a>';
+            }
+
+            if (button.dataset.format === 'list') {
+                replacement = selected ? selected.split(/\r?\n/).filter(Boolean).map(function (line) {
+                    return '<li>' + line.trim() + '</li>';
+                }).join('\n') : '<li><?php echo esc_js(__('Listeneintrag', 'bootscore-child-oegkm')); ?></li>';
+                replacement = '<ul>\n' + replacement + '\n</ul>';
+            }
+
+            textarea.setRangeText(replacement, start, end, 'end');
+            textarea.dispatchEvent(new Event('input', { bubbles: true }));
+            textarea.focus();
+        });
+    </script>
     <?php
 }
 
