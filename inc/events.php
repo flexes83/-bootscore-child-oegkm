@@ -79,7 +79,7 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
 
     ?>
     <style>
-        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field>input,.oegkm-event-admin-field>textarea,.oegkm-event-admin-field>div>input,.oegkm-event-admin-field>p>input,.oegkm-event-admin-field>p>textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}.oegkm-event-admin-editor{border:1px solid #8c8f94;background:#fff}.oegkm-event-admin-toolbar{display:flex;gap:4px;padding:6px;border-bottom:1px solid #dcdcde;background:#f6f7f7}.oegkm-event-admin-toolbar button{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:30px;border:1px solid transparent;background:transparent;color:#3c434a;font-weight:600;cursor:pointer}.oegkm-event-admin-toolbar button:hover,.oegkm-event-admin-toolbar button:focus{border-color:#8c8f94;background:#fff}.oegkm-event-admin-toolbar svg{display:block;width:18px;height:18px}.oegkm-event-admin-editable{box-sizing:border-box;min-height:126px;width:100%;padding:10px 12px;background:#fff;color:#1d2327;font-size:14px;line-height:1.55;outline:0;cursor:text}.oegkm-event-admin-editable:focus{box-shadow:0 0 0 1px #2271b1}.oegkm-event-admin-editable p{margin:.4em 0}.oegkm-event-admin-editable ul{margin:.4em 0 .4em 1.3em;list-style:disc}.oegkm-event-admin-editable a{color:#2271b1;text-decoration:underline}.oegkm-event-admin-input{display:none!important}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}}
+        .oegkm-event-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}.oegkm-event-admin-field label{display:block;font-weight:600;margin-bottom:6px}.oegkm-event-admin-field>input,.oegkm-event-admin-field>textarea,.oegkm-event-admin-field>div>input,.oegkm-event-admin-field>p>input,.oegkm-event-admin-field>p>textarea{width:100%}.oegkm-event-admin-field--full{grid-column:1/-1}.oegkm-event-admin-tabs{display:grid;gap:18px}.oegkm-event-admin-tab{border:1px solid #dcdcde;background:#fff;padding:16px}.oegkm-event-admin-tab h4{margin:0 0 12px}.oegkm-event-admin-section{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f0f1}.oegkm-event-admin-help{margin:4px 0 0;color:#646970}.oegkm-event-admin-section textarea{min-height:126px;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.5}@media(max-width:782px){.oegkm-event-admin-grid{grid-template-columns:1fr}.oegkm-event-admin-field--full{grid-column:auto}.oegkm-event-admin-section{grid-template-columns:1fr}}
     </style>
     <div class="oegkm-event-admin-grid">
         <p class="oegkm-event-admin-field">
@@ -146,7 +146,6 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
                             $section = $sections[$section_index] ?? [];
                             $section_heading = isset($section['heading']) ? (string) $section['heading'] : '';
                             $section_body = isset($section['body']) ? bootscore_child_oegkm_sanitize_event_tab_body((string) $section['body']) : '';
-                            $section_editor_body = bootscore_child_oegkm_event_tab_body_editor_html($section_body);
                             ?>
                             <div class="oegkm-event-admin-section">
                                 <div>
@@ -155,19 +154,8 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
                                 </div>
                                 <div>
                                     <label for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body"><?php echo esc_html(sprintf(__('Abschnitt %d Text', 'bootscore-child-oegkm'), $section_index + 1)); ?></label>
-                                    <div class="oegkm-event-admin-editor">
-                                        <div class="oegkm-event-admin-toolbar" aria-label="<?php esc_attr_e('Text formatieren', 'bootscore-child-oegkm'); ?>">
-                                            <button type="button" class="oegkm-event-admin-format" data-format="bold" aria-label="<?php esc_attr_e('Fett', 'bootscore-child-oegkm'); ?>">B</button>
-                                            <button type="button" class="oegkm-event-admin-format" data-format="link" aria-label="<?php esc_attr_e('Link', 'bootscore-child-oegkm'); ?>">
-                                                <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M8.3 12.5 7 13.8a3.1 3.1 0 0 1-4.4-4.4l2.2-2.2a3.1 3.1 0 0 1 4.4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m11.7 7.5 1.3-1.3a3.1 3.1 0 0 1 4.4 4.4l-2.2 2.2a3.1 3.1 0 0 1-4.4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m7.5 12.5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                                            </button>
-                                            <button type="button" class="oegkm-event-admin-format" data-format="list" aria-label="<?php esc_attr_e('Aufzählung', 'bootscore-child-oegkm'); ?>">
-                                                <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M7 5h10M7 10h10M7 15h10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="3.5" cy="5" r="1.1" fill="currentColor"/><circle cx="3.5" cy="10" r="1.1" fill="currentColor"/><circle cx="3.5" cy="15" r="1.1" fill="currentColor"/></svg>
-                                            </button>
-                                        </div>
-                                        <div class="oegkm-event-admin-editable" contenteditable="true" role="textbox" aria-multiline="true" data-editor-for="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body"><?php echo $section_editor_body; ?></div>
-                                        <textarea class="oegkm-event-admin-input" id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][sections][<?php echo esc_attr($section_index); ?>][body]"><?php echo esc_textarea($section_body); ?></textarea>
-                                    </div>
+                                    <textarea id="oegkm_event_tabs_<?php echo esc_attr($tab_index); ?>_<?php echo esc_attr($section_index); ?>_body" name="oegkm_event_tabs[<?php echo esc_attr($tab_index); ?>][sections][<?php echo esc_attr($section_index); ?>][body]" rows="6"><?php echo esc_textarea($section_body); ?></textarea>
+                                    <p class="oegkm-event-admin-help"><?php esc_html_e('HTML ist erlaubt und wird beim Speichern bereinigt.', 'bootscore-child-oegkm'); ?></p>
                                 </div>
                             </div>
                         <?php endfor; ?>
@@ -176,115 +164,6 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
             </div>
         </div>
     </div>
-    <script>
-        (function () {
-            var activeEditor = null;
-
-            function syncEditor(editor) {
-                var input = editor && document.getElementById(editor.dataset.editorFor);
-
-                if (!input) {
-                    return;
-                }
-
-                input.value = editor.innerHTML.trim();
-                input.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-
-            function syncEditors() {
-                document.querySelectorAll('.oegkm-event-admin-editable').forEach(syncEditor);
-            }
-
-            function focusEditor(editor) {
-                editor.focus();
-                activeEditor = editor;
-            }
-
-            document.querySelectorAll('.oegkm-event-admin-editable').forEach(function (editor) {
-                syncEditor(editor);
-
-                if (window.MutationObserver) {
-                    new MutationObserver(function () {
-                        syncEditor(editor);
-                    }).observe(editor, { childList: true, subtree: true, characterData: true });
-                }
-            });
-
-            document.addEventListener('focusin', function (event) {
-                if (event.target.matches('.oegkm-event-admin-editable')) {
-                    activeEditor = event.target;
-                }
-            });
-
-            document.addEventListener('input', function (event) {
-                if (event.target.matches('.oegkm-event-admin-editable')) {
-                    syncEditor(event.target);
-                }
-            });
-
-            document.addEventListener('paste', function (event) {
-                var text;
-
-                if (!event.target.matches('.oegkm-event-admin-editable')) {
-                    return;
-                }
-
-                event.preventDefault();
-                text = (event.clipboardData || window.clipboardData).getData('text/plain');
-                document.execCommand('insertText', false, text);
-                syncEditor(event.target);
-            });
-
-            document.addEventListener('mousedown', function (event) {
-                if (event.target.closest('.oegkm-event-admin-format')) {
-                    event.preventDefault();
-                }
-            });
-
-            document.addEventListener('click', function (event) {
-                var button = event.target.closest('.oegkm-event-admin-format');
-                var editor;
-                var url;
-
-                if (!button) {
-                    if (event.target.closest('#publish, .editor-post-publish-button, .editor-post-save-draft, .editor-post-publish-panel__toggle')) {
-                        syncEditors();
-                    }
-                    return;
-                }
-
-                editor = button.closest('.oegkm-event-admin-editor').querySelector('.oegkm-event-admin-editable') || activeEditor;
-                if (!editor) {
-                    return;
-                }
-
-                focusEditor(editor);
-
-                if (button.dataset.format === 'bold') {
-                    document.execCommand('bold', false, null);
-                }
-
-                if (button.dataset.format === 'link') {
-                    url = window.prompt('<?php echo esc_js(__('Link-URL eingeben', 'bootscore-child-oegkm')); ?>', 'https://');
-                    if (!url) {
-                        focusEditor(editor);
-                        return;
-                    }
-                    document.execCommand('createLink', false, url);
-                }
-
-                if (button.dataset.format === 'list') {
-                    document.execCommand('insertUnorderedList', false, null);
-                }
-
-                syncEditor(editor);
-                focusEditor(editor);
-            });
-
-            document.addEventListener('submit', syncEditors, true);
-            window.setInterval(syncEditors, 1000);
-        }());
-    </script>
     <?php
 }
 
@@ -517,40 +396,7 @@ function bootscore_child_oegkm_sanitize_event_tabs(array $tabs_input): array {
 function bootscore_child_oegkm_sanitize_event_tab_body(string $body): string {
     $body = bootscore_child_oegkm_normalize_event_tab_body($body);
 
-    return wp_kses($body, bootscore_child_oegkm_event_tab_body_allowed_html());
-}
-
-function bootscore_child_oegkm_event_tab_body_editor_html(string $body): string {
-    $body = bootscore_child_oegkm_sanitize_event_tab_body($body);
-
-    if ($body === '') {
-        return '';
-    }
-
-    if ($body === wp_strip_all_tags($body) && strpos($body, "\n") !== false) {
-        return wp_kses(nl2br(esc_html($body)), bootscore_child_oegkm_event_tab_body_allowed_html());
-    }
-
-    return wp_kses($body, bootscore_child_oegkm_event_tab_body_allowed_html());
-}
-
-function bootscore_child_oegkm_event_tab_body_allowed_html(): array {
-    return [
-        'a' => [
-            'href' => true,
-            'title' => true,
-            'target' => true,
-            'rel' => true,
-        ],
-        'strong' => [],
-        'b' => [],
-        'ul' => [],
-        'ol' => [],
-        'li' => [],
-        'p' => [],
-        'br' => [],
-        'div' => [],
-    ];
+    return wp_kses_post($body);
 }
 
 function bootscore_child_oegkm_normalize_event_tab_body(string $body): string {
