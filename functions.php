@@ -208,6 +208,7 @@ add_action('customize_register', function ($wp_customize) {
         'search_page_url'   => home_url('/'),
         'footer_text'       => __('Österreichische Gesellschaft für Knochen- und Mineralstoffwechsel', 'bootscore-child-oegkm'),
         'privacy_url'       => home_url('/datenschutz/'),
+        'statutes_url'      => home_url('/statuten/'),
         'imprint_url'       => home_url('/impressum/'),
     ];
 
@@ -224,6 +225,7 @@ add_action('customize_register', function ($wp_customize) {
         'search_page_url'   => __('Such-URL', 'bootscore-child-oegkm'),
         'footer_text'       => __('Footer Text', 'bootscore-child-oegkm'),
         'privacy_url'       => __('Datenschutz URL', 'bootscore-child-oegkm'),
+        'statutes_url'      => __('Statuten URL', 'bootscore-child-oegkm'),
         'imprint_url'       => __('Impressum URL', 'bootscore-child-oegkm'),
     ];
 
@@ -255,6 +257,10 @@ function bootscore_child_oegkm_footer_text(): string {
 
 function bootscore_child_oegkm_privacy_url(): string {
     return esc_url((string) get_theme_mod('oegkm_privacy_url', home_url('/datenschutz/')));
+}
+
+function bootscore_child_oegkm_statutes_url(): string {
+    return esc_url((string) get_theme_mod('oegkm_statutes_url', home_url('/statuten/')));
 }
 
 function bootscore_child_oegkm_imprint_url(): string {
