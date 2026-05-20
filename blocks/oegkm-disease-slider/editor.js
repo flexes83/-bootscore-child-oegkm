@@ -2,14 +2,51 @@
   var el = element.createElement;
   var Fragment = element.Fragment;
   var useBlockProps = blockEditor.useBlockProps;
+  var BlockControls = blockEditor.BlockControls;
   var RichText = blockEditor.RichText;
   var MediaUpload = blockEditor.MediaUpload;
   var MediaUploadCheck = blockEditor.MediaUploadCheck;
   var InspectorControls = blockEditor.InspectorControls;
   var PanelBody = components.PanelBody;
   var Button = components.Button;
-  var ToggleControl = components.ToggleControl;
+  var ToolbarButton = components.ToolbarButton;
+  var ToolbarGroup = components.ToolbarGroup;
   var textFormats = ['core/bold', 'core/link'];
+
+  function splitRichTextLines(value) {
+    var html = (value || '').trim();
+    var matches;
+
+    if (!html) return [];
+
+    if (/<li[\s>]/i.test(html)) {
+      matches = html.match(/<li[^>]*>[\s\S]*?<\/li>/gi) || [];
+      return matches.map(function (item) {
+        return item.replace(/^<li[^>]*>/i, '').replace(/<\/li>$/i, '').trim();
+      }).filter(Boolean);
+    }
+
+    if (/<p[\s>]/i.test(html)) {
+      matches = html.match(/<p[^>]*>[\s\S]*?<\/p>/gi) || [];
+      return matches.map(function (item) {
+        return item.replace(/^<p[^>]*>/i, '').replace(/<\/p>$/i, '').trim();
+      }).filter(Boolean);
+    }
+
+    return html.split(/\n|<br\s*\/?>/i).map(function (item) {
+      return item.trim();
+    }).filter(Boolean);
+  }
+
+  function toListValue(value) {
+    return splitRichTextLines(value).map(function (item) {
+      return '<li>' + item + '</li>';
+    }).join('');
+  }
+
+  function fromListValue(value) {
+    return splitRichTextLines(value).join('<br>');
+  }
 
   function ChevronIcon(direction) {
     return el('svg', {
@@ -57,6 +94,16 @@
         setSlides(nextSlides);
       }
 
+      function setSlideTextAsList(index, enabled) {
+        var nextSlides = slides.slice();
+        var slide = nextSlides[index];
+        nextSlides[index] = Object.assign({}, slide, {
+          textAsList: enabled,
+          text: enabled ? toListValue(slide.text) : fromListValue(slide.text)
+        });
+        setSlides(nextSlides);
+      }
+
       function addSlide() {
         var nextSlides = slides.concat([{
           kicker: 'NEUER ABSCHNITT',
@@ -88,17 +135,24 @@
                 slides.length > 1 ? el(Button, {
                   isDestructive: true,
                   onClick: function () { removeSlide(index); }
-                }, 'Löschen') : null,
-                el(ToggleControl, {
-                  label: 'Text als Liste',
-                  checked: !!slide.textAsList,
-                  onChange: function (value) { updateSlide(index, 'textAsList', value); }
-                })
+                }, 'Löschen') : null
               );
             }),
             el(Button, { variant: 'primary', onClick: addSlide }, 'Slide hinzufügen')
           )
         ),
+        currentSlide ? el(BlockControls, {},
+          el(ToolbarGroup, {},
+            el(ToolbarButton, {
+              label: 'Aufzählung',
+              text: 'Aufzählung',
+              isPressed: !!currentSlide.textAsList,
+              onClick: function () {
+                setSlideTextAsList(activeSlide, !currentSlide.textAsList);
+              }
+            })
+          )
+        ) : null,
         currentSlide ? el('section', blockProps,
           el('div', { className: 'oegkm-disease-slider__inner' },
             el('div', { className: 'oegkm-disease-slider__content' },

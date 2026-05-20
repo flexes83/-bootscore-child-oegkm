@@ -1,7 +1,9 @@
 (function (blocks, element, blockEditor, components) {
   var el = element.createElement;
   var Fragment = element.Fragment;
+  var useState = element.useState;
   var useBlockProps = blockEditor.useBlockProps;
+  var BlockControls = blockEditor.BlockControls;
   var RichText = blockEditor.RichText;
   var MediaUpload = blockEditor.MediaUpload;
   var MediaUploadCheck = blockEditor.MediaUploadCheck;
@@ -10,8 +12,44 @@
   var Button = components.Button;
   var SelectControl = components.SelectControl;
   var TextControl = components.TextControl;
-  var ToggleControl = components.ToggleControl;
+  var ToolbarButton = components.ToolbarButton;
+  var ToolbarGroup = components.ToolbarGroup;
   var textFormats = ['core/bold', 'core/link'];
+
+  function splitRichTextLines(value) {
+    var html = (value || '').trim();
+    var matches;
+
+    if (!html) return [];
+
+    if (/<li[\s>]/i.test(html)) {
+      matches = html.match(/<li[^>]*>[\s\S]*?<\/li>/gi) || [];
+      return matches.map(function (item) {
+        return item.replace(/^<li[^>]*>/i, '').replace(/<\/li>$/i, '').trim();
+      }).filter(Boolean);
+    }
+
+    if (/<p[\s>]/i.test(html)) {
+      matches = html.match(/<p[^>]*>[\s\S]*?<\/p>/gi) || [];
+      return matches.map(function (item) {
+        return item.replace(/^<p[^>]*>/i, '').replace(/<\/p>$/i, '').trim();
+      }).filter(Boolean);
+    }
+
+    return html.split(/\n|<br\s*\/?>/i).map(function (item) {
+      return item.trim();
+    }).filter(Boolean);
+  }
+
+  function toListValue(value) {
+    return splitRichTextLines(value).map(function (item) {
+      return '<li>' + item + '</li>';
+    }).join('');
+  }
+
+  function fromListValue(value) {
+    return splitRichTextLines(value).join('<br>');
+  }
 
   function arrowIcon() {
     return el('svg', {
@@ -81,6 +119,7 @@
         value: section.text,
         allowedFormats: textFormats,
         placeholder: 'Text',
+        onFocus: function () { helpers.setActiveTextIndex(index); },
         onChange: function (value) { helpers.updateField(index, 'text', value); }
       }) : el(RichText.Content, {
         tagName: section.textAsList ? 'ul' : 'p',
@@ -104,6 +143,9 @@
     edit: function (props) {
       var sections = props.attributes.sections || [];
       var blockProps = useBlockProps({ className: 'oegkm-image-content oegkm-image-content--editor' });
+      var activeTextState = useState(null);
+      var activeTextIndex = activeTextState[0];
+      var setActiveTextIndex = activeTextState[1];
 
       function setSections(nextSections) {
         props.setAttributes({ sections: nextSections });
@@ -117,6 +159,15 @@
 
       function updateField(index, field, value) {
         updateSection(index, Object.assign({}, { [field]: value }));
+      }
+
+      function setTextAsList(index, enabled) {
+        var section = sections[index];
+        var nextText = enabled ? toListValue(section.text) : fromListValue(section.text);
+        updateSection(index, {
+          textAsList: enabled,
+          text: nextText
+        });
       }
 
       function addSection() {
@@ -142,10 +193,23 @@
 
       var helpers = {
         updateSection: updateSection,
-        updateField: updateField
+        updateField: updateField,
+        setActiveTextIndex: setActiveTextIndex
       };
 
       return el(Fragment, {},
+        typeof activeTextIndex === 'number' && sections[activeTextIndex] ? el(BlockControls, {},
+          el(ToolbarGroup, {},
+            el(ToolbarButton, {
+              label: 'Aufzählung',
+              text: 'Aufzählung',
+              isPressed: !!sections[activeTextIndex].textAsList,
+              onClick: function () {
+                setTextAsList(activeTextIndex, !sections[activeTextIndex].textAsList);
+              }
+            })
+          )
+        ) : null,
         el(InspectorControls, {},
           el(PanelBody, { title: 'Sektionen', initialOpen: true },
             sections.map(function (section, index) {
@@ -163,11 +227,6 @@
                     { label: 'Bild links', value: 'left' }
                   ],
                   onChange: function (value) { updateField(index, 'imagePosition', value); }
-                }),
-                el(ToggleControl, {
-                  label: 'Text als Liste',
-                  checked: !!section.textAsList,
-                  onChange: function (value) { updateField(index, 'textAsList', value); }
                 }),
                 el(TextControl, {
                   label: 'Buttontext',
