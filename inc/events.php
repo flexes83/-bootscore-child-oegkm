@@ -402,6 +402,8 @@ function bootscore_child_oegkm_sanitize_event_tab_body(string $body): string {
 function bootscore_child_oegkm_normalize_event_tab_body(string $body): string {
     $body = html_entity_decode($body, ENT_QUOTES | ENT_HTML5, get_bloginfo('charset') ?: 'UTF-8');
     $body = str_replace(['\\r\\n', '\\n', '\\r', '\\t'], ["\n", "\n", "\n", "\t"], $body);
+    $body = str_replace(["\r\n", "\r"], "\n", $body);
+    $body = str_replace('rn', "\n", $body);
     $body = preg_replace('/(^|>)[\s\t]*(?:rn|r|n|t)(?:\s+(?:rn|r|n|t))*[\s\t]*(?=<|$)/i', '$1', $body) ?? $body;
     $body = preg_replace('/(<br\s*\/?>|<\/(?:p|div|li|ul|ol)>)[\s\t]*(?:rn|r|n|t)+[\s\t]*/i', '$1', $body) ?? $body;
     $body = str_replace(['<br>rn', '<br/>rn', '<br />rn', '>rn'], ['<br>', '<br/>', '<br />', '>'], $body);
