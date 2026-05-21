@@ -209,7 +209,8 @@ add_action('save_post_veranstaltung', function (int $post_id) {
     update_post_meta($post_id, '_oegkm_event_program_text', $program_text);
     update_post_meta($post_id, '_oegkm_event_bottom_image_id', $bottom_image_id);
 
-    update_post_meta($post_id, '_oegkm_event_tabs_json', wp_json_encode(bootscore_child_oegkm_sanitize_event_tabs($tabs_input), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    $tabs_json = wp_json_encode(bootscore_child_oegkm_sanitize_event_tabs($tabs_input), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    update_post_meta($post_id, '_oegkm_event_tabs_json', wp_slash($tabs_json ?: '[]'));
 });
 
 add_action('pre_get_posts', function (WP_Query $query) {
@@ -403,10 +404,12 @@ function bootscore_child_oegkm_normalize_event_tab_body(string $body): string {
     $body = html_entity_decode($body, ENT_QUOTES | ENT_HTML5, get_bloginfo('charset') ?: 'UTF-8');
     $body = str_replace(['\\r\\n', '\\n', '\\r', '\\t'], ["\n", "\n", "\n", "\t"], $body);
     $body = str_replace(["\r\n", "\r"], "\n", $body);
-    $body = str_replace('rn', "\n", $body);
+    $body = str_replace('rnrn', "\n\n", $body);
+    $body = preg_replace('/rn(?=[A-ZÄÖÜ0-9<]|-{2,})/u', "\n", $body) ?? $body;
     $body = preg_replace('/(^|>)[\s\t]*(?:rn|r|n|t)(?:\s+(?:rn|r|n|t))*[\s\t]*(?=<|$)/i', '$1', $body) ?? $body;
     $body = preg_replace('/(<br\s*\/?>|<\/(?:p|div|li|ul|ol)>)[\s\t]*(?:rn|r|n|t)+[\s\t]*/i', '$1', $body) ?? $body;
     $body = str_replace(['<br>rn', '<br/>rn', '<br />rn', '>rn'], ['<br>', '<br/>', '<br />', '>'], $body);
+    $body = str_replace(['<br>n', '<br/>n', '<br />n'], ['<br>', '<br/>', '<br />'], $body);
 
     return trim($body);
 }
