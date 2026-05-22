@@ -267,13 +267,17 @@ if ($selected_event_id) {
                                             if (!$youtube_id && $embed_html === '') {
                                                 continue;
                                             }
-                                            $thumbnail = $youtube_id ? 'https://img.youtube.com/vi/' . rawurlencode($youtube_id) . '/hqdefault.jpg' : '';
                                             ?>
                                             <article class="oegkm-event-media-video">
                                                 <?php if ($youtube_id) : ?>
                                                     <button class="oegkm-video-placeholder" type="button" data-youtube-id="<?php echo esc_attr($youtube_id); ?>" aria-label="<?php echo esc_attr(sprintf(__('Video laden: %s', 'bootscore-child-oegkm'), $video_title)); ?>">
-                                                        <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($video_title); ?>" loading="lazy" decoding="async">
-                                                        <span class="oegkm-video-placeholder__play" aria-hidden="true">▶</span>
+                                                        <span class="oegkm-video-placeholder__label"><?php esc_html_e('Video ansehen', 'bootscore-child-oegkm'); ?></span>
+                                                        <span class="oegkm-video-placeholder__title"><?php echo esc_html($video_title); ?></span>
+                                                        <span class="oegkm-video-placeholder__play" aria-hidden="true">
+                                                            <svg viewBox="0 0 24 24" focusable="false">
+                                                                <path d="M9 7.5v9l7-4.5-7-4.5z" />
+                                                            </svg>
+                                                        </span>
                                                     </button>
                                                 <?php else : ?>
                                                     <div class="oegkm-event-media-video__embed">

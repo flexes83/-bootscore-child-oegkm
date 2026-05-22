@@ -7569,6 +7569,96 @@ body:not(.home) #primary.site-main{
   background:#fff;
   border:1px solid var(--oegkm-member-line);
 }
+
+.oegkm-video-placeholder{
+  position:relative;
+  display:grid;
+  align-content:end;
+  justify-items:start;
+  width:100%;
+  min-height:clamp(15rem, 30vw, 23rem);
+  padding:clamp(1.25rem, 3vw, 2rem);
+  overflow:hidden;
+  border:0;
+  background:
+    radial-gradient(circle at 76% 22%, rgba(184,179,242,.72), transparent 8rem),
+    radial-gradient(circle at 18% 78%, rgba(0,218,142,.55), transparent 10rem),
+    linear-gradient(135deg, var(--oegkm-member-ink), var(--oegkm-member-teal));
+  color:#f6fff0;
+  text-align:left;
+  cursor:pointer;
+}
+
+.oegkm-video-placeholder::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    repeating-radial-gradient(ellipse at 72% 38%, rgba(246,255,240,.26) 0 1px, transparent 1px 8px),
+    radial-gradient(circle at 50% 50%, rgba(246,255,240,.18), transparent 42%);
+  opacity:.55;
+  pointer-events:none;
+}
+
+.oegkm-video-placeholder__label,
+.oegkm-video-placeholder__title,
+.oegkm-video-placeholder__play{
+  position:relative;
+  z-index:1;
+}
+
+.oegkm-video-placeholder__label{
+  margin-bottom:.55rem;
+  color:var(--oegkm-member-mint);
+  font-size:.82rem;
+  font-weight:800;
+  letter-spacing:.1em;
+  line-height:1.1;
+  text-transform:uppercase;
+}
+
+.oegkm-video-placeholder__title{
+  max-width:28rem;
+  margin-right:5rem;
+  font-family:var(--oegkm-font-headline, inherit);
+  font-size:clamp(1.55rem, 2.8vw, 2.35rem);
+  font-weight:600;
+  line-height:1.08;
+}
+
+.oegkm-video-placeholder__play{
+  position:absolute;
+  right:clamp(1.25rem, 3vw, 2rem);
+  bottom:clamp(1.25rem, 3vw, 2rem);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:clamp(3.25rem, 5vw, 4.5rem);
+  height:clamp(3.25rem, 5vw, 4.5rem);
+  border:1.5px solid currentColor;
+  border-radius:999px;
+  color:#f6fff0;
+  transition:transform .18s ease, background-color .18s ease;
+}
+
+.oegkm-video-placeholder__play svg{
+  width:1.35rem;
+  height:1.35rem;
+  fill:currentColor;
+  transform:translateX(.08rem);
+}
+
+.oegkm-video-placeholder:hover .oegkm-video-placeholder__play,
+.oegkm-video-placeholder:focus-visible .oegkm-video-placeholder__play{
+  background:rgba(246,255,240,.12);
+  transform:scale(1.04);
+}
+
+.oegkm-video-placeholder:focus-visible{
+  outline:2px solid var(--oegkm-member-mint);
+  outline-offset:3px;
+}
+
 .oegkm-event-media-video__embed{
   background:#001f22;
 }
