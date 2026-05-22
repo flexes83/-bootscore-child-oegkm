@@ -22,23 +22,20 @@
     button.remove();
   });
 
-  document.addEventListener('click', function (event) {
-    const videoButton = event.target.closest('.oegkm-video-placeholder');
-    if (!videoButton) return;
-
+  function createVideoIframe(videoButton) {
     const token = videoButton.dataset.oegkmVideoToken || '';
-    if (!token) return;
+    if (!token) return null;
 
     let video = {};
     try {
       video = JSON.parse(window.atob(token));
     } catch (error) {
-      return;
+      return null;
     }
 
     const id = video.id || '';
     const provider = video.p || '';
-    if (!id || !provider) return;
+    if (!id || !provider) return null;
 
     const iframe = document.createElement('iframe');
     if (provider === 'vm') {
@@ -51,12 +48,8 @@
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.allowFullscreen = true;
 
-    const wrapper = document.createElement('div');
-    wrapper.className = 'oegkm-event-media-video__embed';
-    wrapper.appendChild(iframe);
-
-    videoButton.replaceWith(wrapper);
-  });
+    return iframe;
+  }
 
   const lightbox = document.createElement('div');
   lightbox.className = 'oegkm-lightbox';
@@ -76,6 +69,7 @@
     </button>
     <figure class="oegkm-lightbox__figure">
       <img class="oegkm-lightbox__image" alt="" loading="eager" decoding="async">
+      <div class="oegkm-lightbox__video" hidden></div>
       <figcaption class="oegkm-lightbox__caption"></figcaption>
     </figure>
     <button class="oegkm-lightbox__nav oegkm-lightbox__nav--next" type="button" aria-label="Nächstes Bild">
@@ -93,15 +87,25 @@
 
   let currentIndex = 0;
   let galleryLinks = [];
+  let lightboxMode = 'image';
 
   const image = lightbox.querySelector('.oegkm-lightbox__image');
+  const video = lightbox.querySelector('.oegkm-lightbox__video');
   const caption = lightbox.querySelector('.oegkm-lightbox__caption');
   const closeButton = lightbox.querySelector('.oegkm-lightbox__close');
   const prevButton = lightbox.querySelector('.oegkm-lightbox__nav--prev');
   const nextButton = lightbox.querySelector('.oegkm-lightbox__nav--next');
 
+  function resetVideo() {
+    video.hidden = true;
+    video.replaceChildren();
+  }
+
   function setImage(index) {
     if (!galleryLinks.length) return;
+    lightboxMode = 'image';
+    resetVideo();
+    image.hidden = false;
     currentIndex = (index + galleryLinks.length) % galleryLinks.length;
     const link = galleryLinks[currentIndex];
     const title = link.dataset.caption || (link.querySelector('img') ? link.querySelector('img').alt : '') || '';
@@ -113,7 +117,14 @@
     nextButton.hidden = galleryLinks.length < 2;
   }
 
-  function open(link) {
+  function showLightbox() {
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('oegkm-lightbox-open');
+    closeButton.focus({ preventScroll: true });
+  }
+
+  function openImage(link) {
     ensureLightbox();
     const group = link.dataset.oegkmLightbox || '';
     galleryLinks = Array.from(document.querySelectorAll('[data-oegkm-lightbox="' + CSS.escape(group) + '"]')).filter(function (item) {
@@ -121,10 +132,25 @@
     });
     const index = Math.max(0, galleryLinks.indexOf(link));
     setImage(index);
-    lightbox.classList.add('is-open');
-    lightbox.setAttribute('aria-hidden', 'false');
-    document.documentElement.classList.add('oegkm-lightbox-open');
-    closeButton.focus({ preventScroll: true });
+    showLightbox();
+  }
+
+  function openVideo(videoButton) {
+    const iframe = createVideoIframe(videoButton);
+    if (!iframe) return;
+
+    ensureLightbox();
+    lightboxMode = 'video';
+    galleryLinks = [];
+    image.hidden = true;
+    image.removeAttribute('src');
+    video.hidden = false;
+    video.replaceChildren(iframe);
+    caption.textContent = videoButton.querySelector('.oegkm-video-placeholder__title') ? videoButton.querySelector('.oegkm-video-placeholder__title').textContent : '';
+    caption.hidden = !caption.textContent;
+    prevButton.hidden = true;
+    nextButton.hidden = true;
+    showLightbox();
   }
 
   function close() {
@@ -132,18 +158,31 @@
     lightbox.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('oegkm-lightbox-open');
     image.removeAttribute('src');
+    image.hidden = false;
+    resetVideo();
   }
 
   document.addEventListener('click', function (event) {
     const link = event.target.closest('[data-oegkm-lightbox]');
     if (!link) return;
     event.preventDefault();
-    open(link);
+    openImage(link);
+  });
+
+  document.addEventListener('click', function (event) {
+    const videoButton = event.target.closest('.oegkm-video-placeholder');
+    if (!videoButton) return;
+    event.preventDefault();
+    openVideo(videoButton);
   });
 
   closeButton.addEventListener('click', close);
-  prevButton.addEventListener('click', function () { setImage(currentIndex - 1); });
-  nextButton.addEventListener('click', function () { setImage(currentIndex + 1); });
+  prevButton.addEventListener('click', function () {
+    if (lightboxMode === 'image') setImage(currentIndex - 1);
+  });
+  nextButton.addEventListener('click', function () {
+    if (lightboxMode === 'image') setImage(currentIndex + 1);
+  });
 
   lightbox.addEventListener('click', function (event) {
     if (event.target === lightbox) close();
@@ -152,6 +191,7 @@
   document.addEventListener('keydown', function (event) {
     if (!lightbox.classList.contains('is-open')) return;
     if (event.key === 'Escape') close();
+    if (lightboxMode !== 'image') return;
     if (event.key === 'ArrowLeft') setImage(currentIndex - 1);
     if (event.key === 'ArrowRight') setImage(currentIndex + 1);
   });
