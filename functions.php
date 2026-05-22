@@ -7,6 +7,12 @@ function bootscore_child_oegkm_theme_version(): string {
     return (string) wp_get_theme()->get('Version');
 }
 
+function bootscore_child_oegkm_asset_version(string $relative_path): string {
+    $path = get_stylesheet_directory() . '/' . ltrim($relative_path, '/');
+
+    return file_exists($path) ? (string) filemtime($path) : bootscore_child_oegkm_theme_version();
+}
+
 require_once get_stylesheet_directory() . '/inc/events.php';
 require_once get_stylesheet_directory() . '/inc/prizes.php';
 require_once get_stylesheet_directory() . '/inc/theme-page-header.php';
@@ -26,10 +32,17 @@ add_action('wp_enqueue_scripts', function () {
         'bootscore-child-oegkm',
         get_stylesheet_directory_uri() . '/assets/css/custom.css',
         ['bootscore-style', 'bootscore-child-oegkm-fonts'],
-        $version
+        bootscore_child_oegkm_asset_version('assets/css/custom.css')
     );
 
     wp_enqueue_script('bootscore-child-oegkm-header-search', get_stylesheet_directory_uri() . '/assets/js/header-search.js', [], $version, true);
+    wp_enqueue_script(
+        'bootscore-child-oegkm-header-mobile-nav',
+        get_stylesheet_directory_uri() . '/assets/js/header-mobile-nav.js',
+        [],
+        bootscore_child_oegkm_asset_version('assets/js/header-mobile-nav.js'),
+        true
+    );
     wp_enqueue_script('bootscore-child-oegkm-header-scroll', get_stylesheet_directory_uri() . '/assets/js/header-scroll.js', [], $version, true);
     wp_enqueue_script('bootscore-child-oegkm-accordion-frontend', get_stylesheet_directory_uri() . '/assets/js/accordion-frontend.js', [], $version, true);
     wp_enqueue_script('bootscore-child-oegkm-ziele-frontend', get_stylesheet_directory_uri() . '/assets/js/ziele-frontend.js', [], $version, true);

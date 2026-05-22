@@ -9221,6 +9221,9 @@ a.download::before,
 }
 
 .oegkm-navbar-toggler{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   width:52px;
   height:52px;
   border-radius:999px;
@@ -9233,7 +9236,6 @@ a.download::before,
   width:1.35rem;
   height:1.35rem;
   position:relative;
-  display:block;
   margin:0 auto;
   background-image:none !important;
   color:var(--oegkm-primary);
@@ -9267,20 +9269,23 @@ a.download::before,
   transform:translate(-50%, 5px);
 }
 
-.oegkm-navbar-toggler:not(.is-open) .navbar-toggler-icon{
+.oegkm-navbar-toggler:not(.is-open):not([aria-expanded="true"]) .navbar-toggler-icon{
   background:
     linear-gradient(currentColor, currentColor) center/1.22rem 2px no-repeat;
 }
 
-.oegkm-navbar-toggler.is-open .navbar-toggler-icon{
+.oegkm-navbar-toggler.is-open .navbar-toggler-icon,
+.oegkm-navbar-toggler[aria-expanded="true"] .navbar-toggler-icon{
   background:none !important;
 }
 
-.oegkm-navbar-toggler.is-open .navbar-toggler-icon::before{
+.oegkm-navbar-toggler.is-open .navbar-toggler-icon::before,
+.oegkm-navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before{
   transform:translate(-50%, -50%) rotate(45deg);
 }
 
-.oegkm-navbar-toggler.is-open .navbar-toggler-icon::after{
+.oegkm-navbar-toggler.is-open .navbar-toggler-icon::after,
+.oegkm-navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after{
   transform:translate(-50%, -50%) rotate(-45deg);
 }
 
