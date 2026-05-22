@@ -73,6 +73,34 @@ $get_youtube_id = static function (string $value): string {
     return '';
 };
 
+$find_video_value = static function ($value) use (&$find_video_value): string {
+    if (is_string($value)) {
+        return trim($value);
+    }
+
+    if (!is_array($value)) {
+        return '';
+    }
+
+    foreach (['url', 'video_url', 'embed', 'oembed', 'html', 'value'] as $key) {
+        if (!empty($value[$key])) {
+            $found = $find_video_value($value[$key]);
+            if ($found !== '') {
+                return $found;
+            }
+        }
+    }
+
+    foreach ($value as $item) {
+        $found = $find_video_value($item);
+        if ($found !== '' && preg_match('~(?:youtube|youtu\.be|vimeo|iframe)~i', $found)) {
+            return $found;
+        }
+    }
+
+    return '';
+};
+
 $get_event_media_totals = static function (array $sections): array {
     $images = 0;
     $videos = 0;
@@ -226,19 +254,44 @@ if ($selected_event_id) {
                                     <div class="oegkm-event-media-videos">
                                         <?php foreach ($videos as $video_index => $video) :
                                             $video_title = $video['title'] ?? sprintf(__('Video %d', 'bootscore-child-oegkm'), $video_index + 1);
-                                            $video_url = (string) ($video['url'] ?? '');
+                                            $video_url = $find_video_value($video['url'] ?? '');
+                                            if ($video_url === '') {
+                                                $video_url = $find_video_value($video);
+                                            }
                                             $video_description = $video['description'] ?? '';
                                             $youtube_id = $get_youtube_id($video_url);
-                                            if (!$youtube_id) {
+                                            $embed_html = '';
+                                            if (!$youtube_id && $video_url !== '') {
+                                                $embed_html = stripos($video_url, '<iframe') !== false ? $video_url : (string) wp_oembed_get($video_url);
+                                            }
+                                            if (!$youtube_id && $embed_html === '') {
                                                 continue;
                                             }
-                                            $thumbnail = 'https://img.youtube.com/vi/' . rawurlencode($youtube_id) . '/hqdefault.jpg';
+                                            $thumbnail = $youtube_id ? 'https://img.youtube.com/vi/' . rawurlencode($youtube_id) . '/hqdefault.jpg' : '';
                                             ?>
                                             <article class="oegkm-event-media-video">
-                                                <button class="oegkm-video-placeholder" type="button" data-youtube-id="<?php echo esc_attr($youtube_id); ?>" aria-label="<?php echo esc_attr(sprintf(__('Video laden: %s', 'bootscore-child-oegkm'), $video_title)); ?>">
-                                                    <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($video_title); ?>" loading="lazy" decoding="async">
-                                                    <span class="oegkm-video-placeholder__play" aria-hidden="true">▶</span>
-                                                </button>
+                                                <?php if ($youtube_id) : ?>
+                                                    <button class="oegkm-video-placeholder" type="button" data-youtube-id="<?php echo esc_attr($youtube_id); ?>" aria-label="<?php echo esc_attr(sprintf(__('Video laden: %s', 'bootscore-child-oegkm'), $video_title)); ?>">
+                                                        <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($video_title); ?>" loading="lazy" decoding="async">
+                                                        <span class="oegkm-video-placeholder__play" aria-hidden="true">▶</span>
+                                                    </button>
+                                                <?php else : ?>
+                                                    <div class="oegkm-event-media-video__embed">
+                                                        <?php echo wp_kses($embed_html, [
+                                                            'iframe' => [
+                                                                'src' => true,
+                                                                'title' => true,
+                                                                'width' => true,
+                                                                'height' => true,
+                                                                'frameborder' => true,
+                                                                'allow' => true,
+                                                                'allowfullscreen' => true,
+                                                                'loading' => true,
+                                                                'referrerpolicy' => true,
+                                                            ],
+                                                        ]); ?>
+                                                    </div>
+                                                <?php endif; ?>
                                                 <div class="oegkm-event-media-video__body">
                                                     <h4><?php echo esc_html($video_title); ?></h4>
                                                     <?php if ($video_description) : ?>
