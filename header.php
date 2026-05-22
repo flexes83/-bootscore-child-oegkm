@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 
 <header class="oegkm-site-header">
     <div class="container">
-        <nav class="navbar navbar-expand-xxl oegkm-navbar" aria-label="<?php esc_attr_e('Hauptnavigation', 'bootscore-child-oegkm'); ?>">
+        <nav class="navbar navbar-expand-xl oegkm-navbar" aria-label="<?php esc_attr_e('Hauptnavigation', 'bootscore-child-oegkm'); ?>">
             <a class="custom-logo-link custom-logo-link--header oegkm-header-brand" href="<?php echo esc_url(home_url('/')); ?>" rel="home" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
                 <img class="custom-logo custom-logo--header" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/logo-oegkm.svg'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
             </a>

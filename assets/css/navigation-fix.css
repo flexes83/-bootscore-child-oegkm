@@ -1,7 +1,7 @@
 
 /* ÖGKM navigation refinement: desktop layout, dropdown hover bridge, custom carets */
 
-@media (min-width: 1400px) {
+@media (min-width: 1200px) {
     .oegkm-site-header,
     .site-header,
     header.site-header,
@@ -113,7 +113,7 @@
 }
 
 /* Mobile keeps Bootstrap collapse, but with the same caret style */
-@media (max-width: 1399.98px) {
+@media (max-width: 1199.98px) {
     .navbar-collapse {
         background: #fff;
         border-radius: 24px;
