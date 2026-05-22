@@ -1,7 +1,7 @@
 
 /* ÖGKM navigation refinement: desktop layout, dropdown hover bridge, custom carets */
 
-@media (min-width: 992px) {
+@media (min-width: 1400px) {
     .oegkm-site-header,
     .site-header,
     header.site-header,
@@ -113,7 +113,7 @@
 }
 
 /* Mobile keeps Bootstrap collapse, but with the same caret style */
-@media (max-width: 991.98px) {
+@media (max-width: 1399.98px) {
     .navbar-collapse {
         background: #fff;
         border-radius: 24px;
@@ -132,5 +132,27 @@
         padding-left: 1rem;
         background: transparent;
         box-shadow: none;
+    }
+
+    .navbar .navbar-nav .dropdown-toggle,
+    .navbar .navbar-nav .menu-item-has-children > a {
+        position: relative;
+        padding-right: 2rem;
+    }
+
+    .navbar .navbar-nav .dropdown-toggle::after,
+    .navbar .navbar-nav .menu-item-has-children > a::after {
+        position: absolute !important;
+        right: .1rem !important;
+        top: 50% !important;
+        width: .55rem !important;
+        height: .55rem !important;
+        margin: 0 !important;
+        transform: translateY(-60%) rotate(45deg) !important;
+    }
+
+    .navbar .navbar-nav .dropdown-toggle.show::after,
+    .navbar .navbar-nav .menu-item-has-children > a.show::after {
+        transform: translateY(-35%) rotate(-135deg) !important;
     }
 }
