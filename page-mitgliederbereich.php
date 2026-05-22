@@ -53,10 +53,7 @@ $member_has_avatar = !empty($member_avatar['found_avatar']) && !empty($member_av
         <div class="container">
             <?php bootscore_child_oegkm_member_nav('overview'); ?>
 
-            <header class="oegkm-members-section-header" aria-labelledby="oegkm-members-title">
-                <p class="oegkm-members-eyebrow"><?php esc_html_e('Mitgliederbereich', 'bootscore-child-oegkm'); ?></p>
-                <h1 id="oegkm-members-title"><?php the_title(); ?></h1>
-            </header>
+            <h1 class="screen-reader-text"><?php the_title(); ?></h1>
 
             <section class="oegkm-member-vcard" aria-label="<?php esc_attr_e('Mitgliedsprofil', 'bootscore-child-oegkm'); ?>">
                 <div class="oegkm-member-vcard__avatar" aria-hidden="true">

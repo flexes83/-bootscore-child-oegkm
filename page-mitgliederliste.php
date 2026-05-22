@@ -93,11 +93,7 @@ natcasesort($member_types);
         <div class="container">
             <?php bootscore_child_oegkm_member_nav('members'); ?>
 
-            <header class="oegkm-members-section-header">
-                <p class="oegkm-members-eyebrow"><?php esc_html_e('Mitgliederbereich', 'bootscore-child-oegkm'); ?></p>
-                <h1><?php the_title(); ?></h1>
-                <p><?php esc_html_e('Verzeichnis der ÖGKM-Mitglieder. Ausgeblendete Profile werden hier nicht angezeigt.', 'bootscore-child-oegkm'); ?></p>
-            </header>
+            <h1 class="screen-reader-text"><?php the_title(); ?></h1>
 
             <form class="oegkm-member-directory-filter" method="get">
                 <label>

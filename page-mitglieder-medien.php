@@ -157,11 +157,7 @@ if ($selected_event_id) {
         <div class="container">
             <?php bootscore_child_oegkm_member_nav('media'); ?>
 
-            <header class="oegkm-media-archive-intro" aria-labelledby="oegkm-media-title">
-                <p class="oegkm-members-eyebrow"><?php esc_html_e('Mitgliederbereich', 'bootscore-child-oegkm'); ?></p>
-                <h1 id="oegkm-media-title"><?php the_title(); ?></h1>
-                <p><?php esc_html_e('Bildergalerien und Videomitschnitte vergangener Veranstaltungen.', 'bootscore-child-oegkm'); ?></p>
-            </header>
+            <h1 class="screen-reader-text"><?php the_title(); ?></h1>
 
             <?php if ($selected_event) : ?>
                 <?php

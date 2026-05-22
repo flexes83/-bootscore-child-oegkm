@@ -91,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['oegkm_profile_action'
 }
 
 get_header();
-$member_area_url = bootscore_child_oegkm_members_area_target_url();
 ?>
 
 <main id="primary" <?php post_class('site-main oegkm-members-page oegkm-profile-page'); ?>>
@@ -99,14 +98,8 @@ $member_area_url = bootscore_child_oegkm_members_area_target_url();
         <div class="container">
             <?php bootscore_child_oegkm_member_nav('profile'); ?>
 
-            <header class="oegkm-members-section-header oegkm-members-section-header--split" aria-labelledby="oegkm-profile-title">
-                <div>
-                    <p class="oegkm-members-eyebrow"><?php esc_html_e('Mitgliederbereich', 'bootscore-child-oegkm'); ?></p>
-                    <h1 id="oegkm-profile-title"><?php the_title(); ?></h1>
-                    <p><?php esc_html_e('Verwalten Sie Ihre Stammdaten und Ihr Passwort.', 'bootscore-child-oegkm'); ?></p>
-                </div>
-                <a class="oegkm-members-textlink" href="<?php echo esc_url($member_area_url); ?>">← <?php esc_html_e('Zur Übersicht', 'bootscore-child-oegkm'); ?></a>
-            </header>
+            <h1 class="screen-reader-text"><?php the_title(); ?></h1>
+
             <?php foreach ($messages as $message) : ?>
                 <div class="oegkm-members-alert oegkm-members-alert--success"><?php echo esc_html($message); ?></div>
             <?php endforeach; ?>
