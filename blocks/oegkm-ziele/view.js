@@ -34,26 +34,33 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   document.querySelectorAll('.oegkm-ziele').forEach(function (section) {
+    var viewport = section.querySelector('.oegkm-ziele__viewport');
     var track = section.querySelector('.oegkm-ziele__track');
     var cards = section.querySelectorAll('.oegkm-ziele__card');
     var prev = section.querySelector('.oegkm-ziele__nav--prev');
     var next = section.querySelector('.oegkm-ziele__nav--next');
-    if (!track || cards.length < 2 || !prev || !next) return;
+    if (!viewport || !track || cards.length < 2 || !prev || !next) return;
 
     var index = 0;
-    var total = cards.length;
 
-    function maxIndex() {
-      return Math.max(0, total - 2);
+    function getStep() {
+      var cardWidth = cards[0].getBoundingClientRect().width;
+      var gap = parseFloat(getComputedStyle(track).gap || getComputedStyle(track).columnGap || 16);
+      return cardWidth + gap;
+    }
+
+    function maxOffset() {
+      return Math.max(0, track.scrollWidth - viewport.clientWidth);
     }
 
     function update() {
-      var cardWidth = cards[0].getBoundingClientRect().width;
-      var gap = parseFloat(getComputedStyle(track).gap || getComputedStyle(track).columnGap || 16);
-      var offset = (cardWidth + gap) * index;
+      var step = getStep();
+      var max = Math.max(0, Math.ceil(maxOffset() / step));
+      index = Math.max(0, Math.min(index, max));
+      var offset = Math.min(step * index, maxOffset());
       track.style.transform = 'translateX(-' + offset + 'px)';
       prev.disabled = index === 0;
-      next.disabled = index >= maxIndex();
+      next.disabled = index >= max;
     }
 
     prev.addEventListener('click', function () {
@@ -62,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     next.addEventListener('click', function () {
-      index = Math.min(maxIndex(), index + 1);
+      index += 1;
       update();
     });
 
@@ -70,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
       index = Math.max(0, index - 1);
       update();
     }, function () {
-      index = Math.min(maxIndex(), index + 1);
+      index += 1;
       update();
     });
 

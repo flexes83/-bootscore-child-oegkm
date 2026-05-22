@@ -4395,6 +4395,44 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   touch-action:pan-y;
 }
 
+.entry-content .oegkm-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]),
+.entry-content .oegkm-accordion__toggle.is-open a:not(.wp-block-button__link):not(.btn):not([class*="button"]),
+.entry-content .oegkm-image-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]),
+.entry-content .oegkm-image-content__content a:not(.wp-block-button__link):not(.btn):not([class*="button"]),
+.entry-content .oegkm-info-slider__card a:not(.wp-block-button__link):not(.btn):not([class*="button"]),
+.wp-block-post-content .oegkm-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]),
+.wp-block-post-content .oegkm-accordion__toggle.is-open a:not(.wp-block-button__link):not(.btn):not([class*="button"]),
+.wp-block-post-content .oegkm-image-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]),
+.wp-block-post-content .oegkm-image-content__content a:not(.wp-block-button__link):not(.btn):not([class*="button"]),
+.wp-block-post-content .oegkm-info-slider__card a:not(.wp-block-button__link):not(.btn):not([class*="button"]){
+  color:#fff !important;
+  text-decoration-color:rgba(255,255,255,.72) !important;
+}
+
+.entry-content .oegkm-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.entry-content .oegkm-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus,
+.entry-content .oegkm-accordion__toggle.is-open a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.entry-content .oegkm-accordion__toggle.is-open a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus,
+.entry-content .oegkm-image-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.entry-content .oegkm-image-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus,
+.entry-content .oegkm-image-content__content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.entry-content .oegkm-image-content__content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus,
+.entry-content .oegkm-info-slider__card a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.entry-content .oegkm-info-slider__card a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus,
+.wp-block-post-content .oegkm-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.wp-block-post-content .oegkm-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus,
+.wp-block-post-content .oegkm-accordion__toggle.is-open a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.wp-block-post-content .oegkm-accordion__toggle.is-open a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus,
+.wp-block-post-content .oegkm-image-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.wp-block-post-content .oegkm-image-accordion__panel a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus,
+.wp-block-post-content .oegkm-image-content__content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.wp-block-post-content .oegkm-image-content__content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus,
+.wp-block-post-content .oegkm-info-slider__card a:not(.wp-block-button__link):not(.btn):not([class*="button"]):hover,
+.wp-block-post-content .oegkm-info-slider__card a:not(.wp-block-button__link):not(.btn):not([class*="button"]):focus{
+  color:#fff !important;
+  text-decoration-color:#fff !important;
+}
+
 
 /* Veranstaltungen: archive header aligned with OEGKM page header/navigation style */
 .oegkm-events-header-shell{
