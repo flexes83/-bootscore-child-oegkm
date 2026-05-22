@@ -27,12 +27,26 @@
     if (!videoButton) return;
 
     const token = videoButton.dataset.oegkmVideoToken || '';
-    const id = token ? window.atob(token) : '';
-    if (!id) return;
+    if (!token) return;
+
+    let video = {};
+    try {
+      video = JSON.parse(window.atob(token));
+    } catch (error) {
+      return;
+    }
+
+    const id = video.id || '';
+    const provider = video.p || '';
+    if (!id || !provider) return;
 
     const iframe = document.createElement('iframe');
-    iframe.src = 'https://www.' + 'youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
-    iframe.title = videoButton.getAttribute('aria-label') || 'YouTube Video';
+    if (provider === 'vm') {
+      iframe.src = 'https://player.' + 'vimeo.com/video/' + encodeURIComponent(id) + '?autoplay=1';
+    } else {
+      iframe.src = 'https://www.' + 'youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
+    }
+    iframe.title = videoButton.getAttribute('aria-label') || 'Video';
     iframe.loading = 'lazy';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.allowFullscreen = true;

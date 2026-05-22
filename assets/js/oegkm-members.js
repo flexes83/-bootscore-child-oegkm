@@ -5,11 +5,19 @@ document.addEventListener('click', function(e){
 
     if(videoButton){
         const token = videoButton.dataset.oegkmVideoToken || '';
-        const id = token ? window.atob(token) : '';
+        let video = {};
 
-        if(id){
+        try {
+            video = token ? JSON.parse(window.atob(token)) : {};
+        } catch (error) {
+            video = {};
+        }
+
+        if(video.id && video.p){
             const iframe = document.createElement('iframe');
-            iframe.src = 'https://www.' + 'youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+            iframe.src = video.p === 'vm'
+                ? 'https://player.' + 'vimeo.com/video/' + encodeURIComponent(video.id) + '?autoplay=1'
+                : 'https://www.' + 'youtube-nocookie.com/embed/' + encodeURIComponent(video.id) + '?autoplay=1&rel=0';
             iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
             iframe.allowFullscreen = true;
 
