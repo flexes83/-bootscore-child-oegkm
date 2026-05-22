@@ -8723,6 +8723,86 @@ a.download::before,
   border-bottom:2px solid currentColor;
 }
 
+.oegkm-member-vcard{
+  display:grid;
+  grid-template-columns:auto minmax(0, 1fr);
+  gap:clamp(1.25rem, 3vw, 2rem);
+  align-items:center;
+  max-width:980px;
+  margin:0 0 clamp(2.75rem, 5vw, 4.75rem);
+  padding:clamp(1.4rem, 3vw, 2.4rem);
+  background:var(--oegkm-mint);
+  color:var(--oegkm-member-ink);
+}
+
+.oegkm-member-vcard__avatar{
+  width:clamp(5rem, 9vw, 7rem);
+  height:clamp(5rem, 9vw, 7rem);
+  flex:0 0 auto;
+  overflow:hidden;
+  border-radius:999px;
+  background:linear-gradient(135deg, #00da8e 0%, #65d1bd 58%, #b8b3f2 100%);
+  color:#fff;
+}
+
+.oegkm-member-vcard__avatar img,
+.oegkm-member-vcard__avatar span{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+}
+
+.oegkm-member-vcard__avatar img{
+  object-fit:cover;
+}
+
+.oegkm-member-vcard__avatar span{
+  font-family:var(--oegkm-font-headline, inherit);
+  font-size:clamp(1.45rem, 3vw, 2.2rem);
+  font-weight:650;
+  line-height:1;
+}
+
+.oegkm-member-vcard__body{
+  min-width:0;
+}
+
+.oegkm-member-vcard h2{
+  margin:0 0 .45rem;
+  color:var(--oegkm-member-ink);
+  font-family:var(--oegkm-font-headline, inherit);
+  font-size:clamp(2rem, 4vw, 3rem);
+  font-weight:600;
+  line-height:1.05;
+  letter-spacing:0;
+}
+
+.oegkm-member-vcard p,
+.oegkm-member-vcard address,
+.oegkm-member-vcard a:not(.oegkm-members-button){
+  margin:0;
+  color:var(--oegkm-member-ink);
+  font-size:clamp(1rem, 1.35vw, 1.2rem);
+  font-style:normal;
+  font-weight:600;
+  line-height:1.4;
+}
+
+.oegkm-member-vcard a:not(.oegkm-members-button){
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:.16em;
+}
+
+.oegkm-member-vcard__actions{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:1rem 1.25rem;
+  margin-top:clamp(1rem, 2vw, 1.4rem);
+}
+
 .oegkm-members-content,
 .oegkm-members-panel,
 .oegkm-profile-form,
@@ -8850,6 +8930,12 @@ a.download::before,
     min-height:2.85rem;
     padding:.75rem 1rem;
     font-size:.95rem;
+  }
+}
+
+@media (max-width: 575.98px){
+  .oegkm-member-vcard{
+    grid-template-columns:1fr;
   }
 }
 

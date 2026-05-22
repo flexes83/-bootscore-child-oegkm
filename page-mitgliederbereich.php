@@ -12,8 +12,40 @@ bootscore_child_oegkm_require_member_access();
 
 get_header();
 $current_user = wp_get_current_user();
+$user_id = (int) $current_user->ID;
 $profile_url = bootscore_child_oegkm_profile_url();
 $logout_url = wp_logout_url(home_url('/'));
+$member_name_parts = array_filter([
+    bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_title'),
+    $current_user->first_name,
+    $current_user->last_name,
+    bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_title_after'),
+]);
+$member_name = trim(implode(' ', $member_name_parts));
+$member_name = $member_name !== '' ? $member_name : ($current_user->display_name ?: $current_user->user_login);
+$member_institution = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_institution');
+$member_address_parts = array_filter([
+    bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_street'),
+    trim(bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_zip') . ' ' . bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_city')),
+    bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_country'),
+]);
+$member_initial_source = trim($current_user->first_name . ' ' . $current_user->last_name);
+$member_initial_source = $member_initial_source !== '' ? $member_initial_source : $member_name;
+$member_initial_words = preg_split('/\s+/', $member_initial_source);
+$member_initial_letters = [];
+foreach ((array) $member_initial_words as $word) {
+    if ($word === '') {
+        continue;
+    }
+    $member_initial_letters[] = function_exists('mb_substr') ? mb_substr($word, 0, 1) : substr($word, 0, 1);
+    if (count($member_initial_letters) >= 2) {
+        break;
+    }
+}
+$member_initials = implode('', $member_initial_letters);
+$member_initials = function_exists('mb_strtoupper') ? mb_strtoupper($member_initials ?: 'ÖG') : strtoupper($member_initials ?: 'ÖG');
+$member_avatar = get_avatar_data($user_id, ['size' => 160, 'default' => '404']);
+$member_has_avatar = !empty($member_avatar['found_avatar']) && !empty($member_avatar['url']);
 ?>
 
 <main id="primary" <?php post_class('site-main oegkm-members-page'); ?>>
@@ -24,19 +56,34 @@ $logout_url = wp_logout_url(home_url('/'));
             <header class="oegkm-members-section-header" aria-labelledby="oegkm-members-title">
                 <p class="oegkm-members-eyebrow"><?php esc_html_e('Mitgliederbereich', 'bootscore-child-oegkm'); ?></p>
                 <h1 id="oegkm-members-title"><?php the_title(); ?></h1>
-                <p>
-                    <?php
-                    printf(
-                        esc_html__('Willkommen, %s. Hier finden Sie geschützte Inhalte und Services der ÖGKM.', 'bootscore-child-oegkm'),
-                        esc_html($current_user->display_name ?: $current_user->user_login)
-                    );
-                    ?>
-                </p>
-                <div class="oegkm-members-section-header__actions">
-                    <a class="oegkm-members-button" href="<?php echo esc_url($profile_url); ?>"><?php esc_html_e('Mein Profil', 'bootscore-child-oegkm'); ?></a>
-                    <a class="oegkm-members-textlink" href="<?php echo esc_url($logout_url); ?>"><?php esc_html_e('Abmelden', 'bootscore-child-oegkm'); ?></a>
-                </div>
             </header>
+
+            <section class="oegkm-member-vcard" aria-label="<?php esc_attr_e('Mitgliedsprofil', 'bootscore-child-oegkm'); ?>">
+                <div class="oegkm-member-vcard__avatar" aria-hidden="true">
+                    <?php if ($member_has_avatar) : ?>
+                        <img src="<?php echo esc_url($member_avatar['url']); ?>" alt="">
+                    <?php else : ?>
+                        <span><?php echo esc_html($member_initials); ?></span>
+                    <?php endif; ?>
+                </div>
+                <div class="oegkm-member-vcard__body">
+                    <h2><?php echo esc_html($member_name); ?></h2>
+                    <?php if ($member_institution !== '') : ?>
+                        <p><?php echo esc_html($member_institution); ?></p>
+                    <?php endif; ?>
+                    <?php if (!empty($member_address_parts)) : ?>
+                        <address><?php echo esc_html(implode(', ', $member_address_parts)); ?></address>
+                    <?php endif; ?>
+                    <?php if ($current_user->user_email !== '') : ?>
+                        <a href="mailto:<?php echo esc_attr($current_user->user_email); ?>"><?php echo esc_html($current_user->user_email); ?></a>
+                    <?php endif; ?>
+                    <div class="oegkm-member-vcard__actions">
+                        <a class="oegkm-members-button" href="<?php echo esc_url($profile_url); ?>"><?php esc_html_e('Profil bearbeiten', 'bootscore-child-oegkm'); ?></a>
+                        <a class="oegkm-members-textlink" href="<?php echo esc_url($logout_url); ?>"><?php esc_html_e('Abmelden', 'bootscore-child-oegkm'); ?></a>
+                    </div>
+                </div>
+            </section>
+
             <?php if (have_posts()) : ?>
                 <?php while (have_posts()) : the_post(); ?>
                     <?php if (trim(get_the_content()) !== '') : ?>
