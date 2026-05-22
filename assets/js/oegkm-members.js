@@ -4,11 +4,12 @@ document.addEventListener('click', function(e){
     const videoButton = e.target.closest('.oegkm-video-placeholder');
 
     if(videoButton){
-        const id = videoButton.dataset.youtubeId;
+        const token = videoButton.dataset.oegkmVideoToken || '';
+        const id = token ? window.atob(token) : '';
 
         if(id){
             const iframe = document.createElement('iframe');
-            iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
+            iframe.src = 'https://www.' + 'youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
             iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
             iframe.allowFullscreen = true;
 

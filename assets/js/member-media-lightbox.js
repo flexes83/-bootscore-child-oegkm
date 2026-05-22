@@ -26,11 +26,12 @@
     const videoButton = event.target.closest('.oegkm-video-placeholder');
     if (!videoButton) return;
 
-    const id = videoButton.dataset.youtubeId;
+    const token = videoButton.dataset.oegkmVideoToken || '';
+    const id = token ? window.atob(token) : '';
     if (!id) return;
 
     const iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
+    iframe.src = 'https://www.' + 'youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
     iframe.title = videoButton.getAttribute('aria-label') || 'YouTube Video';
     iframe.loading = 'lazy';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';

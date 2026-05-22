@@ -270,7 +270,7 @@ if ($selected_event_id) {
                                             ?>
                                             <article class="oegkm-event-media-video">
                                                 <?php if ($youtube_id) : ?>
-                                                    <button class="oegkm-video-placeholder" type="button" data-youtube-id="<?php echo esc_attr($youtube_id); ?>" aria-label="<?php echo esc_attr(sprintf(__('Video laden: %s', 'bootscore-child-oegkm'), $video_title)); ?>">
+                                                    <button class="oegkm-video-placeholder" type="button" data-oegkm-video-token="<?php echo esc_attr(base64_encode($youtube_id)); ?>" aria-label="<?php echo esc_attr(sprintf(__('Video laden: %s', 'bootscore-child-oegkm'), $video_title)); ?>">
                                                         <span class="oegkm-video-placeholder__label"><?php esc_html_e('Video ansehen', 'bootscore-child-oegkm'); ?></span>
                                                         <span class="oegkm-video-placeholder__title"><?php echo esc_html($video_title); ?></span>
                                                         <span class="oegkm-video-placeholder__play" aria-hidden="true">
