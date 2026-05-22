@@ -9,27 +9,38 @@
     return;
   }
 
+  toggle.removeAttribute('data-bs-toggle');
+  toggle.removeAttribute('data-bs-target');
+
   function isDesktop() {
     return window.matchMedia('(min-width: 1200px)').matches;
   }
 
   function setMenuState(isOpen) {
+    panel.classList.remove('collapsing');
+    panel.classList.add('collapse');
     panel.classList.toggle('show', isOpen);
+    toggle.classList.toggle('is-open', isOpen);
     header.classList.toggle('is-mobile-nav-open', isOpen);
     document.body.classList.toggle('oegkm-mobile-nav-is-open', isOpen);
     toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    toggle.setAttribute('aria-label', isOpen ? 'Navigation schliessen' : 'Navigation umschalten');
   }
 
-  toggle.addEventListener('click', function (event) {
+  function handleToggle(event) {
     if (isDesktop()) {
       return;
     }
 
     event.preventDefault();
     event.stopPropagation();
-    event.stopImmediatePropagation();
+    if (typeof event.stopImmediatePropagation === 'function') {
+      event.stopImmediatePropagation();
+    }
     setMenuState(!panel.classList.contains('show'));
-  }, true);
+  }
+
+  toggle.addEventListener('click', handleToggle, true);
 
   panel.addEventListener('click', function (event) {
     const link = event.target.closest('a');

@@ -9232,6 +9232,56 @@ a.download::before,
 .oegkm-navbar-toggler .navbar-toggler-icon{
   width:1.35rem;
   height:1.35rem;
+  position:relative;
+  display:block;
+  margin:0 auto;
+  background-image:none !important;
+  color:var(--oegkm-primary);
+  transition:background-color .18s ease;
+}
+
+.oegkm-navbar-toggler .navbar-toggler-icon,
+.oegkm-navbar-toggler .navbar-toggler-icon::before,
+.oegkm-navbar-toggler .navbar-toggler-icon::after{
+  border-radius:999px;
+}
+
+.oegkm-navbar-toggler .navbar-toggler-icon::before,
+.oegkm-navbar-toggler .navbar-toggler-icon::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:1.22rem;
+  height:2px;
+  background:currentColor;
+  transform-origin:center;
+  transition:transform .2s ease;
+}
+
+.oegkm-navbar-toggler .navbar-toggler-icon::before{
+  transform:translate(-50%, -5px);
+}
+
+.oegkm-navbar-toggler .navbar-toggler-icon::after{
+  transform:translate(-50%, 5px);
+}
+
+.oegkm-navbar-toggler:not(.is-open) .navbar-toggler-icon{
+  background:
+    linear-gradient(currentColor, currentColor) center/1.22rem 2px no-repeat;
+}
+
+.oegkm-navbar-toggler.is-open .navbar-toggler-icon{
+  background:none !important;
+}
+
+.oegkm-navbar-toggler.is-open .navbar-toggler-icon::before{
+  transform:translate(-50%, -50%) rotate(45deg);
+}
+
+.oegkm-navbar-toggler.is-open .navbar-toggler-icon::after{
+  transform:translate(-50%, -50%) rotate(-45deg);
 }
 
 @media (min-width: 1200px){
@@ -9447,20 +9497,51 @@ a.download::before,
 }
 
 @media (max-width: 575.98px){
+  .oegkm-site-header{
+    background:rgba(255,255,255,.94) !important;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+
+  .oegkm-site-header .container{
+    max-width:100%;
+    padding-left:1.25rem;
+    padding-right:1.25rem;
+  }
+
+  .oegkm-navbar{
+    min-height:76px;
+    padding:.55rem 0 !important;
+  }
+
+  .oegkm-header-brand .custom-logo--header{
+    height:32px;
+    max-width:168px;
+  }
+
+  .oegkm-navbar-toggler{
+    width:46px;
+    height:46px;
+  }
+
+  .oegkm-navbar-collapse{
+    margin-top:.65rem;
+  }
+
   .oegkm-hero-shell{
-    margin-top:-74px !important;
+    margin-top:0 !important;
   }
 
   .oegkm-site-hero{
-    padding-top:74px !important;
+    padding-top:92px !important;
   }
 
   .oegkm-theme-page-header{
-    margin-top:-78px !important;
+    margin-top:0 !important;
   }
 
   .oegkm-theme-page-header__panel{
-    padding-top:78px !important;
+    padding-top:92px !important;
   }
 }
 
