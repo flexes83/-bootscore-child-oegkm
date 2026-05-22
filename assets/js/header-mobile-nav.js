@@ -1,39 +1,54 @@
 (function () {
+  'use strict';
+
   const header = document.querySelector('.oegkm-site-header');
-  const toggle = document.querySelector('.oegkm-mobile-nav-toggle');
-  const panel = document.getElementById('oegkm-header-navigation');
+  const toggle = document.querySelector('.oegkm-navbar-toggler');
+  const panel = document.getElementById('oegkmMainNavigation');
 
   if (!header || !toggle || !panel) {
     return;
   }
 
-  const closeMenu = () => {
-    header.classList.remove('is-mobile-nav-open');
-    toggle.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('oegkm-mobile-nav-is-open');
-  };
+  function isDesktop() {
+    return window.matchMedia('(min-width: 1200px)').matches;
+  }
 
-  toggle.addEventListener('click', () => {
-    const isOpen = header.classList.toggle('is-mobile-nav-open');
-    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  function setMenuState(isOpen) {
+    panel.classList.toggle('show', isOpen);
+    header.classList.toggle('is-mobile-nav-open', isOpen);
     document.body.classList.toggle('oegkm-mobile-nav-is-open', isOpen);
-  });
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
 
-  panel.addEventListener('click', (event) => {
-    if (event.target.closest('a')) {
-      closeMenu();
+  toggle.addEventListener('click', function (event) {
+    if (isDesktop()) {
+      return;
     }
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    setMenuState(!panel.classList.contains('show'));
+  }, true);
+
+  panel.addEventListener('click', function (event) {
+    const link = event.target.closest('a');
+    if (!link || link.classList.contains('dropdown-toggle')) {
+      return;
+    }
+
+    setMenuState(false);
   });
 
-  document.addEventListener('keydown', (event) => {
+  document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
-      closeMenu();
+      setMenuState(false);
     }
   });
 
-  window.addEventListener('resize', () => {
-    if (window.matchMedia('(min-width: 992px)').matches) {
-      closeMenu();
+  window.addEventListener('resize', function () {
+    if (isDesktop()) {
+      setMenuState(false);
     }
   });
 })();

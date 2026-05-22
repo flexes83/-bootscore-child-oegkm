@@ -1,4 +1,37 @@
 document.addEventListener('DOMContentLoaded', function () {
+  function addSwipe(element, onPrevious, onNext) {
+    var startX = 0;
+    var startY = 0;
+    var tracking = false;
+    var minDistance = 42;
+
+    element.addEventListener('pointerdown', function (event) {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      startX = event.clientX;
+      startY = event.clientY;
+      tracking = true;
+    }, { passive: true });
+
+    element.addEventListener('pointerup', function (event) {
+      if (!tracking) return;
+      tracking = false;
+
+      var deltaX = event.clientX - startX;
+      var deltaY = event.clientY - startY;
+      if (Math.abs(deltaX) < minDistance || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+
+      if (deltaX < 0) {
+        onNext();
+      } else {
+        onPrevious();
+      }
+    }, { passive: true });
+
+    element.addEventListener('pointercancel', function () {
+      tracking = false;
+    }, { passive: true });
+  }
+
   document.querySelectorAll('.oegkm-info-slider').forEach(function (slider) {
     var viewport = slider.querySelector('.oegkm-info-slider__viewport');
     var track = slider.querySelector('.oegkm-info-slider__track');
@@ -29,12 +62,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     prev.addEventListener('click', function () {
-      index -= 1;
+      index = Math.max(0, index - 1);
       update();
     });
 
     next.addEventListener('click', function () {
-      index += 1;
+      index = Math.min(maxIndex(), index + 1);
+      update();
+    });
+
+    addSwipe(viewport, function () {
+      index = Math.max(0, index - 1);
+      update();
+    }, function () {
+      index = Math.min(maxIndex(), index + 1);
       update();
     });
 

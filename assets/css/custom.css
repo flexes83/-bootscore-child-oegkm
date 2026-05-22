@@ -4386,6 +4386,15 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   }
 }
 
+.oegkm-info-slider__viewport,
+.oegkm-ziele__slider-wrap,
+.oegkm-team-slider__viewport,
+.oegkm-disease-slider,
+.oegkm-disease-slider__stage,
+.oegkm-disease-slider__track{
+  touch-action:pan-y;
+}
+
 
 /* Veranstaltungen: archive header aligned with OEGKM page header/navigation style */
 .oegkm-events-header-shell{
