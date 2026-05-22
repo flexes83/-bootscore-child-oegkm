@@ -49,13 +49,25 @@
   lightbox.setAttribute('aria-modal', 'true');
   lightbox.setAttribute('aria-hidden', 'true');
   lightbox.innerHTML = `
-    <button class="oegkm-lightbox__close" type="button" aria-label="Bild schließen">×</button>
-    <button class="oegkm-lightbox__nav oegkm-lightbox__nav--prev" type="button" aria-label="Vorheriges Bild">‹</button>
+    <button class="oegkm-lightbox__close" type="button" aria-label="Bild schließen">
+      <svg class="oegkm-lightbox__icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+    <button class="oegkm-lightbox__nav oegkm-lightbox__nav--prev" type="button" aria-label="Vorheriges Bild">
+      <svg class="oegkm-lightbox__icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+        <path d="M15 5l-7 7 7 7" />
+      </svg>
+    </button>
     <figure class="oegkm-lightbox__figure">
       <img class="oegkm-lightbox__image" alt="" loading="eager" decoding="async">
       <figcaption class="oegkm-lightbox__caption"></figcaption>
     </figure>
-    <button class="oegkm-lightbox__nav oegkm-lightbox__nav--next" type="button" aria-label="Nächstes Bild">›</button>
+    <button class="oegkm-lightbox__nav oegkm-lightbox__nav--next" type="button" aria-label="Nächstes Bild">
+      <svg class="oegkm-lightbox__icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+        <path d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
   `;
 
   function ensureLightbox() {
