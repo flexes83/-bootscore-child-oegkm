@@ -55,6 +55,22 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   font-family:var(--oegkm-font-copy);
 }
 
+.entry-content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):not(.download),
+.wp-block-post-content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):not(.download),
+.oegkm-page-content-container a:not(.wp-block-button__link):not(.btn):not([class*="button"]):not(.download){
+  color:var(--oegkm-primary);
+  text-decoration-color:currentColor;
+}
+
+.entry-content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):not(.download):hover,
+.entry-content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):not(.download):focus,
+.wp-block-post-content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):not(.download):hover,
+.wp-block-post-content a:not(.wp-block-button__link):not(.btn):not([class*="button"]):not(.download):focus,
+.oegkm-page-content-container a:not(.wp-block-button__link):not(.btn):not([class*="button"]):not(.download):hover,
+.oegkm-page-content-container a:not(.wp-block-button__link):not(.btn):not([class*="button"]):not(.download):focus{
+  color:#01565b;
+}
+
 .oegkm-homepage .entry-header{
   display:none;
 }
@@ -1118,7 +1134,7 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 .oegkm-image-accordion__panel.is-open{
   max-height:5000px;
   padding-top:8px;
-  padding-bottom:28px;
+  padding-bottom:48px;
 }
 
 .oegkm-image-accordion__panel-content{
@@ -3291,7 +3307,7 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 
 .oegkm-accordion__panel.is-open{
   padding-top: 24px;
-  padding-bottom: 48px;
+  padding-bottom: 72px;
   max-height: 6000px;
 }
 
