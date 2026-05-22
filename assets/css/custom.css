@@ -7581,12 +7581,9 @@ body:not(.home) #primary.site-main{
   overflow:hidden;
   border:0;
   background:
-    radial-gradient(circle at 76% 22%, rgba(184,179,242,.38), transparent 8rem),
-    radial-gradient(circle at 18% 78%, rgba(0,218,142,.28), transparent 10rem),
-    url('../img/oegkm-guilloche.png') 62% 42% / 148% auto no-repeat,
-    linear-gradient(135deg, rgba(5,63,67,.92), rgba(5,117,123,.9)),
+    radial-gradient(circle at 76% 22%, rgba(184,179,242,.24), transparent 8rem),
+    radial-gradient(circle at 18% 78%, rgba(0,218,142,.22), transparent 10rem),
     linear-gradient(135deg, var(--oegkm-member-ink), var(--oegkm-member-teal));
-  background-blend-mode:normal, normal, screen, normal, normal;
   color:#f6fff0;
   text-align:left;
   cursor:pointer;
@@ -7596,10 +7593,19 @@ body:not(.home) #primary.site-main{
   content:"";
   position:absolute;
   inset:0;
+  background:url('../img/oegkm-guilloche.png') 58% 43% / 154% auto no-repeat;
+  mix-blend-mode:screen;
+  opacity:.2;
+  pointer-events:none;
+}
+
+.oegkm-video-placeholder::after{
+  content:"";
+  position:absolute;
+  inset:0;
   background:
-    radial-gradient(circle at 76% 22%, rgba(184,179,242,.38), transparent 8rem),
-    radial-gradient(circle at 18% 78%, rgba(0,218,142,.28), transparent 10rem);
-  opacity:.9;
+    linear-gradient(135deg, rgba(5,63,67,.72) 0%, rgba(5,117,123,.5) 55%, rgba(5,63,67,.62) 100%),
+    radial-gradient(circle at 68% 28%, rgba(246,255,240,.16), transparent 14rem);
   pointer-events:none;
 }
 
@@ -7607,7 +7613,7 @@ body:not(.home) #primary.site-main{
 .oegkm-video-placeholder__title,
 .oegkm-video-placeholder__play{
   position:relative;
-  z-index:1;
+  z-index:2;
 }
 
 .oegkm-video-placeholder__label{
