@@ -8736,6 +8736,7 @@ a.download::before,
 }
 
 .oegkm-member-vcard__avatar{
+  position:relative;
   width:clamp(5rem, 9vw, 7rem);
   height:clamp(5rem, 9vw, 7rem);
   flex:0 0 auto;
@@ -8754,6 +8755,9 @@ a.download::before,
 }
 
 .oegkm-member-vcard__avatar img{
+  position:absolute;
+  inset:0;
+  z-index:1;
   object-fit:cover;
 }
 
@@ -8772,7 +8776,7 @@ a.download::before,
   margin:0 0 .45rem;
   color:var(--oegkm-member-ink);
   font-family:var(--oegkm-font-headline, inherit);
-  font-size:clamp(2rem, 4vw, 3rem);
+  font-size:clamp(1.65rem, 2.7vw, 2.25rem);
   font-weight:600;
   line-height:1.05;
   letter-spacing:0;
@@ -10867,6 +10871,21 @@ a.download::before,
 
 .oegkm-event-single-tabs__text p + p{
   margin-top:.45em;
+}
+
+.oegkm-event-single-tabs__text a,
+.oegkm-event-single-tabs__text a:visited{
+  color:var(--oegkm-event-teal);
+  text-decoration:underline;
+  text-decoration-color:currentColor;
+  text-decoration-thickness:1px;
+  text-underline-offset:.16em;
+}
+
+.oegkm-event-single-tabs__text a:hover,
+.oegkm-event-single-tabs__text a:focus-visible{
+  color:var(--oegkm-event-teal);
+  text-decoration-thickness:2px;
 }
 
 .oegkm-event-single-bottom-image{

@@ -61,10 +61,9 @@ $member_has_avatar = !empty($member_avatar['found_avatar']) && !empty($member_av
             <section class="oegkm-member-vcard" aria-label="<?php esc_attr_e('Mitgliedsprofil', 'bootscore-child-oegkm'); ?>">
                 <div class="oegkm-member-vcard__avatar" aria-hidden="true">
                     <?php if ($member_has_avatar) : ?>
-                        <img src="<?php echo esc_url($member_avatar['url']); ?>" alt="">
-                    <?php else : ?>
-                        <span><?php echo esc_html($member_initials); ?></span>
+                        <img src="<?php echo esc_url($member_avatar['url']); ?>" alt="" onerror="this.remove();">
                     <?php endif; ?>
+                    <span><?php echo esc_html($member_initials); ?></span>
                 </div>
                 <div class="oegkm-member-vcard__body">
                     <h2><?php echo esc_html($member_name); ?></h2>

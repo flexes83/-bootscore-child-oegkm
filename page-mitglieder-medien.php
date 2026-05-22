@@ -50,10 +50,26 @@ $normalize_media_image = static function ($image): array {
     ];
 };
 
-$get_youtube_id = static function (string $url): string {
-    if (preg_match('~(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{6,})~', $url, $matches)) {
+$get_youtube_id = static function (string $value): string {
+    $value = html_entity_decode(wp_unslash($value), ENT_QUOTES, get_bloginfo('charset') ?: 'UTF-8');
+    $candidate = $value;
+
+    if (preg_match('~src=["\']([^"\']+)["\']~i', $value, $src_match)) {
+        $candidate = $src_match[1];
+    }
+
+    if (preg_match('~(?:youtube(?:-nocookie)?\.com/(?:watch\?[^"\']*v=|embed/|shorts/|live/)|youtu\.be/)([A-Za-z0-9_-]{6,})~', $candidate, $matches)) {
         return $matches[1];
     }
+
+    $query = (string) wp_parse_url($candidate, PHP_URL_QUERY);
+    if ($query !== '') {
+        parse_str($query, $params);
+        if (!empty($params['v']) && is_string($params['v']) && preg_match('~^[A-Za-z0-9_-]{6,}$~', $params['v'])) {
+            return $params['v'];
+        }
+    }
+
     return '';
 };
 
