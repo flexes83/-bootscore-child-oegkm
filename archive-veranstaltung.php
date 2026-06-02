@@ -25,6 +25,7 @@ bootscore_child_oegkm_render_theme_page_header([
                             <?php
                             $date_label = bootscore_child_oegkm_event_date_label(get_the_ID());
                             $location   = (string) get_post_meta(get_the_ID(), '_oegkm_event_location', true);
+                            $event_label = function_exists('bootscore_child_oegkm_event_oegkm_label') ? bootscore_child_oegkm_event_oegkm_label(get_the_ID()) : '';
                             ?>
                             <article <?php post_class('oegkm-event-calendar-item'); ?>>
                                 <?php if (has_post_thumbnail()) : ?>
@@ -36,6 +37,9 @@ bootscore_child_oegkm_render_theme_page_header([
                                 <div class="oegkm-event-calendar-item__content">
                                     <?php if ($date_label) : ?>
                                         <div class="oegkm-event-calendar-item__date"><?php echo esc_html($date_label); ?></div>
+                                    <?php endif; ?>
+                                    <?php if ($event_label) : ?>
+                                        <?php echo $event_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                                     <?php endif; ?>
 
                                     <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>

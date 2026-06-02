@@ -71,6 +71,7 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
     $program_title    = get_post_meta($post->ID, '_oegkm_event_program_title', true);
     $program_text     = get_post_meta($post->ID, '_oegkm_event_program_text', true);
     $bottom_image_id  = get_post_meta($post->ID, '_oegkm_event_bottom_image_id', true);
+    $is_oegkm_event   = (string) get_post_meta($post->ID, '_oegkm_event_is_oegkm', true) === '1';
     $tabs             = bootscore_child_oegkm_event_tabs($post->ID);
 
     if (!$program_label) {
@@ -85,6 +86,13 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
         <p class="oegkm-event-admin-field">
             <label for="oegkm_event_start_date"><?php esc_html_e('Startdatum', 'bootscore-child-oegkm'); ?> *</label>
             <input type="date" id="oegkm_event_start_date" name="oegkm_event_start_date" value="<?php echo esc_attr($start_date); ?>">
+        </p>
+        <p class="oegkm-event-admin-field">
+            <label for="oegkm_event_is_oegkm"><?php esc_html_e('ÖGKM-Event', 'bootscore-child-oegkm'); ?></label>
+            <label style="display:inline-flex;align-items:center;gap:8px;font-weight:400;margin-top:6px;">
+                <input type="checkbox" id="oegkm_event_is_oegkm" name="oegkm_event_is_oegkm" value="1" <?php checked($is_oegkm_event); ?>>
+                <span><?php esc_html_e('Dieses Event als ÖGKM-Event markieren', 'bootscore-child-oegkm'); ?></span>
+            </label>
         </p>
         <p class="oegkm-event-admin-field">
             <label for="oegkm_event_end_date"><?php esc_html_e('Enddatum', 'bootscore-child-oegkm'); ?></label>
@@ -191,6 +199,7 @@ add_action('save_post_veranstaltung', function (int $post_id) {
     $program_title    = isset($_POST['oegkm_event_program_title']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_program_title'])) : '';
     $program_text     = isset($_POST['oegkm_event_program_text']) ? sanitize_textarea_field(wp_unslash($_POST['oegkm_event_program_text'])) : '';
     $bottom_image_id  = isset($_POST['oegkm_event_bottom_image_id']) ? absint($_POST['oegkm_event_bottom_image_id']) : 0;
+    $is_oegkm_event   = isset($_POST['oegkm_event_is_oegkm']) ? '1' : '';
     $tabs_input       = isset($_POST['oegkm_event_tabs']) && is_array($_POST['oegkm_event_tabs']) ? wp_unslash($_POST['oegkm_event_tabs']) : [];
 
     if ($start_date && !$end_date) {
@@ -208,6 +217,12 @@ add_action('save_post_veranstaltung', function (int $post_id) {
     update_post_meta($post_id, '_oegkm_event_program_title', $program_title);
     update_post_meta($post_id, '_oegkm_event_program_text', $program_text);
     update_post_meta($post_id, '_oegkm_event_bottom_image_id', $bottom_image_id);
+
+    if ($is_oegkm_event) {
+        update_post_meta($post_id, '_oegkm_event_is_oegkm', '1');
+    } else {
+        delete_post_meta($post_id, '_oegkm_event_is_oegkm');
+    }
 
     $tabs_json = wp_json_encode(bootscore_child_oegkm_sanitize_event_tabs($tabs_input), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     update_post_meta($post_id, '_oegkm_event_tabs_json', wp_slash($tabs_json ?: '[]'));
@@ -319,6 +334,23 @@ function bootscore_child_oegkm_event_month_badge(?int $post_id = null): array {
         'day'   => wp_date('d', $timestamp),
         'month' => wp_date('M', $timestamp),
     ];
+}
+
+function bootscore_child_oegkm_is_oegkm_event(?int $post_id = null): bool {
+    $post_id = $post_id ?: get_the_ID();
+
+    return (string) get_post_meta($post_id, '_oegkm_event_is_oegkm', true) === '1';
+}
+
+function bootscore_child_oegkm_event_oegkm_label(?int $post_id = null): string {
+    if (!bootscore_child_oegkm_is_oegkm_event($post_id)) {
+        return '';
+    }
+
+    return sprintf(
+        '<span class="oegkm-event-label"><span class="oegkm-event-label__icon" aria-hidden="true"></span><span>%s</span></span>',
+        esc_html__('ÖGKM-Event', 'bootscore-child-oegkm')
+    );
 }
 
 function bootscore_child_oegkm_default_event_tabs(): array {

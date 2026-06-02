@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!track || !cards.length || !prev || !next) return;
 
-    var index = cards.length > 1 ? 1 : 0;
+    var index = 0;
 
     function maxIndex() {
       return Math.max(0, cards.length - 1);

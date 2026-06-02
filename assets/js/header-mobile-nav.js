@@ -16,6 +16,32 @@
     return window.matchMedia('(min-width: 1200px)').matches;
   }
 
+  function getDirectSubmenu(item) {
+    return Array.from(item.children).find(function (child) {
+      return child.classList.contains('dropdown-menu') || child.classList.contains('sub-menu');
+    });
+  }
+
+  function setSubmenuState(link, isOpen) {
+    const item = link.closest('.menu-item-has-children, .dropdown');
+    const submenu = item ? getDirectSubmenu(item) : null;
+
+    if (!item || !submenu) {
+      return;
+    }
+
+    item.classList.toggle('show', isOpen);
+    link.classList.toggle('show', isOpen);
+    submenu.classList.toggle('show', isOpen);
+    link.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+
+  function closeSubmenus() {
+    panel.querySelectorAll('.dropdown-toggle.show').forEach(function (link) {
+      setSubmenuState(link, false);
+    });
+  }
+
   function setMenuState(isOpen) {
     panel.classList.remove('collapsing');
     panel.classList.add('collapse');
@@ -25,6 +51,10 @@
     document.body.classList.toggle('oegkm-mobile-nav-is-open', isOpen);
     toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     toggle.setAttribute('aria-label', isOpen ? 'Navigation schliessen' : 'Navigation umschalten');
+
+    if (!isOpen) {
+      closeSubmenus();
+    }
   }
 
   function handleToggle(event) {
@@ -44,12 +74,22 @@
 
   panel.addEventListener('click', function (event) {
     const link = event.target.closest('a');
-    if (!link || link.classList.contains('dropdown-toggle')) {
+    if (!link) {
+      return;
+    }
+
+    if (link.classList.contains('dropdown-toggle') && !isDesktop()) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (typeof event.stopImmediatePropagation === 'function') {
+        event.stopImmediatePropagation();
+      }
+      setSubmenuState(link, !link.classList.contains('show'));
       return;
     }
 
     setMenuState(false);
-  });
+  }, true);
 
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {

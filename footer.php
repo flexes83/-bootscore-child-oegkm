@@ -33,6 +33,8 @@ if (!defined('ABSPATH')) {
                         <a href="<?php echo bootscore_child_oegkm_statutes_url(); ?>"><?php esc_html_e('Statuten', 'bootscore-child-oegkm'); ?></a>
                         <a href="<?php echo bootscore_child_oegkm_privacy_url(); ?>"><?php esc_html_e('Datenschutz', 'bootscore-child-oegkm'); ?></a>
                         <a href="<?php echo bootscore_child_oegkm_imprint_url(); ?>"><?php esc_html_e('Impressum', 'bootscore-child-oegkm'); ?></a>
+                        <a href="https://www.instagram.com/oe_gkm/" target="_blank" rel="noopener noreferrer" class="oegkm-instagram-link" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram"></i></a>
                     </div>
                 <?php endif; ?>
             </div>

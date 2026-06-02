@@ -23,6 +23,7 @@ get_header();
     $intro            = has_excerpt() ? get_the_excerpt() : '';
     $arrow_svg        = function_exists('bootscore_child_oegkm_button_arrow_svg') ? bootscore_child_oegkm_button_arrow_svg() : '';
     $download_svg     = '<svg class="oegkm-button-arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M10 3v9m0 0 3.5-3.5M10 12 6.5 8.5M4 16h12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    $event_label      = function_exists('bootscore_child_oegkm_event_oegkm_label') ? bootscore_child_oegkm_event_oegkm_label($post_id) : '';
 
     if (!$program_label) {
         $program_label = __('Programm', 'bootscore-child-oegkm');
@@ -41,12 +42,17 @@ get_header();
 
     <main id="primary" class="site-main oegkm-event-single-page">
         <article <?php post_class('oegkm-event-single'); ?>>
-            <?php if ($flyer_url) : ?>
+            <?php if ($event_label || $flyer_url) : ?>
                 <div class="oegkm-event-single-actions">
-                    <a class="oegkm-event-single-button oegkm-event-single-button--download" href="<?php echo esc_url($flyer_url); ?>">
-                        <span><?php esc_html_e('Flyer herunterladen', 'bootscore-child-oegkm'); ?></span>
-                        <?php echo $download_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                    </a>
+                    <?php if ($event_label) : ?>
+                        <?php echo $event_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    <?php endif; ?>
+                    <?php if ($flyer_url) : ?>
+                        <a class="oegkm-event-single-button oegkm-event-single-button--download" href="<?php echo esc_url($flyer_url); ?>">
+                            <span><?php esc_html_e('Flyer herunterladen', 'bootscore-child-oegkm'); ?></span>
+                            <?php echo $download_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        </a>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
 
