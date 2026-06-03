@@ -372,7 +372,7 @@ function bootscore_child_oegkm_event_oegkm_label(?int $post_id = null): string {
     return sprintf(
         '<span class="oegkm-event-label"><img class="oegkm-event-label__icon" src="%s" alt="" aria-hidden="true" loading="lazy"><span class="oegkm-event-label__text">%s</span></span>',
         esc_url($icon_url),
-        esc_html__('ÖGKM-Event', 'bootscore-child-oegkm')
+        esc_html__('ögkm event', 'bootscore-child-oegkm')
     );
 }
 
