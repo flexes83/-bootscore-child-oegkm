@@ -10826,7 +10826,6 @@ a.download::before,
   width:max-content;
   margin:0 0 18px;
   padding:.36rem .78rem .36rem .42rem;
-  border:1px solid rgba(1,86,91,.22);
   border-radius:999px;
   color:var(--oegkm-primary);
   background:var(--oegkm-mint);
