@@ -251,6 +251,26 @@ add_action('pre_get_posts', function (WP_Query $query) {
     }
 });
 
+add_filter('posts_clauses', function (array $clauses, WP_Query $query): array {
+    if (is_admin() || !$query->is_main_query() || !$query->is_post_type_archive('veranstaltung')) {
+        return $clauses;
+    }
+
+    global $wpdb;
+
+    $flag_alias = 'oegkm_event_flag_sort';
+    $join       = " LEFT JOIN {$wpdb->postmeta} AS {$flag_alias} ON ({$wpdb->posts}.ID = {$flag_alias}.post_id AND {$flag_alias}.meta_key = '_oegkm_event_is_oegkm')";
+
+    if (strpos($clauses['join'], $join) === false) {
+        $clauses['join'] .= $join;
+    }
+
+    $event_first_order = "CASE WHEN {$flag_alias}.meta_value = '1' THEN 0 ELSE 1 END ASC";
+    $clauses['orderby'] = $clauses['orderby'] ? $event_first_order . ', ' . $clauses['orderby'] : $event_first_order;
+
+    return $clauses;
+}, 10, 2);
+
 function bootscore_child_oegkm_event_date_label(?int $post_id = null): string {
     $post_id = $post_id ?: get_the_ID();
 
@@ -347,8 +367,11 @@ function bootscore_child_oegkm_event_oegkm_label(?int $post_id = null): string {
         return '';
     }
 
+    $icon_url = get_stylesheet_directory_uri() . '/assets/img/oegkm-bildmarke.png';
+
     return sprintf(
-        '<span class="oegkm-event-label"><span class="oegkm-event-label__icon" aria-hidden="true"></span><span>%s</span></span>',
+        '<span class="oegkm-event-label"><img class="oegkm-event-label__icon" src="%s" alt="" aria-hidden="true" loading="lazy"><span class="oegkm-event-label__text">%s</span></span>',
+        esc_url($icon_url),
         esc_html__('ÖGKM-Event', 'bootscore-child-oegkm')
     );
 }

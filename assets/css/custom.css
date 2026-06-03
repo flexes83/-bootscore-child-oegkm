@@ -10822,37 +10822,38 @@ a.download::before,
 .oegkm-event-label{
   display:inline-flex;
   align-items:center;
-  gap:.45rem;
+  gap:.5rem;
   width:max-content;
   margin:0 0 18px;
-  padding:.42rem .72rem .42rem .5rem;
+  padding:.36rem .78rem .36rem .42rem;
   border:1px solid rgba(1,86,91,.22);
   border-radius:999px;
   color:var(--oegkm-primary);
   background:var(--oegkm-mint);
-  font-family:var(--oegkm-font-copy);
+  font-family:var(--oegkm-font-headline);
   font-size:15px;
   line-height:1;
-  font-weight:700;
+  font-weight:600;
   letter-spacing:.02em;
   text-transform:uppercase;
 }
 
 .oegkm-event-label__icon{
-  position:relative;
-  width:24px;
-  height:24px;
-  border-radius:42% 58% 49% 51% / 52% 43% 57% 48%;
-  background:linear-gradient(135deg, #00da8e 8%, #62d5c2 56%, #b7b1ef 100%);
+  display:block;
+  width:26px;
+  height:25px;
+  object-fit:contain;
   flex:0 0 auto;
 }
 
-.oegkm-event-label__icon::after{
-  content:"";
-  position:absolute;
-  inset:6px;
-  border-radius:50%;
-  background:var(--oegkm-mint);
+.oegkm-theme-page-header__pretitle{
+  display:flex;
+  justify-content:center;
+  margin:0 0 clamp(1rem, 2vw, 1.5rem);
+}
+
+.oegkm-theme-page-header__pretitle .oegkm-event-label{
+  margin:0;
 }
 
 .oegkm-event-calendar-item h3{

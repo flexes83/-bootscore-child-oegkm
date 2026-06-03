@@ -37,22 +37,18 @@ get_header();
         'intro'      => $intro,
         'variant'    => 'blue-lilac',
         'labelledby' => 'oegkm-event-single-title',
+        'before_title' => $event_label,
     ]);
     ?>
 
     <main id="primary" class="site-main oegkm-event-single-page">
         <article <?php post_class('oegkm-event-single'); ?>>
-            <?php if ($event_label || $flyer_url) : ?>
+            <?php if ($flyer_url) : ?>
                 <div class="oegkm-event-single-actions">
-                    <?php if ($event_label) : ?>
-                        <?php echo $event_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                    <?php endif; ?>
-                    <?php if ($flyer_url) : ?>
-                        <a class="oegkm-event-single-button oegkm-event-single-button--download" href="<?php echo esc_url($flyer_url); ?>">
-                            <span><?php esc_html_e('Flyer herunterladen', 'bootscore-child-oegkm'); ?></span>
-                            <?php echo $download_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                        </a>
-                    <?php endif; ?>
+                    <a class="oegkm-event-single-button oegkm-event-single-button--download" href="<?php echo esc_url($flyer_url); ?>">
+                        <span><?php esc_html_e('Flyer herunterladen', 'bootscore-child-oegkm'); ?></span>
+                        <?php echo $download_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    </a>
                 </div>
             <?php endif; ?>
 
