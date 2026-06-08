@@ -91,24 +91,33 @@
 
   toggle.addEventListener('click', handleToggle, true);
 
-  panel.addEventListener('click', function (event) {
-    const link = event.target.closest('a');
-    if (!link) {
+  panel.querySelectorAll('.menu-item-has-children > a, .dropdown > a').forEach(function (link) {
+    if (!isDirectMenuToggle(link)) {
       return;
     }
 
-    if (isDirectMenuToggle(link) && !isDesktop()) {
+    link.addEventListener('click', function (event) {
+      if (isDesktop()) {
+        return;
+      }
+
       event.preventDefault();
       event.stopPropagation();
       if (typeof event.stopImmediatePropagation === 'function') {
         event.stopImmediatePropagation();
       }
       setSubmenuState(link, !link.classList.contains('show'));
+    }, true);
+  });
+
+  panel.addEventListener('click', function (event) {
+    const link = event.target.closest('a');
+    if (!link || isDirectMenuToggle(link)) {
       return;
     }
 
     setMenuState(false);
-  }, true);
+  });
 
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
