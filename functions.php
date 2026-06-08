@@ -161,7 +161,6 @@ add_filter('nav_menu_link_attributes', function ($atts, $item, $args, $depth) {
         $classes[] = 'dropdown-toggle';
         $atts['href'] = '#';
         $atts['role'] = 'button';
-        $atts['data-bs-toggle'] = 'dropdown';
         $atts['aria-expanded'] = 'false';
     }
 

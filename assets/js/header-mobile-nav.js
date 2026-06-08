@@ -12,6 +12,12 @@
   toggle.removeAttribute('data-bs-toggle');
   toggle.removeAttribute('data-bs-target');
 
+  panel.querySelectorAll('.menu-item-has-children > a, .dropdown > a').forEach(function (link) {
+    link.removeAttribute('data-bs-toggle');
+    link.removeAttribute('data-bs-target');
+    link.removeAttribute('data-bs-auto-close');
+  });
+
   function isDesktop() {
     return window.matchMedia('(min-width: 1200px)').matches;
   }
@@ -63,7 +69,7 @@
   }
 
   function toggleSubmenuLink(link, event) {
-    if (isDesktop() || !isDirectMenuToggle(link)) {
+    if (!isDirectMenuToggle(link)) {
       return false;
     }
 
@@ -71,6 +77,10 @@
     event.stopPropagation();
     if (typeof event.stopImmediatePropagation === 'function') {
       event.stopImmediatePropagation();
+    }
+
+    if (isDesktop()) {
+      return true;
     }
 
     setSubmenuState(link, !link.classList.contains('show'));
