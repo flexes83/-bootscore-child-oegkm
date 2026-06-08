@@ -22,6 +22,12 @@
     });
   }
 
+  function getDirectLink(item) {
+    return Array.from(item.children).find(function (child) {
+      return child.tagName === 'A';
+    });
+  }
+
   function getParentMenuItem(link) {
     const item = link.parentElement;
 
@@ -34,9 +40,10 @@
 
   function isDirectMenuToggle(link) {
     const item = getParentMenuItem(link);
+    const directLink = item ? getDirectLink(item) : null;
     const submenu = item ? getDirectSubmenu(item) : null;
 
-    return Boolean(item && submenu && link.parentElement === item);
+    return Boolean(item && submenu && directLink === link);
   }
 
   function setSubmenuState(link, isOpen) {
@@ -91,13 +98,20 @@
 
   toggle.addEventListener('click', handleToggle, true);
 
-  panel.querySelectorAll('.menu-item-has-children > a, .dropdown > a').forEach(function (link) {
-    if (!isDirectMenuToggle(link)) {
+  panel.querySelectorAll('.menu-item-has-children, .dropdown').forEach(function (item) {
+    const link = getDirectLink(item);
+    const submenu = getDirectSubmenu(item);
+
+    if (!link || !submenu) {
       return;
     }
 
-    link.addEventListener('click', function (event) {
+    item.addEventListener('click', function (event) {
       if (isDesktop()) {
+        return;
+      }
+
+      if (!link.contains(event.target)) {
         return;
       }
 
@@ -136,8 +150,12 @@
   });
 
   if (!isDesktop()) {
-    panel.querySelectorAll('.menu-item-has-children > a, .dropdown > a').forEach(function (link) {
-      setSubmenuState(link, false);
+    panel.querySelectorAll('.menu-item-has-children, .dropdown').forEach(function (item) {
+      const link = getDirectLink(item);
+
+      if (link) {
+        setSubmenuState(link, false);
+      }
     });
   }
 })();
