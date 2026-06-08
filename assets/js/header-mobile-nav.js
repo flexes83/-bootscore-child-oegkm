@@ -23,7 +23,13 @@
   }
 
   function getParentMenuItem(link) {
-    return link.closest('.menu-item-has-children, .dropdown');
+    const item = link.parentElement;
+
+    if (!item || !item.matches('.menu-item-has-children, .dropdown')) {
+      return null;
+    }
+
+    return item;
   }
 
   function isDirectMenuToggle(link) {
@@ -44,6 +50,8 @@
     item.classList.toggle('show', isOpen);
     link.classList.toggle('show', isOpen);
     submenu.classList.toggle('show', isOpen);
+    submenu.hidden = !isOpen;
+    submenu.style.display = isOpen ? 'block' : 'none';
     link.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   }
 
@@ -111,6 +119,16 @@
   window.addEventListener('resize', function () {
     if (isDesktop()) {
       setMenuState(false);
+      panel.querySelectorAll('.dropdown-menu, .sub-menu').forEach(function (submenu) {
+        submenu.hidden = false;
+        submenu.style.display = '';
+      });
     }
   });
+
+  if (!isDesktop()) {
+    panel.querySelectorAll('.menu-item-has-children > a, .dropdown > a').forEach(function (link) {
+      setSubmenuState(link, false);
+    });
+  }
 })();
