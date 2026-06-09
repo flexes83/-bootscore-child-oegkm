@@ -1923,7 +1923,7 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
 }
 
 .oegkm-team-slider__card.is-active .oegkm-team-slider__image{
-  height:417px;
+  height:332px;
 }
 
 .oegkm-team-slider__image img{
@@ -1931,6 +1931,7 @@ p, li, .wp-block-paragraph, .wp-block-list, .oegkm-hero-text,
   width:100%;
   height:100%;
   object-fit:cover;
+  object-position:top center;
 }
 
 .oegkm-team-slider__image span{
