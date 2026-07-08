@@ -8464,13 +8464,17 @@ a.download::before,
     margin:1rem 0 0;
 }
 
+.oegkm-member-card .oegkm-member-card__website{
+    margin:1rem 0 0;
+}
+
 .oegkm-member-card__address{
-    margin:.65rem 0 0;
+    margin:1rem 0 0;
     color:rgba(31,47,57,.72);
     font-style:normal;
 }
 
-.oegkm-member-card__contact + .oegkm-member-card__address{
+.oegkm-member-card__address + .oegkm-member-card__contact{
     margin-top:1rem;
 }
 

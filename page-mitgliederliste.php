@@ -150,9 +150,6 @@ natcasesort($member_types);
                                 <?php if ($department) : ?>
                                     <p><?php echo esc_html($department); ?></p>
                                 <?php endif; ?>
-                                <?php if ($member->user_email) : ?>
-                                    <p class="oegkm-member-card__contact"><a href="mailto:<?php echo esc_attr($member->user_email); ?>"><?php echo esc_html($member->user_email); ?></a></p>
-                                <?php endif; ?>
                                 <?php if ($address_parts) : ?>
                                     <address class="oegkm-member-card__address">
                                         <?php foreach ($address_parts as $address_part) : ?>
@@ -161,7 +158,10 @@ natcasesort($member_types);
                                     </address>
                                 <?php endif; ?>
                                 <?php if ($website) : ?>
-                                    <a href="<?php echo esc_url($website); ?>" target="_blank" rel="noopener"><?php esc_html_e('Website öffnen', 'bootscore-child-oegkm'); ?> →</a>
+                                    <p class="oegkm-member-card__website"><a href="<?php echo esc_url($website); ?>" target="_blank" rel="noopener"><?php esc_html_e('Website öffnen', 'bootscore-child-oegkm'); ?> →</a></p>
+                                <?php endif; ?>
+                                <?php if ($member->user_email) : ?>
+                                    <p class="oegkm-member-card__contact"><a href="mailto:<?php echo esc_attr($member->user_email); ?>"><?php echo esc_html($member->user_email); ?></a></p>
                                 <?php endif; ?>
                             </div>
                         </article>
