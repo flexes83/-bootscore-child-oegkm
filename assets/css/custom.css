@@ -8407,7 +8407,7 @@ a.download::before,
 
 .oegkm-member-directory-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:1rem;
 }
 
@@ -8475,6 +8475,9 @@ a.download::before,
         display:none;
     }
     .oegkm-member-directory-filter{
+        grid-template-columns:1fr;
+    }
+    .oegkm-member-directory-grid{
         grid-template-columns:1fr;
     }
 }
