@@ -8460,9 +8460,22 @@ a.download::before,
     font-weight:700;
 }
 
+.oegkm-member-card__contact{
+    margin-top:.65rem;
+}
+
+.oegkm-member-card__address{
+    margin:.65rem 0 0;
+    color:rgba(31,47,57,.72);
+    font-style:normal;
+}
+
+.oegkm-member-card__address span{
+    display:block;
+}
+
 .oegkm-member-card a{
     display:inline-block;
-    margin-top:.65rem;
     color:var(--oegkm-primary);
     font-weight:800;
 }

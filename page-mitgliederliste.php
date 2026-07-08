@@ -124,11 +124,18 @@ natcasesort($member_types);
                         $title_after = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_title_after');
                         $institution = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_institution');
                         $department = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_department');
+                        $street = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_street');
+                        $zip = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_zip');
                         $city = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_city');
                         $country = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_country');
                         $website = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_website');
                         $member_type = bootscore_child_oegkm_member_meta($user_id, 'oegkm_member_type');
                         $name = trim(sprintf('%s %s %s %s', $title, $member->first_name ?: '', $member->last_name ?: $member->display_name, $title_after));
+                        $address_parts = array_filter([
+                            $street,
+                            trim($zip . ($zip && $city ? ' ' : '') . $city),
+                            $country,
+                        ]);
                         ?>
                         <article class="oegkm-member-card">
                             <div class="oegkm-member-card__initial" aria-hidden="true"><?php echo esc_html(mb_substr($member->last_name ?: $member->display_name, 0, 1)); ?></div>
@@ -143,8 +150,15 @@ natcasesort($member_types);
                                 <?php if ($department) : ?>
                                     <p><?php echo esc_html($department); ?></p>
                                 <?php endif; ?>
-                                <?php if ($city || $country) : ?>
-                                    <p class="oegkm-member-card__location"><?php echo esc_html(trim($city . ($city && $country ? ', ' : '') . $country)); ?></p>
+                                <?php if ($member->user_email) : ?>
+                                    <p class="oegkm-member-card__contact"><a href="mailto:<?php echo esc_attr($member->user_email); ?>"><?php echo esc_html($member->user_email); ?></a></p>
+                                <?php endif; ?>
+                                <?php if ($address_parts) : ?>
+                                    <address class="oegkm-member-card__address">
+                                        <?php foreach ($address_parts as $address_part) : ?>
+                                            <span><?php echo esc_html($address_part); ?></span>
+                                        <?php endforeach; ?>
+                                    </address>
                                 <?php endif; ?>
                                 <?php if ($website) : ?>
                                     <a href="<?php echo esc_url($website); ?>" target="_blank" rel="noopener"><?php esc_html_e('Website öffnen', 'bootscore-child-oegkm'); ?> →</a>
