@@ -17,6 +17,7 @@ require_once get_stylesheet_directory() . '/inc/events.php';
 require_once get_stylesheet_directory() . '/inc/prizes.php';
 require_once get_stylesheet_directory() . '/inc/theme-page-header.php';
 require_once get_stylesheet_directory() . '/inc/members.php';
+require_once get_stylesheet_directory() . '/inc/fraxplus.php';
 
 add_action('wp_enqueue_scripts', function () {
     $version = bootscore_child_oegkm_theme_version();
