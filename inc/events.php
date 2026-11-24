@@ -136,7 +136,7 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
         </p>
         <div class="oegkm-event-admin-field oegkm-event-admin-field--full">
             <label><?php esc_html_e('Tabsektion', 'bootscore-child-oegkm'); ?></label>
-            <p class="oegkm-event-admin-help"><?php esc_html_e('Leere Überschriften und Texte werden nicht ausgegeben. Zusätzliche Bereiche erscheinen automatisch, wenn bereits mehr Inhalte gespeichert sind.', 'bootscore-child-oegkm'); ?></p>
+            <p class="oegkm-event-admin-help"><?php esc_html_e('Leere Überschriften und Texte werden nicht ausgegeben. Weitere Tabs können über „Tab hinzufügen“ ergänzt werden.', 'bootscore-child-oegkm'); ?></p>
             <div class="oegkm-event-admin-tabs">
                 <?php foreach ($tabs as $tab_index => $tab) : ?>
                     <?php
@@ -170,8 +170,40 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
                     </div>
                 <?php endforeach; ?>
             </div>
+            <p><button type="button" class="button oegkm-event-add-tab"><?php esc_html_e('Tab hinzufügen', 'bootscore-child-oegkm'); ?></button></p>
         </div>
     </div>
+    <script>
+    (() => {
+        const grid = document.currentScript.previousElementSibling;
+        const list = grid.querySelector('.oegkm-event-admin-tabs');
+        const button = grid.querySelector('.oegkm-event-add-tab');
+        if (!list || !button) return;
+        button.addEventListener('click', () => {
+            const source = list.querySelector('.oegkm-event-admin-tab');
+            if (!source) return;
+            const indexes = Array.from(list.querySelectorAll('input[name]'), input => {
+                const match = input.name.match(/^oegkm_event_tabs\[(\d+)\]/);
+                return match ? Number(match[1]) : -1;
+            });
+            const index = Math.max(-1, ...indexes) + 1;
+            const tab = source.cloneNode(true);
+            tab.querySelector('h4').textContent = 'Tab ' + (index + 1);
+            tab.querySelectorAll('input, textarea').forEach(field => {
+                field.value = ''; field.defaultValue = '';
+                field.name = field.name.replace(/^oegkm_event_tabs\[\d+\]/, 'oegkm_event_tabs[' + index + ']');
+                field.id = field.id.replace(/^oegkm_event_tabs_\d+_/, 'oegkm_event_tabs_' + index + '_');
+            });
+            tab.querySelectorAll('label[for]').forEach(label => {
+                label.htmlFor = label.htmlFor.replace(/^oegkm_event_tabs_\d+_/, 'oegkm_event_tabs_' + index + '_');
+            });
+            list.append(tab);
+            tab.querySelector('input').focus();
+            tab.scrollIntoView({block: 'start'});
+            tab.querySelector('input').dispatchEvent(new Event('input', {bubbles: true}));
+        });
+    })();
+</script>
     <?php
 }
 
