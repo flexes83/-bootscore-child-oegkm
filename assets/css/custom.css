@@ -11292,6 +11292,39 @@ a.download::before,
   line-height:1.35;
 }
 
+/* Keep fee and registration tables readable within the event panel. */
+.oegkm-event-single-tabs__text{
+  max-width:100%;
+  overflow-x:auto;
+}
+
+.oegkm-event-single-tabs__text table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:16px;
+  line-height:1.5;
+}
+
+.oegkm-event-single-tabs__text th,
+.oegkm-event-single-tabs__text td{
+  padding:10px 12px;
+  border-bottom:1px solid #c9dedd;
+  text-align:left;
+  vertical-align:top;
+  overflow-wrap:normal;
+  word-break:normal;
+  min-width:7rem;
+}
+
+.oegkm-event-single-tabs__text table p{
+  font-size:inherit;
+  line-height:inherit;
+}
+
+.oegkm-event-single-tabs__text th{
+  font-weight:700;
+}
+
 .oegkm-event-single-tabs__text p{
   margin:0;
 }

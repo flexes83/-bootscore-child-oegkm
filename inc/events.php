@@ -66,13 +66,14 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
     $end_time         = get_post_meta($post->ID, '_oegkm_event_end_time', true);
     $location         = get_post_meta($post->ID, '_oegkm_event_location', true);
     $registration_url = get_post_meta($post->ID, '_oegkm_event_registration_url', true);
+    $program_url      = get_post_meta($post->ID, '_oegkm_event_program_url', true);
     $flyer_url        = get_post_meta($post->ID, '_oegkm_event_flyer_url', true);
     $program_label    = get_post_meta($post->ID, '_oegkm_event_program_label', true);
     $program_title    = get_post_meta($post->ID, '_oegkm_event_program_title', true);
     $program_text     = get_post_meta($post->ID, '_oegkm_event_program_text', true);
     $bottom_image_id  = get_post_meta($post->ID, '_oegkm_event_bottom_image_id', true);
     $is_oegkm_event   = (string) get_post_meta($post->ID, '_oegkm_event_is_oegkm', true) === '1';
-    $tabs             = bootscore_child_oegkm_event_tabs($post->ID);
+    $tabs             = bootscore_child_oegkm_event_tabs($post->ID) ?: bootscore_child_oegkm_default_event_tabs();
 
     if (!$program_label) {
         $program_label = __('Programm', 'bootscore-child-oegkm');
@@ -119,6 +120,11 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
             <input type="url" id="oegkm_event_flyer_url" name="oegkm_event_flyer_url" value="<?php echo esc_attr($flyer_url); ?>" placeholder="https://">
         </p>
         <p class="oegkm-event-admin-field">
+            <label for="oegkm_event_program_url"><?php esc_html_e('Programm-Download URL (z. B. PDF)', 'bootscore-child-oegkm'); ?></label>
+            <input type="url" id="oegkm_event_program_url" name="oegkm_event_program_url" value="<?php echo esc_attr($program_url); ?>" placeholder="https://">
+            <span class="oegkm-event-admin-help"><?php esc_html_e('Programm in die Mediathek hochladen und die Datei-URL hier einfügen.', 'bootscore-child-oegkm'); ?></span>
+        </p>
+        <p class="oegkm-event-admin-field">
             <label for="oegkm_event_bottom_image_id"><?php esc_html_e('Abschlussbild Attachment-ID', 'bootscore-child-oegkm'); ?></label>
             <input type="number" id="oegkm_event_bottom_image_id" name="oegkm_event_bottom_image_id" value="<?php echo esc_attr($bottom_image_id); ?>" min="0" step="1">
         </p>
@@ -136,7 +142,7 @@ function bootscore_child_oegkm_render_event_meta_box(WP_Post $post): void {
         </p>
         <div class="oegkm-event-admin-field oegkm-event-admin-field--full">
             <label><?php esc_html_e('Tabsektion', 'bootscore-child-oegkm'); ?></label>
-            <p class="oegkm-event-admin-help"><?php esc_html_e('Leere Überschriften und Texte werden nicht ausgegeben. Weitere Tabs können über „Tab hinzufügen“ ergänzt werden.', 'bootscore-child-oegkm'); ?></p>
+            <p class="oegkm-event-admin-help"><?php esc_html_e('Reiter erscheinen nur mit Titel und ausgefülltem Abschnittstext. Zum Ausblenden alle Abschnittstexte leeren. Weitere Tabs können über „Tab hinzufügen“ ergänzt werden.', 'bootscore-child-oegkm'); ?></p>
             <div class="oegkm-event-admin-tabs">
                 <?php foreach ($tabs as $tab_index => $tab) : ?>
                     <?php
@@ -226,6 +232,7 @@ add_action('save_post_veranstaltung', function (int $post_id) {
     $end_time         = isset($_POST['oegkm_event_end_time']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_end_time'])) : '';
     $location         = isset($_POST['oegkm_event_location']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_location'])) : '';
     $registration_url = isset($_POST['oegkm_event_registration_url']) ? esc_url_raw(wp_unslash($_POST['oegkm_event_registration_url'])) : '';
+    $program_url      = isset($_POST['oegkm_event_program_url']) ? esc_url_raw(wp_unslash($_POST['oegkm_event_program_url'])) : '';
     $flyer_url        = isset($_POST['oegkm_event_flyer_url']) ? esc_url_raw(wp_unslash($_POST['oegkm_event_flyer_url'])) : '';
     $program_label    = isset($_POST['oegkm_event_program_label']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_program_label'])) : '';
     $program_title    = isset($_POST['oegkm_event_program_title']) ? sanitize_text_field(wp_unslash($_POST['oegkm_event_program_title'])) : '';
@@ -245,6 +252,7 @@ add_action('save_post_veranstaltung', function (int $post_id) {
     update_post_meta($post_id, '_oegkm_event_location', $location);
     update_post_meta($post_id, '_oegkm_event_registration_url', $registration_url);
     update_post_meta($post_id, '_oegkm_event_flyer_url', $flyer_url);
+    update_post_meta($post_id, '_oegkm_event_program_url', $program_url);
     update_post_meta($post_id, '_oegkm_event_program_label', $program_label);
     update_post_meta($post_id, '_oegkm_event_program_title', $program_title);
     update_post_meta($post_id, '_oegkm_event_program_text', $program_text);
@@ -282,26 +290,6 @@ add_action('pre_get_posts', function (WP_Query $query) {
         ]);
     }
 });
-
-add_filter('posts_clauses', function (array $clauses, WP_Query $query): array {
-    if (is_admin() || !$query->is_main_query() || !$query->is_post_type_archive('veranstaltung')) {
-        return $clauses;
-    }
-
-    global $wpdb;
-
-    $flag_alias = 'oegkm_event_flag_sort';
-    $join       = " LEFT JOIN {$wpdb->postmeta} AS {$flag_alias} ON ({$wpdb->posts}.ID = {$flag_alias}.post_id AND {$flag_alias}.meta_key = '_oegkm_event_is_oegkm')";
-
-    if (strpos($clauses['join'], $join) === false) {
-        $clauses['join'] .= $join;
-    }
-
-    $event_first_order = "CASE WHEN {$flag_alias}.meta_value = '1' THEN 0 ELSE 1 END ASC";
-    $clauses['orderby'] = $clauses['orderby'] ? $event_first_order . ', ' . $clauses['orderby'] : $event_first_order;
-
-    return $clauses;
-}, 10, 2);
 
 function bootscore_child_oegkm_event_date_label(?int $post_id = null): string {
     $post_id = $post_id ?: get_the_ID();
@@ -409,33 +397,9 @@ function bootscore_child_oegkm_event_oegkm_label(?int $post_id = null): string {
 }
 
 function bootscore_child_oegkm_default_event_tabs(): array {
-    return [
-        [
-            'title' => 'Allgemeine Infos / Organisation',
-            'sections' => [
-                [
-                    'heading' => 'Öffnungszeiten & Registratur',
-                    'body' => "Donnerstag, 28. Mai          09:30 - 17:30 Uhr\nFreitag, 29. Mai                  08:00 - 17:30 Uhr\nSamstag, 30. Mai                08:00 - 13:00 Uhr",
-                ],
-                [
-                    'heading' => 'Tagungsbüro',
-                    'body' => "MAW - Medizinische Ausstellungs- und Werbegesellschaft\nCarmen Zavarsky\nFreyung 6/3, 1010 Wien\nT: +43 1 536 63-23\nE-Mail: osteoporose@media.co.at",
-                ],
-                [
-                    'heading' => 'Fachausstellung',
-                    'body' => "MAW - Medizinische Ausstellungs- und Werbegesellschaft\nIris Bobal\nFreyung 6, 1010 Wien\nT: +43 1 536 63-48\nF: +43 1 535 60 16\nE-Mail: maw@media.co.at",
-                ],
-                [
-                    'heading' => 'Diplomfortbildungsprogramm (DFP)',
-                    'body' => 'Für die Veranstaltung werden im Rahmen des Diplomfortbildungsprogramms der Österreichischen Ärztekammer Fortbildungspunkte entsprechend den Vortragseinheiten angesucht.',
-                ],
-            ],
-        ],
-        ['title' => 'Veranstalter', 'sections' => [['heading' => 'Veranstalter', 'body' => 'Informationen ergänzen.']]],
-        ['title' => 'Kongressort / Anfahrt', 'sections' => [['heading' => 'Kongressort / Anfahrt', 'body' => 'Informationen ergänzen.']]],
-        ['title' => 'Teilnahmegebühren', 'sections' => [['heading' => 'Teilnahmegebühren', 'body' => 'Informationen ergänzen.']]],
-        ['title' => 'Aussteller, Sponsoren, Interessenten', 'sections' => [['heading' => 'Aussteller, Sponsoren, Interessenten', 'body' => 'Informationen ergänzen.']]],
-    ];
+    return array_map(static function (string $title): array {
+        return ['title' => $title, 'sections' => []];
+    }, ['Allgemeine Infos / Organisation', 'Veranstalter', 'Kongressort / Anfahrt', 'Teilnahmegebühren', 'Aussteller, Sponsoren, Interessenten']);
 }
 
 function bootscore_child_oegkm_sanitize_event_tabs(array $tabs_input): array {
@@ -478,7 +442,7 @@ function bootscore_child_oegkm_sanitize_event_tabs(array $tabs_input): array {
         ];
     }
 
-    return $tabs ?: bootscore_child_oegkm_default_event_tabs();
+    return $tabs;
 }
 
 function bootscore_child_oegkm_sanitize_event_tab_body(string $body): string {
@@ -506,5 +470,34 @@ function bootscore_child_oegkm_event_tabs(?int $post_id = null): array {
     $json = (string) get_post_meta($post_id, '_oegkm_event_tabs_json', true);
     $tabs = $json ? json_decode($json, true) : null;
 
-    return is_array($tabs) && $tabs ? $tabs : bootscore_child_oegkm_default_event_tabs();
+    return is_array($tabs) ? $tabs : bootscore_child_oegkm_default_event_tabs();
+}
+
+/** Keep the event fields available even when an editor previously hid the box. */
+add_filter('hidden_meta_boxes', function (array $hidden, $screen): array {
+    if ($screen->post_type === 'veranstaltung') {
+        $hidden = array_values(array_diff($hidden, ['oegkm_event_details']));
+    }
+    return $hidden;
+}, 10, 2);
+
+/** Frontend tabs need actual content; headings and editor placeholders are insufficient. */
+function bootscore_child_oegkm_visible_event_tabs(int $post_id): array {
+    $visible = [];
+    foreach (bootscore_child_oegkm_sanitize_event_tabs(bootscore_child_oegkm_event_tabs($post_id)) as $tab) {
+        if ($tab['title'] === '') {
+            continue;
+        }
+        $sections = array_values(array_filter($tab['sections'], static function (array $section): bool {
+            $body = $section['body'];
+            $text = trim(str_replace("\xc2\xa0", ' ', html_entity_decode(wp_strip_all_tags($body), ENT_QUOTES | ENT_HTML5, 'UTF-8')));
+            return ($text !== '' && $text !== 'Informationen ergänzen.')
+                || (bool) preg_match('/<(?:img|iframe|video|audio|embed|object)\b/i', $body);
+        }));
+        if ($sections) {
+            $tab['sections'] = $sections;
+            $visible[] = $tab;
+        }
+    }
+    return $visible;
 }

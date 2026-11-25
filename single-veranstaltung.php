@@ -12,12 +12,13 @@ get_header();
     $date_label       = function_exists('bootscore_child_oegkm_event_date_range_label') ? bootscore_child_oegkm_event_date_range_label($post_id) : bootscore_child_oegkm_event_date_label($post_id);
     $location         = trim((string) get_post_meta($post_id, '_oegkm_event_location', true));
     $registration_url = trim((string) get_post_meta($post_id, '_oegkm_event_registration_url', true));
+    $program_url      = trim((string) get_post_meta($post_id, '_oegkm_event_program_url', true));
     $flyer_url        = trim((string) get_post_meta($post_id, '_oegkm_event_flyer_url', true));
     $program_label    = trim((string) get_post_meta($post_id, '_oegkm_event_program_label', true));
     $program_title    = trim((string) get_post_meta($post_id, '_oegkm_event_program_title', true));
     $program_text     = trim((string) get_post_meta($post_id, '_oegkm_event_program_text', true));
     $bottom_image_id  = absint(get_post_meta($post_id, '_oegkm_event_bottom_image_id', true));
-    $tabs             = function_exists('bootscore_child_oegkm_event_tabs') ? bootscore_child_oegkm_event_tabs($post_id) : [];
+    $tabs             = function_exists('bootscore_child_oegkm_visible_event_tabs') ? bootscore_child_oegkm_visible_event_tabs($post_id) : [];
     $subtitle_parts   = array_filter([$date_label, $location]);
     $subtitle         = implode(', ', $subtitle_parts);
     $intro            = has_excerpt() ? get_the_excerpt() : '';
@@ -43,12 +44,20 @@ get_header();
 
     <main id="primary" class="site-main oegkm-event-single-page">
         <article <?php post_class('oegkm-event-single'); ?>>
-            <?php if ($flyer_url) : ?>
+            <?php if ($flyer_url || $program_url) : ?>
                 <div class="oegkm-event-single-actions">
+                    <?php if ($flyer_url) : ?>
                     <a class="oegkm-event-single-button oegkm-event-single-button--download" href="<?php echo esc_url($flyer_url); ?>">
                         <span><?php esc_html_e('Flyer herunterladen', 'bootscore-child-oegkm'); ?></span>
                         <?php echo $download_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                     </a>
+                    <?php endif; ?>
+                    <?php if ($program_url) : ?>
+                        <a class="oegkm-event-single-button oegkm-event-single-button--download" href="<?php echo esc_url($program_url); ?>">
+                            <span><?php esc_html_e('Programm herunterladen', 'bootscore-child-oegkm'); ?></span>
+                            <?php echo $download_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        </a>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
 
@@ -142,7 +151,7 @@ get_header();
                                                     <h3><?php echo esc_html($section_heading); ?></h3>
                                                 <?php endif; ?>
                                                 <?php if ($section_body) : ?>
-                                                    <div class="oegkm-event-single-tabs__text">
+                                                    <div class="oegkm-event-single-tabs__text"<?php if (stripos($section_body, '<table') !== false) : ?> tabindex="0" role="region" aria-label="<?php echo esc_attr($section_heading ?: $tab['title']); ?>"<?php endif; ?>>
                                                         <?php echo wpautop(bootscore_child_oegkm_sanitize_event_tab_body($section_body)); ?>
                                                     </div>
                                                 <?php endif; ?>
